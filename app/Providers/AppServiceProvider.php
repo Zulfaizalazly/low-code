@@ -6,9 +6,21 @@ use App\Kernel\Events\DomainEvent;
 use App\Kernel\Events\EventLog;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
+    /**
+     * The policy mappings for the application.
+     */
+    protected $policies = [
+        \App\Studio\Registry\Feature::class => \App\Policies\FeaturePolicy::class,
+        \App\Studio\Registry\FeatureVersion::class => \App\Policies\FeatureVersionPolicy::class,
+        \App\Studio\Registry\FlowDefinition::class => \App\Policies\FlowDefinitionPolicy::class,
+        \App\Studio\Registry\PageDefinition::class => \App\Policies\PageDefinitionPolicy::class,
+        \App\Studio\Registry\ScopeOverride::class => \App\Policies\ScopeOverridePolicy::class,
+    ];
+
     /**
      * Register any application services.
      */
@@ -22,6 +34,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Register policies
+        foreach ($this->policies as $model => $policy) {
+            Gate::policy($model, $policy);
+        }
+
         // Register domain event logging for all concrete DomainEvent subclasses
         $domainEvents = [
             \App\Domain\Customer\Events\CustomerCreated::class,

@@ -1,9 +1,27 @@
 import './bootstrap';
 import { createApp } from 'vue';
+import Toast from 'vue-toastification';
+import 'vue-toastification/dist/index.css';
 import FlowCanvas from './builders/flow/FlowCanvas.vue';
 import PageBuilder from './builders/page/PageBuilder.vue';
 import ReleaseCenter from './builders/publish/ReleaseCenter.vue';
 import ReviewScreen from './builders/publish/ReviewScreen.vue';
+
+// Toast configuration
+const toastOptions = {
+    position: 'top-right',
+    timeout: 3000,
+    closeOnClick: true,
+    pauseOnFocusLoss: true,
+    pauseOnHover: true,
+    draggable: true,
+    draggablePercent: 0.6,
+    showCloseButtonOnHover: false,
+    hideProgressBar: false,
+    closeButton: 'button',
+    icon: true,
+    rtl: false
+};
 
 // ─── Flow Builder (Vue Island) ───
 const flowElement = document.getElementById('flow-canvas');
@@ -16,6 +34,7 @@ if (flowElement) {
         initialEdges: JSON.parse(flowElement.dataset.edges || '[]'),
         commands: JSON.parse(flowElement.dataset.commands || '[]'),
     });
+    app.use(Toast, toastOptions);
     app.mount('#flow-canvas');
 
     document.getElementById('save-flow-btn')?.addEventListener('click', () => {
@@ -32,6 +51,7 @@ if (pageElement) {
         initialSteps: JSON.parse(pageElement.dataset.steps || '[]'),
         initialEntities: JSON.parse(pageElement.dataset.entities || '{}'),
     });
+    app.use(Toast, toastOptions);
     app.mount('#page-builder');
 
     document.getElementById('save-page-btn')?.addEventListener('click', () => {
@@ -43,6 +63,7 @@ if (pageElement) {
 const releaseElement = document.getElementById('release-center-mount');
 if (releaseElement) {
     const app = createApp(ReleaseCenter);
+    app.use(Toast, toastOptions);
     app.mount('#release-center-mount');
 }
 
@@ -52,5 +73,6 @@ if (reviewElement) {
     const app = createApp(ReviewScreen, {
         versionId: reviewElement.children[0].getAttribute('version-id')
     });
+    app.use(Toast, toastOptions);
     app.mount('#review-screen-mount');
 }

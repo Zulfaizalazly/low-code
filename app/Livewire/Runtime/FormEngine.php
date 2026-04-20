@@ -13,10 +13,11 @@ class FormEngine extends Component
     public PageDefinition $page;
     public array $formData = [];
     public int $currentStepIndex = 0;
+    public bool $isSubmitted = false;
 
     public function mount(string $featureKey, string $pageKey = null)
     {
-        $loader = new PageLoader();
+        $loader = app(PageLoader::class);
         $this->page = $loader->load($featureKey, $pageKey);
 
         if (!$this->page) {
@@ -66,6 +67,7 @@ class FormEngine extends Component
             $orchestrator->execute($primaryFlow, ['form' => $payload]);
         }
 
+        $this->isSubmitted = true;
         $this->dispatch('form-submitted', payload: $payload);
     }
 

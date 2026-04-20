@@ -175,7 +175,7 @@ class ReferenceFeatureSeeder extends Seeder
             'field_key' => 'items',
             'label' => 'Item Details',
             'component_type' => 'input_hidden',
-            'default_value' => [],
+            'default_value' => [['item_type' => 'Jewelry', 'weight_grams' => 10, 'purity' => 916]],
             'sort_order' => 2
         ]);
 

@@ -15,6 +15,18 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'ai.rate' => \App\Http\Middleware\AIRateLimitMiddleware::class,
             'publish.permission' => \App\Http\Middleware\PublishWorkflowPermissions::class,
+            'permission' => \App\Http\Middleware\CheckPermission::class,
+            'role' => \App\Http\Middleware\CheckRole::class,
+        ]);
+
+        // Apply sanitization to all web requests
+        $middleware->web(append: [
+            \App\Http\Middleware\SanitizeInput::class,
+        ]);
+
+        // Ensure CSRF protection is enabled for all web routes
+        $middleware->validateCsrfTokens(except: [
+            // Add any routes that need to be excluded from CSRF protection
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -20,6 +20,7 @@
         "@vue-flow/core": "^1.48.2",
         "axios": "^1.15.1",
         "lucide-vue-next": "^1.0.0",
-        "vue": "^3.5.32"
+        "vue": "^3.5.32",
+        "vue-toastification": "^2.0.0-rc.5"
     }
 }
