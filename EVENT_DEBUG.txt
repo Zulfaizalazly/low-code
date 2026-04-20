@@ -1,0 +1,996 @@
+EVENT: bootstrapped: Illuminate\Foundation\Bootstrap\BootProviders
+EVENT: Illuminate\Console\Events\ArtisanStarting
+EVENT: Illuminate\Database\Events\ConnectionEstablished
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationsStarted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationsEnded
+EVENT: Illuminate\Database\Events\DatabaseRefreshed
+EVENT: eloquent.booting: App\Models\User
+EVENT: eloquent.booted: App\Models\User
+EVENT: eloquent.saving: App\Models\User
+EVENT: eloquent.creating: App\Models\User
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.booting: App\Kernel\Audit\AuditLog
+EVENT: eloquent.booted: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saving: App\Kernel\Audit\AuditLog
+EVENT: eloquent.creating: App\Kernel\Audit\AuditLog
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.created: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saved: App\Kernel\Audit\AuditLog
+EVENT: eloquent.created: App\Models\User
+EVENT: eloquent.saved: App\Models\User
+EVENT: Illuminate\Auth\Events\Authenticated
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\TransactionBeginning
+EVENT: eloquent.booting: App\Domain\Customer\Models\Customer
+EVENT: eloquent.booted: App\Domain\Customer\Models\Customer
+EVENT: eloquent.saving: App\Domain\Customer\Models\Customer
+EVENT: eloquent.creating: App\Domain\Customer\Models\Customer
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.saving: App\Kernel\Audit\AuditLog
+EVENT: eloquent.creating: App\Kernel\Audit\AuditLog
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.created: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saved: App\Kernel\Audit\AuditLog
+EVENT: eloquent.created: App\Domain\Customer\Models\Customer
+EVENT: eloquent.saved: App\Domain\Customer\Models\Customer
+EVENT: App\Domain\Customer\Events\CustomerCreated
+EVENT: Illuminate\Database\Events\TransactionCommitted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: bootstrapped: Illuminate\Foundation\Bootstrap\BootProviders
+EVENT: Illuminate\Database\Events\ConnectionEstablished
+EVENT: eloquent.booting: App\Models\User
+EVENT: eloquent.booted: App\Models\User
+EVENT: eloquent.saving: App\Models\User
+EVENT: eloquent.creating: App\Models\User
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.booting: App\Kernel\Audit\AuditLog
+EVENT: eloquent.booted: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saving: App\Kernel\Audit\AuditLog
+EVENT: eloquent.creating: App\Kernel\Audit\AuditLog
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.created: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saved: App\Kernel\Audit\AuditLog
+EVENT: eloquent.created: App\Models\User
+EVENT: eloquent.saved: App\Models\User
+EVENT: Illuminate\Auth\Events\Authenticated
+EVENT: bootstrapped: Illuminate\Foundation\Bootstrap\BootProviders
+EVENT: Illuminate\Console\Events\ArtisanStarting
+EVENT: Illuminate\Database\Events\ConnectionEstablished
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationsStarted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationsEnded
+EVENT: Illuminate\Database\Events\DatabaseRefreshed
+EVENT: eloquent.booting: App\Models\User
+EVENT: eloquent.booted: App\Models\User
+EVENT: eloquent.saving: App\Models\User
+EVENT: eloquent.creating: App\Models\User
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.booting: App\Kernel\Audit\AuditLog
+EVENT: eloquent.booted: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saving: App\Kernel\Audit\AuditLog
+EVENT: eloquent.creating: App\Kernel\Audit\AuditLog
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.created: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saved: App\Kernel\Audit\AuditLog
+EVENT: eloquent.created: App\Models\User
+EVENT: eloquent.saved: App\Models\User
+EVENT: Illuminate\Auth\Events\Authenticated
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\TransactionBeginning
+EVENT: eloquent.booting: App\Domain\Customer\Models\Customer
+EVENT: eloquent.booted: App\Domain\Customer\Models\Customer
+EVENT: eloquent.saving: App\Domain\Customer\Models\Customer
+EVENT: eloquent.creating: App\Domain\Customer\Models\Customer
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.saving: App\Kernel\Audit\AuditLog
+EVENT: eloquent.creating: App\Kernel\Audit\AuditLog
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.created: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saved: App\Kernel\Audit\AuditLog
+EVENT: eloquent.created: App\Domain\Customer\Models\Customer
+EVENT: eloquent.saved: App\Domain\Customer\Models\Customer
+EVENT: App\Domain\Customer\Events\CustomerCreated
+EVENT: Illuminate\Database\Events\TransactionCommitted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: bootstrapped: Illuminate\Foundation\Bootstrap\BootProviders
+EVENT: Illuminate\Database\Events\ConnectionEstablished
+EVENT: eloquent.booting: App\Models\User
+EVENT: eloquent.booted: App\Models\User
+EVENT: eloquent.saving: App\Models\User
+EVENT: eloquent.creating: App\Models\User
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.booting: App\Kernel\Audit\AuditLog
+EVENT: eloquent.booted: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saving: App\Kernel\Audit\AuditLog
+EVENT: eloquent.creating: App\Kernel\Audit\AuditLog
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.created: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saved: App\Kernel\Audit\AuditLog
+EVENT: eloquent.created: App\Models\User
+EVENT: eloquent.saved: App\Models\User
+EVENT: Illuminate\Auth\Events\Authenticated
+EVENT: bootstrapped: Illuminate\Foundation\Bootstrap\BootProviders
+EVENT: Illuminate\Console\Events\ArtisanStarting
+EVENT: Illuminate\Database\Events\ConnectionEstablished
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationsStarted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationsEnded
+EVENT: Illuminate\Database\Events\DatabaseRefreshed
+EVENT: eloquent.booting: App\Models\User
+EVENT: eloquent.booted: App\Models\User
+EVENT: eloquent.saving: App\Models\User
+EVENT: eloquent.creating: App\Models\User
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.booting: App\Kernel\Audit\AuditLog
+EVENT: eloquent.booted: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saving: App\Kernel\Audit\AuditLog
+EVENT: eloquent.creating: App\Kernel\Audit\AuditLog
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.created: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saved: App\Kernel\Audit\AuditLog
+EVENT: eloquent.created: App\Models\User
+EVENT: eloquent.saved: App\Models\User
+EVENT: Illuminate\Auth\Events\Authenticated
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\TransactionBeginning
+EVENT: eloquent.booting: App\Domain\Customer\Models\Customer
+EVENT: eloquent.booted: App\Domain\Customer\Models\Customer
+EVENT: eloquent.saving: App\Domain\Customer\Models\Customer
+EVENT: eloquent.creating: App\Domain\Customer\Models\Customer
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.saving: App\Kernel\Audit\AuditLog
+EVENT: eloquent.creating: App\Kernel\Audit\AuditLog
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.created: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saved: App\Kernel\Audit\AuditLog
+EVENT: eloquent.created: App\Domain\Customer\Models\Customer
+EVENT: eloquent.saved: App\Domain\Customer\Models\Customer
+EVENT: App\Domain\Customer\Events\CustomerCreated
+EVENT: Illuminate\Database\Events\TransactionCommitted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: bootstrapped: Illuminate\Foundation\Bootstrap\BootProviders
+EVENT: Illuminate\Database\Events\ConnectionEstablished
+EVENT: eloquent.booting: App\Models\User
+EVENT: eloquent.booted: App\Models\User
+EVENT: eloquent.saving: App\Models\User
+EVENT: eloquent.creating: App\Models\User
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.booting: App\Kernel\Audit\AuditLog
+EVENT: eloquent.booted: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saving: App\Kernel\Audit\AuditLog
+EVENT: eloquent.creating: App\Kernel\Audit\AuditLog
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.created: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saved: App\Kernel\Audit\AuditLog
+EVENT: eloquent.created: App\Models\User
+EVENT: eloquent.saved: App\Models\User
+EVENT: Illuminate\Auth\Events\Authenticated
+EVENT: bootstrapped: Illuminate\Foundation\Bootstrap\BootProviders
+EVENT: Illuminate\Console\Events\ArtisanStarting
+EVENT: Illuminate\Database\Events\ConnectionEstablished
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationsStarted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationStarted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationEnded
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\MigrationsEnded
+EVENT: Illuminate\Database\Events\DatabaseRefreshed
+EVENT: eloquent.booting: App\Models\User
+EVENT: eloquent.booted: App\Models\User
+EVENT: eloquent.saving: App\Models\User
+EVENT: eloquent.creating: App\Models\User
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.booting: App\Kernel\Audit\AuditLog
+EVENT: eloquent.booted: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saving: App\Kernel\Audit\AuditLog
+EVENT: eloquent.creating: App\Kernel\Audit\AuditLog
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.created: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saved: App\Kernel\Audit\AuditLog
+EVENT: eloquent.created: App\Models\User
+EVENT: eloquent.saved: App\Models\User
+EVENT: Illuminate\Auth\Events\Authenticated
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\TransactionBeginning
+EVENT: eloquent.booting: App\Domain\Customer\Models\Customer
+EVENT: eloquent.booted: App\Domain\Customer\Models\Customer
+EVENT: eloquent.saving: App\Domain\Customer\Models\Customer
+EVENT: eloquent.creating: App\Domain\Customer\Models\Customer
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.saving: App\Kernel\Audit\AuditLog
+EVENT: eloquent.creating: App\Kernel\Audit\AuditLog
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.created: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saved: App\Kernel\Audit\AuditLog
+EVENT: eloquent.created: App\Domain\Customer\Models\Customer
+EVENT: eloquent.saved: App\Domain\Customer\Models\Customer
+EVENT: Illuminate\Log\Events\MessageLogged
+EVENT: eloquent.booting: App\Kernel\Events\EventLog
+EVENT: eloquent.booted: App\Kernel\Events\EventLog
+EVENT: eloquent.saving: App\Kernel\Events\EventLog
+EVENT: eloquent.creating: App\Kernel\Events\EventLog
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.created: App\Kernel\Events\EventLog
+EVENT: eloquent.saved: App\Kernel\Events\EventLog
+EVENT: App\Domain\Customer\Events\CustomerCreated
+EVENT: Illuminate\Database\Events\TransactionCommitted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: Illuminate\Database\Events\StatementPrepared
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: bootstrapped: Illuminate\Foundation\Bootstrap\BootProviders
+EVENT: Illuminate\Database\Events\ConnectionEstablished
+EVENT: eloquent.booting: App\Models\User
+EVENT: eloquent.booted: App\Models\User
+EVENT: eloquent.saving: App\Models\User
+EVENT: eloquent.creating: App\Models\User
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.booting: App\Kernel\Audit\AuditLog
+EVENT: eloquent.booted: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saving: App\Kernel\Audit\AuditLog
+EVENT: eloquent.creating: App\Kernel\Audit\AuditLog
+EVENT: Illuminate\Database\Events\QueryExecuted
+EVENT: eloquent.created: App\Kernel\Audit\AuditLog
+EVENT: eloquent.saved: App\Kernel\Audit\AuditLog
+EVENT: eloquent.created: App\Models\User
+EVENT: eloquent.saved: App\Models\User
+EVENT: Illuminate\Auth\Events\Authenticated
