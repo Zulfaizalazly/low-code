@@ -28,7 +28,7 @@
             </div>
 
             <nav class="flex-1 px-4 space-y-2">
-                <a href="/studio" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 transition-all">
+                <a href="{{ route('studio.dashboard') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl {{ request()->routeIs('studio.dashboard') ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} transition-all">
                     Dashboard
                 </a>
                 
@@ -36,26 +36,33 @@
                     Engine Builders
                 </div>
                 
-                <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all">
+                <div class="px-4 py-3 text-sm font-medium rounded-xl text-slate-500 cursor-not-allowed opacity-50">
                     Feature Builder
-                </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all">
+                    <span class="text-[10px] ml-2">(Coming Soon)</span>
+                </div>
+                <div class="px-4 py-3 text-sm font-medium rounded-xl text-slate-500 cursor-not-allowed opacity-50">
                     Flow Canvas
-                </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all">
+                    <span class="text-[10px] ml-2">(Select from Dashboard)</span>
+                </div>
+                <div class="px-4 py-3 text-sm font-medium rounded-xl text-slate-500 cursor-not-allowed opacity-50">
                     Page Studio
-                </a>
+                    <span class="text-[10px] ml-2">(Select from Dashboard)</span>
+                </div>
 
                 <div class="pt-6 pb-2 px-4 text-[10px] font-bold uppercase tracking-widest text-slate-500">
                     Governance
                 </div>
                 
-                <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all">
+                <a href="{{ route('studio.releases') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl {{ request()->routeIs('studio.releases*') ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} transition-all">
                     Release Center
                 </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all">
-                    Audit Logs
+                <a href="{{ route('studio.monitor') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl {{ request()->routeIs('studio.monitor') ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20' : 'text-slate-400 hover:text-white hover:bg-white/5' }} transition-all">
+                    Runtime Monitor
                 </a>
+                <div class="px-4 py-3 text-sm font-medium rounded-xl text-slate-500 cursor-not-allowed opacity-50">
+                    Audit Logs
+                    <span class="text-[10px] ml-2">(Coming Soon)</span>
+                </div>
             </nav>
 
             <div class="p-6 border-t border-slate-800/50">
@@ -72,7 +79,11 @@
         <!-- Main Workspace -->
         <main class="flex-1 overflow-y-auto bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-slate-950">
             <div class="max-w-7xl mx-auto p-12">
-                {{ $slot }}
+                @if(isset($slot))
+                    {{ $slot }}
+                @else
+                    @yield('content')
+                @endif
             </div>
         </main>
     </div>

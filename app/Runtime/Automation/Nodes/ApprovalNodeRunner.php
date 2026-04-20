@@ -25,7 +25,7 @@ class ApprovalNodeRunner implements NodeRunner
         $remarks = $this->resolve($config['remarks'] ?? null, $context);
 
         // Simulation Mode: Skip real dispatch
-        if ($context->get('_simulation')) {
+        if ($context->isSimulation) {
             return [
                 'simulated_execution' => true,
                 'node_type' => 'approval',

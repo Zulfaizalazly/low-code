@@ -36,8 +36,18 @@ class DocumentNodeRunnerTest extends TestCase
 
     public function test_document_node_generates_document()
     {
+        $customer = \App\Domain\Customer\Models\Customer::create([
+            'name' => 'Doc Test Customer',
+            'ic_number' => 'DOC-IC-001',
+            'status' => 'active',
+        ]);
+
         $facility = Facility::create([
+            'customer_id' => $customer->id,
             'facility_number' => 'F-DOC-001',
+            'product_code' => 'ARRAHNU_GOLD',
+            'branch_id' => 1,
+            'entity_id' => 1,
             'principal_amount' => 5000,
             'status' => 'active',
         ]);

@@ -31,7 +31,7 @@ class CommandNodeRunner implements NodeRunner
                 if (preg_match('/^\{\{(.*)\}\}$/', $pathOrLiteral, $matches)) {
                     $isPath = true;
                     $path = trim($matches[1]);
-                } elseif (preg_match('/^(nodes\.|form\.|auth\.)/', $pathOrLiteral)) {
+                } elseif (preg_match('/^(nodes\.|form\.|auth\.|trigger\.|formula\.)/', $pathOrLiteral)) {
                     $isPath = true;
                 }
             }
@@ -47,7 +47,7 @@ class CommandNodeRunner implements NodeRunner
         $command = new $commandClass(...$resolvedPayload);
 
         // Simulation Mode: Skip real dispatch
-        if ($context->get('_simulation')) {
+        if ($context->isSimulation) {
             return [
                 'simulated_execution' => true,
                 'command' => $commandClass,

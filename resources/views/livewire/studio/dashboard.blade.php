@@ -5,7 +5,7 @@
     </header>
 
     <!-- Stats/Overview -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
         <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
             <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Active Features</p>
             <p class="text-3xl font-bold text-white">{{ $features->count() }}</p>
@@ -13,6 +13,16 @@
         <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
             <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Build Pipeline</p>
             <p class="text-3xl font-bold text-indigo-400">{{ $features->where('status', 'draft')->count() }} Drafts</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">AI Usage MTD</p>
+            <p class="text-3xl font-bold {{ $budget_used_percent > 80 ? 'text-orange-400' : 'text-white' }}">
+                ${{ number_format($mtd_ai_cost, 2) }}
+            </p>
+            <div class="mt-3 w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                <div class="h-full {{ $budget_used_percent > 90 ? 'bg-red-500' : ($budget_used_percent > 70 ? 'bg-orange-500' : 'bg-indigo-500') }}" 
+                     style="width: {{ min($budget_used_percent, 100) }}%"></div>
+            </div>
         </div>
         <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
             <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Health Status</p>

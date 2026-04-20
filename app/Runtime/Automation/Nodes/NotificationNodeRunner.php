@@ -24,7 +24,7 @@ class NotificationNodeRunner implements NodeRunner
         $body = $this->interpolate($config['body'] ?? null, $context);
 
         // Simulation Mode: Skip real dispatch
-        if ($context->get('_simulation')) {
+        if ($context->isSimulation) {
             return [
                 'simulated_execution' => true,
                 'node_type' => 'notification',

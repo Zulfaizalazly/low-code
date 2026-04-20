@@ -7,7 +7,8 @@
         <div id="flow-canvas" 
              data-flow-id="{{ $flow->id }}"
              data-nodes="{{ json_encode($flow->nodes) }}"
-             data-edges="{{ json_encode($flow->edges) }}">
+             data-edges="{{ json_encode($flow->edges) }}"
+             data-commands="{{ json_encode($commands ?? []) }}">
              
              <!-- Content will be injected by Vue -->
              <div class="flex items-center justify-center h-full text-slate-500">

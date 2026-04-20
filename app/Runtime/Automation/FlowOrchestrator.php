@@ -11,12 +11,13 @@ use Throwable;
 
 class FlowOrchestrator
 {
-    public function execute(FlowDefinition $flow, array $triggerData = []): AutomationExecutionLog
+    public function execute(FlowDefinition $flow, array $triggerData = [], bool $isSimulation = false): AutomationExecutionLog
     {
         $log = AutomationExecutionLog::create([
             'flow_definition_id' => $flow->id,
             'feature_version_id' => $flow->feature_version_id,
             'trigger_type' => $flow->trigger_type,
+            'trigger_source' => $isSimulation ? 'simulator' : 'production',
             'status' => 'running',
             'started_at' => now(),
         ]);
@@ -30,7 +31,7 @@ class FlowOrchestrator
         ];
 
         $initialData = array_merge($initialData, $triggerData);
-        $context = new ExecutionContext($log, $initialData);
+        $context = new ExecutionContext($log, $initialData, $isSimulation);
         $context->set('auth', $initialData['auth']);
 
         try {

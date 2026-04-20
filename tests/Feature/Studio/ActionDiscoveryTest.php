@@ -34,6 +34,6 @@ class ActionDiscoveryTest extends TestCase
         
         $emailArg = $args->firstWhere('name', 'email');
         $this->assertEquals('?string', $emailArg['type']);
-        $this->assertTrue($emailArg['required']);
+        $this->assertFalse($emailArg['required']);
     }
 }

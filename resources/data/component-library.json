@@ -1,0 +1,114 @@
+{
+  "system": "Liquid Glass V3",
+  "version": "1.0.0",
+  "components": [
+    {
+      "key": "text_input",
+      "label": "Text Input",
+      "props": ["label", "placeholder", "required", "validation"],
+      "styling": { "radius": "12pt", "border": "1pt" }
+    },
+    {
+      "key": "ic_input",
+      "label": "IC Number Input",
+      "props": ["label", "required"],
+      "validation": { "pattern": "^[0-9]{6}-[0-9]{2}-[0-9]{4}$" }
+    },
+    {
+      "key": "phone_input",
+      "label": "Phone Input",
+      "props": ["label", "required"],
+      "validation": { "pattern": "^01[0-9]-[0-9]{7,8}$" }
+    },
+    {
+      "key": "amount_input",
+      "label": "Currency Input",
+      "props": ["label", "required", "currency"],
+      "currency": "MYR"
+    },
+    {
+      "key": "select",
+      "label": "Dropdown Select",
+      "props": ["label", "options", "required"]
+    },
+    {
+      "key": "date_picker",
+      "label": "Date Picker",
+      "props": ["label", "min_date", "max_date", "required"]
+    },
+    {
+      "key": "checkbox",
+      "label": "Checkbox",
+      "props": ["label", "checked_value", "required"]
+    },
+    {
+      "key": "radio",
+      "label": "Radio Group",
+      "props": ["label", "options", "required"]
+    },
+    {
+      "key": "textarea",
+      "label": "Text Area",
+      "props": ["label", "placeholder", "rows"]
+    },
+    {
+      "key": "file_upload",
+      "label": "File Upload",
+      "props": ["label", "accept", "max_size"]
+    },
+    {
+      "key": "repeater",
+      "label": "Field Repeater",
+      "props": ["label", "min_items", "max_items", "fields"]
+    },
+    {
+      "key": "card",
+      "label": "Container Card",
+      "props": ["title", "content", "variant"]
+    },
+    {
+      "key": "button",
+      "label": "Action Button",
+      "props": ["label", "variant", "action"]
+    },
+    {
+      "key": "badge",
+      "label": "Status Badge",
+      "props": ["label", "color"]
+    },
+    {
+      "key": "alert",
+      "label": "System Alert",
+      "props": ["type", "message", "icon"]
+    },
+    {
+      "key": "modal",
+      "label": "Overlay Modal",
+      "props": ["title", "size", "content"]
+    },
+    {
+      "key": "tabs",
+      "label": "Navigation Tabs",
+      "props": ["items", "active_key"]
+    }
+  ],
+  "tokens": {
+    "spacing": [4, 8, 12, 16, 24, 32, 48, 64],
+    "typography": {
+      "display": { "size": "34pt", "weight": "bold" },
+      "title1": { "size": "28pt", "weight": "bold" },
+      "title2": { "size": "22pt", "weight": "bold" },
+      "headline": { "size": "17pt", "weight": "semibold" },
+      "body": { "size": "17pt", "weight": "regular" },
+      "subhead": { "size": "15pt", "weight": "regular" },
+      "footnote": { "size": "13pt", "weight": "regular" }
+    },
+    "colors": {
+      "primary": "systemBlue",
+      "danger": "systemRed",
+      "success": "systemGreen",
+      "warning": "systemOrange",
+      "neutral": "systemGray"
+    }
+  }
+}

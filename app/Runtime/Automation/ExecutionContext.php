@@ -10,7 +10,8 @@ class ExecutionContext
 
     public function __construct(
         public AutomationExecutionLog $log,
-        array $initialData = []
+        array $initialData = [],
+        public bool $isSimulation = false
     ) {
         $this->data = $initialData;
     }
