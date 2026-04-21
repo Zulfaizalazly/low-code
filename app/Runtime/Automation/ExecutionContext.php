@@ -13,6 +13,12 @@ class ExecutionContext
         array $initialData = [],
         public bool $isSimulation = false
     ) {
+        // Auto-detect simulation mode from data if not explicitly set
+        if (!$isSimulation && isset($initialData['_simulation'])) {
+            $this->isSimulation = (bool) $initialData['_simulation'];
+            unset($initialData['_simulation']); // Remove from data
+        }
+        
         $this->data = $initialData;
     }
 

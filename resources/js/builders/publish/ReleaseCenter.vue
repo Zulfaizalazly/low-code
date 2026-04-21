@@ -221,17 +221,16 @@ function formatDate(dateString) {
 
 <style scoped>
 .release-center {
-  padding: 32px; color: #f1f5f9; min-height: 100vh;
-  background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.1), transparent),
-              radial-gradient(circle at bottom left, rgba(236, 72, 153, 0.05), transparent);
+  padding: 32px; color: #1e293b; min-height: 100vh;
+  background: linear-gradient(135deg, #f0f9ff 0%, #fef3c7 100%);
 }
 
 .page-header {
   display: flex; justify-content: space-between; align-items: flex-end;
   margin-bottom: 40px;
 }
-.page-header h1 { font-size: 32px; font-weight: 800; margin: 0; color: white; }
-.page-header p { color: #94a3b8; margin: 8px 0 0; }
+.page-header h1 { font-size: 32px; font-weight: 800; margin: 0; color: #0f172a; }
+.page-header p { color: #475569; margin: 8px 0 0; }
 
 .summary-cards {
   display: grid;
@@ -241,20 +240,21 @@ function formatDate(dateString) {
 }
 
 .summary-card {
-  background: rgba(30, 41, 59, 0.4);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 20px;
   padding: 24px;
   display: flex;
   align-items: center;
   gap: 16px;
   transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .summary-card:hover {
   transform: translateY(-2px);
   border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .summary-card.highlight {
@@ -274,25 +274,26 @@ function formatDate(dateString) {
 .card-value {
   font-size: 32px;
   font-weight: 800;
-  color: white;
+  color: #0f172a;
   line-height: 1;
   margin-bottom: 6px;
 }
 
 .card-label {
   font-size: 12px;
-  color: #94a3b8;
+  color: #64748b;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .refresh-btn {
-  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-  color: white; padding: 10px 16px; border-radius: 12px; cursor: pointer;
+  background: white; border: 1px solid rgba(0,0,0,0.1);
+  color: #1e293b; padding: 10px 16px; border-radius: 12px; cursor: pointer;
   display: flex; align-items: center; gap: 8px; transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
-.refresh-btn:hover { background: rgba(255,255,255,0.1); }
+.refresh-btn:hover { background: #f8fafc; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
 .spinning { animation: spin 1s linear infinite; display: inline-block; }
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
@@ -306,18 +307,19 @@ function formatDate(dateString) {
 .tab-btn {
   display: flex; align-items: center; gap: 12px; padding: 14px 18px;
   background: transparent; border: 1px solid transparent; border-radius: 16px;
-  color: #94a3b8; cursor: pointer; transition: all 0.2s; text-align: left;
+  color: #475569; cursor: pointer; transition: all 0.2s; text-align: left;
 }
-.tab-btn:hover { background: rgba(255,255,255,0.03); color: white; }
+.tab-btn:hover { background: rgba(0,0,0,0.03); color: #1e293b; }
 .tab-btn.active { 
-  background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2);
-  color: #818cf8;
+  background: white; border: 1px solid rgba(99, 102, 241, 0.2);
+  color: #6366f1;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 .tab-icon { font-size: 18px; }
 .tab-label { flex: 1; font-size: 13px; font-weight: 700; letter-spacing: 0.05em; }
 .tab-count {
-  background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 20px;
-  font-size: 11px; color: #f8fafc;
+  background: rgba(99,102,241,0.1); padding: 2px 8px; border-radius: 20px;
+  font-size: 11px; color: #4338ca; font-weight: 700;
 }
 
 .content-view {
@@ -349,19 +351,21 @@ function formatDate(dateString) {
 
 .search-input {
   width: 100%;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   padding: 10px 14px 10px 42px;
-  color: white;
+  color: #1e293b;
   font-size: 14px;
   outline: none;
   transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .search-input:focus {
   border-color: #6366f1;
-  background: rgba(0, 0, 0, 0.3);
+  background: white;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.15);
 }
 
 .sort-controls {
@@ -372,36 +376,39 @@ function formatDate(dateString) {
 
 .sort-controls label {
   font-size: 13px;
-  color: #94a3b8;
+  color: #475569;
   font-weight: 600;
 }
 
 .sort-select {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 8px 12px;
-  color: white;
+  color: #1e293b;
   font-size: 13px;
   outline: none;
   cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .glass {
-  background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px;
+  background: white; 
+  border: 1px solid rgba(0, 0, 0, 0.08); 
+  border-radius: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .version-card {
   padding: 24px; margin-bottom: 16px; display: flex; justify-content: space-between;
   align-items: center; transition: transform 0.2s;
 }
-.version-card:hover { transform: translateY(-2px); border-color: rgba(99, 102, 241, 0.3); }
+.version-card:hover { transform: translateY(-2px); border-color: rgba(99, 102, 241, 0.3); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
-.card-info .feature-name { font-size: 18px; font-weight: 700; color: white; }
+.card-info .feature-name { font-size: 18px; font-weight: 700; color: #0f172a; }
 .card-info .version-tag { 
   display: inline-block; margin-top: 4px; padding: 2px 10px; 
-  background: #334155; border-radius: 6px; font-size: 12px; color: #cbd5e1;
+  background: #e0e7ff; border-radius: 6px; font-size: 12px; color: #4338ca;
 }
 .card-info .update-time { margin-top: 12px; font-size: 12px; color: #64748b; }
 
@@ -413,11 +420,12 @@ function formatDate(dateString) {
 .primary-btn:hover { background: #4f46e5; box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
 
 .secondary-btn {
-  background: rgba(255,255,255,0.05); color: #cbd5e1; padding: 10px 20px; 
-  border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); font-weight: 600; 
+  background: white; color: #475569; padding: 10px 20px; 
+  border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); font-weight: 600; 
   cursor: pointer; transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
-.secondary-btn:hover { background: rgba(255,255,255,0.1); color: white; }
+.secondary-btn:hover { background: #f8fafc; color: #1e293b; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
 
 .log-card { padding: 20px; margin-bottom: 12px; }
 .log-card.danger { border-left: 4px solid #ef4444; }
@@ -425,7 +433,7 @@ function formatDate(dateString) {
 .log-meta { font-size: 12px; color: #64748b; }
 
 .empty-state {
-  text-align: center; padding: 80px 0; color: #475569;
+  text-align: center; padding: 80px 0; color: #94a3b8;
 }
 .loading-state {
   display: flex; flex-direction: column; align-items: center; justify-content: center;

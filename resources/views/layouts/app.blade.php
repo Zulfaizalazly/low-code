@@ -12,8 +12,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Tailwind CSS CDN (renders without Vite) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', '-apple-system', 'sans-serif'] } } } }</script>
+    <!-- Vite (when running, overrides CDN) -->
+    @php try { @endphp
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @php } catch(\Exception $e) {} @endphp
     @livewireStyles
 </head>
 <body class="h-full font-sans antialiased text-slate-900">

@@ -6,18 +6,46 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Pilot Auth Utilities
+// Role-based Auth Utilities
 Route::get('/login', function() {
-    return "Please use <a href='/login-pilot'>/login-pilot</a> for the zero-config test.";
+    return redirect('/');
 })->name('login');
 
-Route::get('/login-pilot', function() {
+Route::get('/login-hq', function() {
+    // `admin@arrahnu.com` is seeded with `super-admin` role via DatabaseSeeder.
+    $user = \App\Models\User::where('email', 'admin@arrahnu.com')->first();
+    if ($user) {
+        auth()->login($user);
+        return redirect('/studio');
+    }
+    return 'HQ Admin user not found. Please run `php artisan db:seed` first.';
+});
+
+Route::get('/login-admin', function() {
+    $user = \App\Models\User::where('email', 'admin@arrahnu.com')->first();
+    if ($user) {
+        auth()->login($user);
+        return redirect('/studio');
+    }
+    return 'Admin user not found. Please seed database.';
+});
+
+Route::get('/login-manager', function() {
+    $user = \App\Models\User::where('email', 'manager@arrahnu.com')->first();
+    if ($user) {
+        auth()->login($user);
+        return redirect('/f/new-pledge'); // or manager dashboard
+    }
+    return 'Manager user not found. Please seed database.';
+});
+
+Route::get('/login-teller', function() {
     $user = \App\Models\User::where('email', 'staff@arrahnu.com')->first();
     if ($user) {
         auth()->login($user);
         return redirect('/f/new-pledge');
     }
-    return "Pilot user not found. Please run php artisan v3:produce-pilot first.";
+    return "Teller user not found. Please run seeders first.";
 });
 
 // V3 Dynamic Feature Runtime

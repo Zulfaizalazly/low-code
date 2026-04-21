@@ -13,8 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Create Demo HQ Admin
-        User::create([
+        // Seed roles first
+        $this->call(RolePermissionSeeder::class);
+        
+        // 1. Create Demo HQ Admin with Super Admin role
+        $admin = User::create([
             'name' => 'HQ Admin',
             'email' => 'admin@arrahnu.com',
             'password' => Hash::make('password'),
@@ -22,6 +25,7 @@ class DatabaseSeeder extends Seeder
             'entity_id' => 1,
             'branch_id' => null,
         ]);
+        $admin->assignRole('super-admin');
 
         // 2. Create Demo Branch Staff
         User::create([

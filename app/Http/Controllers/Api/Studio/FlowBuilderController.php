@@ -26,22 +26,33 @@ class FlowBuilderController extends Controller
             // Store new nodes
             $nodeMap = [];
             foreach ($nodes as $nData) {
+                // Support both formats: {id, type, position, data} and {node_key, node_type, ...}
+                $nodeKey = $nData['node_key'] ?? $nData['id'] ?? null;
+                $nodeType = $nData['node_type'] ?? $nData['type'] ?? null;
+                $label = $nData['label'] ?? ($nData['data']['label'] ?? 'Untitled');
+                $posX = $nData['position_x'] ?? ($nData['position']['x'] ?? 0);
+                $posY = $nData['position_y'] ?? ($nData['position']['y'] ?? 0);
+                
                 $node = $flow->nodes()->create([
-                    'node_key' => $nData['node_key'],
-                    'node_type' => $nData['node_type'],
-                    'label' => $nData['label'],
+                    'node_key' => $nodeKey,
+                    'node_type' => $nodeType,
+                    'label' => $label,
                     'config' => $nData['config'] ?? [],
-                    'position_x' => $nData['position_x'],
-                    'position_y' => $nData['position_y'],
+                    'position_x' => $posX,
+                    'position_y' => $posY,
                 ]);
-                $nodeMap[$nData['node_key']] = $node->id;
+                $nodeMap[$nodeKey] = $node->id;
             }
 
             // Store new edges
             foreach ($edges as $eData) {
+                // Support both formats: {source, target} and {source_node_key, target_node_key}
+                $sourceKey = $eData['source_node_key'] ?? $eData['source'] ?? null;
+                $targetKey = $eData['target_node_key'] ?? $eData['target'] ?? null;
+                
                 $flow->edges()->create([
-                    'source_node_id' => $nodeMap[$eData['source_node_key']] ?? null,
-                    'target_node_id' => $nodeMap[$eData['target_node_key']] ?? null,
+                    'source_node_id' => $nodeMap[$sourceKey] ?? null,
+                    'target_node_id' => $nodeMap[$targetKey] ?? null,
                     'condition_type' => $eData['condition_type'] ?? 'always',
                     'condition_config' => $eData['condition_config'] ?? [],
                     'priority' => $eData['priority'] ?? 0,
@@ -68,16 +79,18 @@ class FlowBuilderController extends Controller
         
         try {
             // Run in simulation mode (Dry Run)
-            $log = $orchestrator->execute($flow, $request->input('trigger_data', []), true);
+            $triggerData = $request->input('trigger_data', $request->input('payload', []));
+            $log = $orchestrator->execute($flow, $triggerData, true);
+            
+            $nodeLogs = $log->nodeLogs()->orderBy('started_at')->get();
             
             return response()->json([
                 'success' => true,
                 'status' => $log->status,
-                'path' => $log->nodeLogs()->orderBy('started_at')->get()->map(fn($n) => [
-                    'node_key' => $n->node_key,
-                    'status' => $n->status,
-                    'output' => $n->output_data
-                ])
+                'execution_path' => $nodeLogs->pluck('node_key')->toArray(),
+                'node_outputs' => $nodeLogs->mapWithKeys(fn($n) => [
+                    $n->node_key => $n->output_data
+                ])->toArray(),
             ]);
         } catch (\Throwable $e) {
             return response()->json([

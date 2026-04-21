@@ -8,10 +8,15 @@ use App\Studio\Registry\FormField;
 use App\Studio\Registry\FormStep;
 use App\Studio\Registry\PageDefinition;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
+#[Layout('layouts.studio-fullscreen')]
 class PageBuilderProxy extends Component
 {
+    public int $featureVersionId;
+    public int $pageId;
+    public string $pageName = '';
     public array $steps = [];
     public array $entities = [];
     public string $saveStatus = '';

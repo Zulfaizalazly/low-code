@@ -31,7 +31,7 @@ class PublishWorkflowPermissions
         $userRole = $user->role ?? 'designer';
 
         $allowed = match ($action) {
-            'submit' => in_array($userRole, ['designer', 'reviewer', 'admin']),
+            'submit' => in_array($userRole, ['branch_staff', 'designer', 'reviewer', 'admin']),
             'review' => in_array($userRole, ['reviewer', 'admin']),
             'publish' => in_array($userRole, ['admin']),
             'rollback' => in_array($userRole, ['admin']),

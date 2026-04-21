@@ -230,15 +230,16 @@ const configFields = computed(() => {
       <!-- Actions -->
       <div class="inspector-actions">
         <button class="btn-delete" @click="confirmDelete">
-          🗑️ Delete Node
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"></path></svg>
+          Remove Node
         </button>
       </div>
     </template>
 
     <template v-else>
       <div class="empty-state">
-        <span class="empty-icon">👆</span>
-        <p>Select a node to edit its properties</p>
+        <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+        <p>Select a node to view its configurations</p>
       </div>
     </template>
   </aside>
@@ -246,123 +247,147 @@ const configFields = computed(() => {
 
 <style scoped>
 .node-inspector {
-  width: 280px;
-  background: rgba(15, 23, 42, 0.6);
-  border-left: 1px solid rgba(255,255,255,0.05);
-  padding: 16px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 340px;
+  background: #ffffff;
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 24px;
   overflow-y: auto;
   flex-shrink: 0;
-  backdrop-filter: blur(12px);
-  transition: opacity 0.2s;
+  z-index: 100;
+  
+  /* Slide-in animation */
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.04);
+}
+
+.node-inspector.active {
+  transform: translateX(0);
 }
 
 .inspector-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .inspector-header h3 {
-  font-size: 14px;
-  font-weight: 600;
-  color: #e2e8f0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #202124;
   margin: 0;
+  letter-spacing: -0.01em;
+  font-family: "Google Sans", "Inter", sans-serif;
 }
 
 .node-type-badge {
-  font-size: 10px;
-  padding: 3px 8px;
-  background: rgba(99, 102, 241, 0.15);
-  color: #a5b4fc;
-  border-radius: 6px;
+  font-size: 11px;
+  padding: 4px 10px;
+  background: #e8f0fe;
+  color: #1a73e8;
+  border-radius: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .field-group {
-  margin-bottom: 14px;
+  margin-bottom: 20px;
 }
 
 .field-label {
   display: block;
-  font-size: 11px;
-  font-weight: 600;
-  color: #94a3b8;
-  margin-bottom: 5px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #5f6368;
+  margin-bottom: 8px;
 }
 
 .field-input {
   width: 100%;
-  padding: 8px 10px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 8px;
-  color: #e2e8f0;
-  font-size: 12px;
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 1px solid #dadce0;
+  border-radius: 6px;
+  color: #202124;
+  font-size: 13px;
   outline: none;
-  transition: border-color 0.15s;
+  transition: all 0.2s;
   box-sizing: border-box;
+  font-family: inherit;
+}
+
+.field-input:hover:not(:disabled) {
+  border-color: #9aa0a6;
 }
 
 .field-input:focus {
-  border-color: rgba(99, 102, 241, 0.4);
-  background: rgba(255,255,255,0.06);
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
 }
 
 .field-input:disabled {
-  opacity: 0.5;
+  background: #f1f3f4;
+  color: #80868b;
   cursor: not-allowed;
+  border-color: #e8eaed;
 }
 
 .field-textarea {
   resize: vertical;
-  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  min-height: 80px;
 }
 
 .field-json {
-  font-size: 11px;
-  line-height: 1.4;
+  font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  background: #f8f9fa;
 }
 
 .config-divider {
-  font-size: 10px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: #64748b;
-  margin: 20px 0 12px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  letter-spacing: 1px;
+  color: #1a73e8;
+  margin: 28px 0 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .inspector-actions {
-  margin-top: 24px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .btn-delete {
   width: 100%;
-  padding: 8px 12px;
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-  border-radius: 8px;
-  color: #f87171;
-  font-size: 12px;
+  padding: 10px 16px;
+  background: #fff;
+  border: 1px solid #d93025;
+  border-radius: 6px;
+  color: #d93025;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .btn-delete:hover {
-  background: rgba(239, 68, 68, 0.2);
-  border-color: rgba(239, 68, 68, 0.4);
+  background: #fce8e6;
 }
 
 .empty-state {
@@ -370,19 +395,21 @@ const configFields = computed(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 200px;
+  height: 100%;
   text-align: center;
-  color: #475569;
+  color: #80868b;
 }
 
 .empty-icon {
-  font-size: 32px;
-  margin-bottom: 12px;
-  opacity: 0.5;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  color: #dadce0;
 }
 
 .empty-state p {
-  font-size: 13px;
+  font-size: 14px;
   margin: 0;
+  font-weight: 500;
 }
 </style>

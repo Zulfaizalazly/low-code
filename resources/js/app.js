@@ -37,8 +37,40 @@ if (flowElement) {
     app.use(Toast, toastOptions);
     app.mount('#flow-canvas');
 
-    document.getElementById('save-flow-btn')?.addEventListener('click', () => {
-        if (window.saveFlowToLivewire) window.saveFlowToLivewire();
+    document.getElementById('save-flow-btn')?.addEventListener('click', async () => {
+        const btn = document.getElementById('save-flow-btn');
+        const spinner = document.getElementById('save-btn-spinner');
+        const text = document.getElementById('save-btn-text');
+
+        if (!window.saveFlowToLivewire) return;
+
+        try {
+            // Start Loading
+            btn.disabled = true;
+            spinner.classList.remove('hidden');
+            text.innerText = 'Updating...';
+
+            await window.saveFlowToLivewire();
+            
+            // Success State (Reset shortly after)
+            text.innerText = 'Updated!';
+            setTimeout(() => {
+                text.innerText = 'Update Definition';
+                btn.disabled = false;
+                spinner.classList.add('hidden');
+            }, 1500);
+
+        } catch (error) {
+            console.error('Save failed:', error);
+            text.innerText = 'Error!';
+            btn.classList.add('bg-red-600');
+            setTimeout(() => {
+                text.innerText = 'Update Definition';
+                btn.disabled = false;
+                spinner.classList.add('hidden');
+                btn.classList.remove('bg-red-600');
+            }, 3000);
+        }
     });
 }
 

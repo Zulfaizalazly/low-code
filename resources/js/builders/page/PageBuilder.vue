@@ -42,32 +42,32 @@ const fieldCategories = [
   {
     name: 'Standard Inputs',
     types: [
-      { type: 'text_input', label: 'Text Input', icon: '📝', dataType: 'string' },
-      { type: 'amount_input', label: 'Currency', icon: '💰', dataType: 'decimal' },
-      { type: 'date_picker', label: 'Date Picker', icon: '📅', dataType: 'date' },
-      { type: 'select', label: 'Dropdown', icon: '📋', dataType: 'string' },
-      { type: 'textarea', label: 'Text Area', icon: '📄', dataType: 'text' },
-      { type: 'checkbox', label: 'Checkbox', icon: '☑️', dataType: 'boolean' },
-      { type: 'radio', label: 'Radio Group', icon: '⭕', dataType: 'string' },
-      { type: 'file_upload', label: 'File Upload', icon: '📁', dataType: 'file' },
+      { type: 'text_input', label: 'Text Input', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>', dataType: 'string' },
+      { type: 'amount_input', label: 'Currency', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>', dataType: 'decimal' },
+      { type: 'date_picker', label: 'Date Picker', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>', dataType: 'date' },
+      { type: 'select', label: 'Dropdown', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><path d="M8 12l4 4 4-4"></path></svg>', dataType: 'string' },
+      { type: 'textarea', label: 'Text Area', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>', dataType: 'text' },
+      { type: 'checkbox', label: 'Checkbox', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>', dataType: 'boolean' },
+      { type: 'radio', label: 'Radio Group', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle></svg>', dataType: 'string' },
+      { type: 'file_upload', label: 'File Upload', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="12" y2="12"></line><line x1="15" y1="15" x2="12" y2="12"></line></svg>', dataType: 'file' },
     ]
   },
   {
     name: 'Domain Specific',
     types: [
-      { type: 'ic_input', label: 'IC Number', icon: '🆔', dataType: 'string' },
-      { type: 'phone_input', label: 'Phone Number', icon: '📱', dataType: 'string' },
-      { type: 'gold_repeater', label: 'Gold Items', icon: '💍', dataType: 'collection' },
-      { type: 'nominee_repeater', label: 'Nominees', icon: '👥', dataType: 'collection' },
+      { type: 'ic_input', label: 'IC Number', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2" ry="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M15 8h2"></path><path d="M15 12h2"></path><path d="M7 16h5"></path></svg>', dataType: 'string' },
+      { type: 'phone_input', label: 'Phone Number', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>', dataType: 'string' },
+      { type: 'gold_repeater', label: 'Gold Items', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>', dataType: 'collection' },
+      { type: 'nominee_repeater', label: 'Nominees', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>', dataType: 'collection' },
     ]
   },
   {
     name: 'Display & Layout',
     types: [
-      { type: 'summary_panel', label: 'Summary Panel', icon: '📊', dataType: 'display' },
-      { type: 'timeline', label: 'Timeline', icon: '⏳', dataType: 'display' },
-      { type: 'alert', label: 'Alert Banner', icon: '⚠️', dataType: 'display' },
-      { type: 'badge', label: 'Status Badge', icon: '🏷️', dataType: 'display' },
+      { type: 'summary_panel', label: 'Summary Panel', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3zM3 9h18M9 21V9"></path></svg>', dataType: 'display' },
+      { type: 'timeline', label: 'Timeline', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>', dataType: 'display' },
+      { type: 'alert', label: 'Alert Banner', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>', dataType: 'display' },
+      { type: 'badge', label: 'Status Badge', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>', dataType: 'display' },
     ]
   }
 ]
@@ -252,436 +252,726 @@ async function submitForReview() {
 <template>
   <div class="page-builder">
     <!-- Left: Field Library -->
-    <aside class="field-library">
-      <div class="lib-header">
-        <span>🧱</span>
+    <aside class="mac-sidebar left">
+      <div class="sidebar-header">
+        <div class="mac-icon-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></div>
         <span>Field Library</span>
       </div>
 
-      <div v-for="cat in fieldCategories" :key="cat.name" class="lib-cat">
-        <label class="lib-cat-label">{{ cat.name }}</label>
-        <div
-          v-for="ft in cat.types"
-          :key="ft.type"
-          class="lib-field"
-          draggable="true"
-          @dragstart="(e) => onFieldDragStart(e, ft)"
-        >
-          <span class="lib-icon">{{ ft.icon }}</span>
-          <span class="lib-label">{{ ft.label }}</span>
+      <div class="sidebar-content">
+        <div v-for="cat in fieldCategories" :key="cat.name" class="lib-cat">
+          <label class="lib-cat-label">{{ cat.name }}</label>
+          <div
+            v-for="ft in cat.types"
+            :key="ft.type"
+            class="lib-field"
+            draggable="true"
+            @dragstart="(e) => onFieldDragStart(e, ft)"
+          >
+            <div class="lib-icon" v-html="ft.icon"></div>
+            <span class="lib-label">{{ ft.label }}</span>
+          </div>
         </div>
       </div>
     </aside>
 
     <!-- Center: Form Canvas -->
-    <div class="form-canvas">
-      <!-- Canvas Header -->
-      <div class="canvas-header">
+    <div class="form-canvas-area">
+      <!-- Apple Island Toolbar -->
+      <div class="canvas-island-toolbar">
         <div class="preview-toggles">
           <button v-for="mode in ['desktop', 'tablet', 'mobile']" 
             :key="mode" 
-            class="mode-btn" 
+            class="island-btn segmented" 
             :class="{ active: previewMode === mode }"
             @click="previewMode = mode"
+            :title="mode"
+            v-html="mode === 'desktop' ? '<svg width=\'14\' height=\'14\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><rect x=\'2\' y=\'3\' width=\'20\' height=\'14\' rx=\'2\' ry=\'2\'></rect><line x1=\'8\' y1=\'21\' x2=\'16\' y2=\'21\'></line><line x1=\'12\' y1=\'17\' x2=\'12\' y2=\'21\'></line></svg>' : (mode === 'tablet' ? '<svg width=\'14\' height=\'14\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><rect x=\'4\' y=\'2\' width=\'16\' height=\'20\' rx=\'2\' ry=\'2\'></rect><line x1=\'12\' y1=\'18\' x2=\'12.01\' y2=\'18\'></line></svg>' : '<svg width=\'14\' height=\'14\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><rect x=\'5\' y=\'2\' width=\'14\' height=\'20\' rx=\'2\' ry=\'2\'></rect><line x1=\'12\' y1=\'18\' x2=\'12.01\' y2=\'18\'></line></svg>')"
           >
-            {{ mode === 'desktop' ? '💻' : (mode === 'tablet' ? '📱' : '📲') }}
-            {{ mode }}
           </button>
         </div>
-        <div class="canvas-actions">
-          <button class="preview-btn" @click="showPreview = true" style="margin-right: 8px;">👁️ Preview Page</button>
-          <button 
-            @click="submitForReview" 
-            class="submit-btn"
-          >
-            🕵️ Submit for Review
-          </button>
-        </div>
-      </div>
+        
+        <div class="island-divider"></div>
 
-      <!-- Step Tabs -->
-      <div class="step-tabs">
-        <button
-          v-for="(step, idx) in steps"
-          :key="step.step_key"
-          class="step-tab"
-          :class="{ active: idx === activeStepIdx }"
-          @click="activeStepIdx = idx"
-        >
-          <span class="step-num">{{ idx + 1 }}</span>
-          {{ step.title }}
-          <span v-if="steps.length > 1" class="step-remove" @click.stop="removeStep(idx)">×</span>
+        <button class="island-btn" @click="showPreview = true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          Preview
         </button>
-        <button class="step-tab add-step" @click="addStep">+ Add Step</button>
+
+        <div class="island-divider"></div>
+
+        <button class="island-btn submit" @click="submitForReview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Submit Review
+        </button>
       </div>
 
-      <!-- Step Config -->
-      <div v-if="activeStep" class="step-config">
-        <input v-model="activeStep.title" class="step-title-input" placeholder="Step title..." @change="isDirty = true" />
-        <input v-model="activeStep.entity_binding" class="step-entity-input" placeholder="Entity binding (e.g. facility_nominees)" @change="isDirty = true" />
-      </div>
-
-      <!-- Drop Zone -->
-      <div
-        v-if="activeStep"
-        class="field-drop-zone"
-        :style="{ width: canvasWidth, margin: '0 auto', transition: 'width 0.3s ease' }"
-        @drop="onFieldDrop"
-        @dragover="onFieldDragOver"
-      >
-        <div v-if="activeStep.fields.length === 0" class="drop-placeholder">
-          <span>📋</span>
-          <p>Drag fields from the library to add them here</p>
-        </div>
-
-        <div
-          v-for="(field, idx) in activeStep.fields"
-          :key="field.field_key"
-          class="field-card"
-          :class="{ selected: selectedField?.field_key === field.field_key }"
-          draggable="true"
-          @click="selectField(field)"
-          @dragstart="(e) => onReorderStart(e, idx)"
-          @drop.stop="(e) => onReorderDrop(e, idx)"
-          @dragover.prevent
-        >
-          <div class="field-drag-handle">⠿</div>
-          <div class="field-preview">
-            <label class="field-preview-label">
-              {{ field.label }}
-              <span v-if="field.is_required" class="required-dot">*</span>
-            </label>
-            <div class="field-preview-input" :class="field.component_type">
-              {{ field.placeholder || field.component_type }}
-            </div>
+      <!-- Canvas Scrollable Content -->
+      <div class="canvas-scroll">
+        <!-- Step Tabs (Segmented Control Style) -->
+        <div class="mac-segmented-control-wrapper">
+          <div class="mac-segmented-control">
+            <button
+              v-for="(step, idx) in steps"
+              :key="step.step_key"
+              class="seg-btn"
+              :class="{ active: idx === activeStepIdx }"
+              @click="activeStepIdx = idx"
+            >
+              Step {{ idx + 1 }}
+              <span v-if="steps.length > 1" class="seg-remove" @click.stop="removeStep(idx)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </span>
+            </button>
+            <button class="seg-btn add-btn" @click="addStep">+</button>
           </div>
-          <button class="field-remove" @click.stop="removeField(field.field_key)">×</button>
+        </div>
+
+        <div class="canvas-content-bounds" :style="{ width: canvasWidth, margin: '0 auto', transition: 'width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)' }">
+          
+          <!-- Step Config Header -->
+          <div v-if="activeStep" class="mac-card step-header-card">
+            <input v-model="activeStep.title" class="mac-input large header-input" placeholder="Page Title (e.g. Personal Details)" @change="isDirty = true" />
+            <input v-model="activeStep.entity_binding" class="mac-input small mono" placeholder="entity (e.g. user_profile)" @change="isDirty = true" />
+          </div>
+
+          <!-- Drop Zone -->
+          <div
+            v-if="activeStep"
+            class="mac-drop-zone"
+            @drop="onFieldDrop"
+            @dragover="onFieldDragOver"
+          >
+            <div v-if="activeStep.fields.length === 0" class="mac-empty-state">
+              <div class="empty-icon">📋</div>
+              <p>Drag UI components here to build your form</p>
+            </div>
+
+            <div
+              v-for="(field, idx) in activeStep.fields"
+              :key="field.field_key"
+              class="mac-field-card"
+              :class="{ selected: selectedField?.field_key === field.field_key }"
+              draggable="true"
+              @click="selectField(field)"
+              @dragstart="(e) => onReorderStart(e, idx)"
+              @drop.stop="(e) => onReorderDrop(e, idx)"
+              @dragover.prevent
+            >
+              <div class="drag-handle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="4" y1="8" x2="20" y2="8"></line><line x1="4" y1="16" x2="20" y2="16"></line></svg>
+              </div>
+              <div class="field-preview-content">
+                <label class="field-label">
+                  {{ field.label }}
+                  <span v-if="field.is_required" class="required-mark">*</span>
+                </label>
+                <div class="fake-input" :class="field.component_type">
+                  {{ field.placeholder || 'Enter value...' }}
+                </div>
+              </div>
+              <button class="remove-action" @click.stop="removeField(field.field_key)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </button>
+            </div>
+            
+            <div class="drop-target-line"></div>
+          </div>
         </div>
       </div>
 
-      <!-- Dirty Indicator -->
-      <div v-if="isDirty" class="dirty-bar">
-        <span>● Unsaved changes</span>
-        <button class="save-btn" @click="savePage">💾 Save Page</button>
-      </div>
+      <!-- Floating Unsaved Ribbon -->
+      <transition name="slide-up">
+        <div v-if="isDirty" class="mac-floating-saver">
+          <div class="saver-info">
+            <span class="dot pulse"></span>
+            Unsaved Changes
+          </div>
+          <button class="mac-btn primary small" @click="savePage">Save Now</button>
+        </div>
+      </transition>
     </div>
 
     <!-- Right: Field Inspector -->
-    <aside class="field-inspector" v-if="selectedField">
-      <div class="insp-header">
-        <h3>Field Properties</h3>
-        <span class="type-badge">{{ selectedField.component_type }}</span>
-      </div>
+    <aside class="mac-sidebar right" :class="{ 'is-empty': !selectedField }">
+      <template v-if="selectedField">
+        <div class="sidebar-header">
+          <span>Field Inspector</span>
+          <span class="mac-badge">{{ selectedField.component_type.replace('_', ' ') }}</span>
+        </div>
 
-      <div class="insp-field">
-        <label>Label</label>
-        <input v-model="selectedField.label" @change="updateField" />
-      </div>
-      <div class="insp-field">
-        <label>Key</label>
-        <input v-model="selectedField.field_key" disabled />
-      </div>
-      <div class="insp-field">
-        <label>Placeholder</label>
-        <input v-model="selectedField.placeholder" @change="updateField" />
-      </div>
-      <div class="insp-field">
-        <label>Help Text</label>
-        <input v-model="selectedField.help_text" @change="updateField" />
-      </div>
-      <div class="insp-field insp-check">
-        <label>
-          <input type="checkbox" v-model="selectedField.is_required" @change="updateField" />
-          Required
-        </label>
-      </div>
+        <div class="sidebar-content">
+          <div class="mac-form-group">
+            <label>Field Label</label>
+            <input v-model="selectedField.label" class="mac-input" @change="updateField" />
+          </div>
+          <div class="mac-form-group">
+            <label>Internal Key</label>
+            <input v-model="selectedField.field_key" class="mac-input mono disabled" disabled />
+          </div>
+          <div class="mac-form-group">
+            <label>Placeholder Text</label>
+            <input v-model="selectedField.placeholder" class="mac-input" @change="updateField" />
+          </div>
+          <div class="mac-form-group">
+            <label>Help Description</label>
+            <textarea v-model="selectedField.help_text" class="mac-textarea" @change="updateField" rows="2"></textarea>
+          </div>
+          
+          <div class="mac-toggle-group">
+            <label class="mac-toggle">
+              <input type="checkbox" v-model="selectedField.is_required" @change="updateField" />
+              <div class="toggle-track"></div>
+              <span class="toggle-label">Required Field</span>
+            </label>
+          </div>
 
-      <div class="insp-divider">Validation Rules</div>
-      <div class="insp-field">
-        <label>Min Length</label>
-        <input type="number" v-model="selectedField.config.min_length" placeholder="0" @change="updateField" />
-      </div>
-      <div class="insp-field">
-        <label>Max Length</label>
-        <input type="number" v-model="selectedField.config.max_length" placeholder="255" @change="updateField" />
-      </div>
-      <div class="insp-field">
-        <label>Pattern (Regex)</label>
-        <input v-model="selectedField.config.pattern" placeholder="^[a-zA-Z]+$" @change="updateField" />
-      </div>
-      <div class="insp-field">
-        <label>Custom Error Message</label>
-        <input v-model="selectedField.config.custom_error" placeholder="Invalid input" @change="updateField" />
-      </div>
+          <div class="mac-divider">Validation Rules</div>
+          
+          <div class="mac-row-group">
+            <div class="mac-form-group half">
+              <label>Min Length</label>
+              <input type="number" v-model="selectedField.config.min_length" class="mac-input" placeholder="0" @change="updateField" />
+            </div>
+            <div class="mac-form-group half">
+              <label>Max Length</label>
+              <input type="number" v-model="selectedField.config.max_length" class="mac-input" placeholder="255" @change="updateField" />
+            </div>
+          </div>
+          <div class="mac-form-group">
+            <label>Regex Pattern</label>
+            <input v-model="selectedField.config.pattern" class="mac-input mono" placeholder="^[a-zA-Z]+$" @change="updateField" />
+          </div>
+          <div class="mac-form-group">
+            <label>Error Message</label>
+            <input v-model="selectedField.config.custom_error" class="mac-input" placeholder="Invalid format" @change="updateField" />
+          </div>
 
-      <div class="insp-divider">Data Binding</div>
-      <div class="insp-field">
-        <label>Target Entity</label>
-        <select v-model="selectedField.binding.target_entity" @change="updateField" class="insp-select">
-          <option value="">Select Entity...</option>
-          <option v-for="(fields, entity) in entities" :key="entity" :value="entity">{{ entity }}</option>
-        </select>
-      </div>
-      <div class="insp-field" v-if="selectedField.binding.target_entity">
-        <label>Target Path</label>
-        <select v-model="selectedField.binding.target_path" @change="updateField" class="insp-select">
-          <option value="">Select Field...</option>
-          <option v-for="fieldName in entities[selectedField.binding.target_entity]" :key="fieldName" :value="fieldName">
-            {{ fieldName }}
-          </option>
-        </select>
-      </div>
-    </aside>
-
-    <aside class="field-inspector empty" v-else>
-      <div class="empty-state">
-        <span>👆</span>
-        <p>Select a field to edit</p>
-      </div>
+          <div class="mac-divider">Data Binding</div>
+          
+          <div class="mac-form-group">
+            <label>Target Entity</label>
+            <div class="mac-select-wrapper">
+              <select v-model="selectedField.binding.target_entity" class="mac-select" @change="updateField">
+                <option value="">None</option>
+                <option v-for="(fields, entity) in entities" :key="entity" :value="entity">{{ entity }}</option>
+              </select>
+              <svg class="select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+          </div>
+          <div class="mac-form-group" v-if="selectedField.binding.target_entity">
+            <label>Entity Property Path</label>
+            <div class="mac-select-wrapper">
+              <select v-model="selectedField.binding.target_path" class="mac-select" @change="updateField">
+                <option value="">Select Property...</option>
+                <option v-for="fieldName in entities[selectedField.binding.target_entity]" :key="fieldName" :value="fieldName">
+                  {{ fieldName }}
+                </option>
+              </select>
+              <svg class="select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+          </div>
+        </div>
+      </template>
+      <template v-else>
+        <div class="mac-empty-inspector">
+          <div class="icon-ring">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          </div>
+          <p>Select a field to configure its properties</p>
+        </div>
+      </template>
     </aside>
 
     <!-- Full Page Preview Modal -->
     <PagePreviewModal
       :show="showPreview"
       :steps="steps"
-      :page-name="pageName || 'New Page'"
+      :page-name="activeStep?.title || 'New Page'"
       @close="showPreview = false"
     />
   </div>
 </template>
 
 <style scoped>
+/* ─── Apple Design System Base ─── */
 .page-builder {
   display: flex;
-  height: 100%;
+  height: 100vh;
   width: 100%;
-  background: #0f172a;
-  border-radius: 16px;
+  max-height: 100%;
+  background: #f5f5f7; /* Apple grey backdrop */
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif;
+  color: #1d1d1f;
   overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.05);
 }
 
-/* ─── Field Library ─── */
-.field-library {
-  width: 180px;
-  background: rgba(15, 23, 42, 0.6);
-  border-right: 1px solid rgba(255,255,255,0.05);
-  padding: 16px 10px;
+/* ─── Shared Sidebars ─── */
+.mac-sidebar {
+  width: 280px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
   flex-shrink: 0;
 }
-.lib-header {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 13px; font-weight: 600; color: #e2e8f0;
-  margin-bottom: 20px; padding-bottom: 10px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+.mac-sidebar.right {
+  border-right: none;
+  border-left: 1px solid rgba(0,0,0,0.06);
 }
+.sidebar-header {
+  height: 60px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  font-weight: 600;
+  font-size: 14px;
+  color: #1d1d1f;
+  background: rgba(255, 255, 255, 0.5);
+}
+.mac-icon-box {
+  width: 28px;
+  height: 28px;
+  background: rgba(0,0,0,0.04);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+.sidebar-content {
+  padding: 20px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ─── Field Library (Left) ─── */
 .lib-cat {
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 .lib-cat-label {
-  display: block; font-size: 10px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 1px;
-  color: #64748b; margin-bottom: 8px; padding-left: 4px;
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #86868b;
+  margin-bottom: 10px;
+  padding-left: 4px;
 }
 .lib-field {
-  display: flex; align-items: center; gap: 8px;
-  padding: 7px 8px; border-radius: 8px;
-  cursor: grab; margin-bottom: 3px;
-  font-size: 12px; color: #cbd5e1;
-  transition: background 0.15s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: grab;
+  margin-bottom: 4px;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  border: 1px solid transparent;
 }
-.lib-field:hover { background: rgba(99,102,241,0.08); transform: translateX(2px); }
-.lib-field:active { cursor: grabbing; }
-.lib-icon { font-size: 15px; }
-
-/* ─── Form Canvas ─── */
-.form-canvas {
-  flex: 1; padding: 20px; display: flex;
-  flex-direction: column; min-height: 600px;
-  overflow-x: auto;
+.lib-field:hover {
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border-color: rgba(0,0,0,0.03);
+  transform: translateX(2px);
 }
-
-.canvas-header {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 20px; padding-bottom: 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+.lib-field:active {
+  cursor: grabbing;
+  transform: scale(0.98);
 }
-
-.preview-toggles {
-  display: flex; gap: 4px; background: rgba(255,255,255,0.05);
-  padding: 4px; border-radius: 10px;
+.lib-icon {
+  font-size: 18px;
 }
-.mode-btn {
-  padding: 6px 12px; border-radius: 7px; border: none;
-  background: transparent; color: #64748b; font-size: 11px;
-  font-weight: 600; cursor: pointer; transition: all 0.2s;
-  text-transform: capitalize;
-}
-.mode-btn.active { background: #334155; color: #e2e8f0; }
-
-.preview-btn {
-  padding: 8px 16px; background: rgba(99,102,241,0.1);
-  border: 1px solid rgba(99,102,241,0.2); border-radius: 10px;
-  color: #a5b4fc; font-size: 12px; font-weight: 600;
-  cursor: pointer; transition: all 0.2s;
-}
-.preview-btn:hover { background: rgba(99,102,241,0.2); border-color: rgba(99,102,241,0.4); }
-
-.submit-btn {
-  padding: 8px 16px; background: #1e3a8a;
-  border: 1px solid #3b82f6; border-radius: 10px;
-  color: white; font-size: 12px; font-weight: 600;
-  cursor: pointer; transition: all 0.2s;
-}
-.submit-btn:hover { background: #1e40af; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
-
-.step-tabs {
-  display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap;
-}
-.step-tab {
-  display: flex; align-items: center; gap: 6px;
-  padding: 6px 14px; border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.03); color: #94a3b8;
-  font-size: 12px; cursor: pointer; transition: all 0.15s;
-}
-.step-tab.active {
-  background: rgba(99,102,241,0.12);
-  border-color: rgba(99,102,241,0.3);
-  color: #a5b4fc;
-}
-.step-tab.add-step {
-  border-style: dashed; color: #64748b;
-}
-.step-tab.add-step:hover { color: #a5b4fc; }
-.step-num {
-  width: 20px; height: 20px; display: flex; align-items: center;
-  justify-content: center; border-radius: 6px; font-size: 10px;
-  font-weight: 700; background: rgba(255,255,255,0.06);
-}
-.step-remove {
-  font-size: 14px; opacity: 0.4; cursor: pointer;
-  margin-left: 2px; line-height: 1;
-}
-.step-remove:hover { opacity: 1; color: #f87171; }
-
-.step-config {
-  display: flex; gap: 10px; margin-bottom: 14px;
-}
-.step-title-input, .step-entity-input {
-  padding: 6px 10px; background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;
-  color: #e2e8f0; font-size: 12px; outline: none;
-}
-.step-title-input { flex: 1; }
-.step-entity-input { flex: 1.5; font-family: monospace; font-size: 11px; }
-
-.field-drop-zone {
-  flex: 1; border: 2px dashed rgba(255,255,255,0.06);
-  border-radius: 12px; padding: 16px;
-  min-height: 300px; overflow-y: auto;
-}
-
-.drop-placeholder {
-  display: flex; flex-direction: column; align-items: center;
-  justify-content: center; height: 200px; color: #475569;
+.lib-label {
   font-size: 13px;
+  font-weight: 500;
+  color: #1d1d1f;
 }
-.drop-placeholder span { font-size: 32px; margin-bottom: 8px; opacity: 0.5; }
 
-.field-card {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 14px; border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.06);
-  background: rgba(255,255,255,0.02);
-  margin-bottom: 6px; cursor: pointer; transition: all 0.15s;
+/* ─── Form Canvas Area (Center) ─── */
+.form-canvas-area {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
-.field-card:hover { border-color: rgba(99,102,241,0.2); }
-.field-card.selected {
-  border-color: rgba(99,102,241,0.4);
-  background: rgba(99,102,241,0.05);
-}
-.field-drag-handle {
-  cursor: grab; color: #475569; font-size: 14px;
-  letter-spacing: -1px; user-select: none;
-}
-.field-preview { flex: 1; }
-.field-preview-label {
-  font-size: 11px; font-weight: 600; color: #94a3b8;
-  margin-bottom: 4px; display: block;
-}
-.required-dot { color: #ef4444; }
-.field-preview-input {
-  padding: 5px 8px; background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06); border-radius: 6px;
-  font-size: 11px; color: #64748b;
-}
-.field-remove {
-  background: none; border: none; color: #475569;
-  font-size: 16px; cursor: pointer; padding: 2px 6px;
-}
-.field-remove:hover { color: #f87171; }
 
-.dirty-bar {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 8px 14px; background: rgba(99,102,241,0.08);
-  border: 1px solid rgba(99,102,241,0.15); border-radius: 10px;
-  margin-top: 12px; font-size: 11px; color: #a5b4fc;
+/* Island Toolbar */
+.canvas-island-toolbar {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  padding: 6px 8px;
+  border-radius: 100px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+  border: 1px solid rgba(0,0,0,0.05);
+  z-index: 50;
 }
-.save-btn {
-  padding: 5px 14px; background: #6366f1; color: white;
-  border: none; border-radius: 8px; font-size: 11px;
-  font-weight: 600; cursor: pointer; transition: background 0.15s;
+.preview-toggles {
+  display: flex;
+  gap: 2px;
 }
-.save-btn:hover { background: #4f46e5; }
+.island-btn {
+  background: transparent;
+  border: none;
+  border-radius: 100px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1d1d1f;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.island-btn:hover { background: rgba(0,0,0,0.04); }
+.island-btn.segmented { padding: 6px 12px; }
+.island-btn.active { background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.island-divider { width: 1px; height: 18px; background: rgba(0,0,0,0.1); margin: 0 4px; }
+.island-btn.submit { color: #007aff; }
+.island-btn.submit:hover { background: rgba(0, 122, 255, 0.08); }
 
-/* ─── Field Inspector ─── */
-.field-inspector {
-  width: 260px; background: rgba(15,23,42,0.6);
-  border-left: 1px solid rgba(255,255,255,0.05);
-  padding: 16px; flex-shrink: 0; overflow-y: auto;
+/* Canvas Scrollable Content */
+.canvas-scroll {
+  flex: 1;
+  padding: 90px 40px 100px 40px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
 }
-.field-inspector.empty {
+
+/* Segmented Control (Steps) */
+.mac-segmented-control-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.mac-segmented-control {
+  display: inline-flex;
+  background: rgba(0,0,0,0.06);
+  padding: 3px;
+  border-radius: 9px;
+  gap: 2px;
+}
+.seg-btn {
+  border: none;
+  background: transparent;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1d1d1f;
+  border-radius: 7px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.seg-btn:hover { background: rgba(0,0,0,0.04); }
+.seg-btn.active {
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+}
+.seg-remove {
+  color: #86868b;
+  display: flex;
+  padding: 2px;
+  border-radius: 10px;
+}
+.seg-remove:hover { color: #ff3b30; background: rgba(255,59,48,0.1); }
+.seg-btn.add-btn { color: #86868b; padding: 6px 12px; font-weight: 600; }
+
+/* Canvas Bounds & Headers */
+.canvas-content-bounds {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.mac-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.02);
+  border: 1px solid rgba(0,0,0,0.04);
+  padding: 24px;
+}
+.step-header-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.mac-input {
+  width: 100%;
+  background: #f5f5f7;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #1d1d1f;
+  transition: all 0.2s ease;
+  outline: none;
+  font-family: inherit;
+}
+.mac-input:focus, .mac-textarea:focus {
+  background: #ffffff;
+  border-color: #007aff;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+}
+.mac-input.large { font-size: 20px; font-weight: 600; padding: 12px 16px; background: transparent; border: 1px solid #e5e5ea; }
+.mac-input.large:focus { border-color: #007aff; background: #ffffff; }
+.mac-input.small { padding: 8px 12px; font-size: 12px; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+
+/* Drop Zone */
+.mac-drop-zone {
+  min-height: 400px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+  border: 1px solid rgba(0,0,0,0.04);
+}
+.mac-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  color: #86868b;
+  font-size: 14px;
+  border: 2px dashed #e5e5ea;
+  border-radius: 12px;
+  background: #fafafa;
+}
+.mac-empty-state .empty-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.5; }
+
+/* Field Cards */
+.mac-field-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  background: #ffffff;
+  border: 1px solid #e5e5ea;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+.mac-field-card:hover {
+  border-color: #d1d1d6;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+  transform: translateY(-1px);
+}
+.mac-field-card.selected {
+  border-color: #007aff;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15), 0 6px 16px rgba(0,0,0,0.06);
+}
+.drag-handle {
+  color: #c7c7cc;
+  cursor: grab;
+  padding: 4px;
+  margin-top: 2px;
+}
+.drag-handle:active { cursor: grabbing; }
+.field-preview-content {
+  flex: 1;
+}
+.field-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 8px;
+}
+.required-mark { color: #ff3b30; margin-left: 4px; }
+.fake-input {
+  background: #f5f5f7;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #86868b;
+  user-select: none;
+}
+.remove-action {
+  background: transparent;
+  border: none;
+  color: #c7c7cc;
+  padding: 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.remove-action:hover { color: #ff3b30; background: rgba(255,59,48,0.1); }
+
+/* Floating Save Ribbon */
+.mac-floating-saver {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 10px 14px 10px 20px;
+  border-radius: 100px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  border: 1px solid rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  z-index: 50;
+}
+.saver-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1d1d1f;
+}
+.dot { width: 8px; height: 8px; background: #ff9500; border-radius: 50%; }
+.pulse { animation: pulseAnim 2s infinite; }
+@keyframes pulseAnim {
+  0% { box-shadow: 0 0 0 0 rgba(255, 149, 0, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(255, 149, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 149, 0, 0); }
+}
+
+/* Base Buttons */
+.mac-btn {
+  border: none;
+  background: #ffffff;
+  padding: 10px 18px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1d1d1f;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.mac-btn:hover { box-shadow: 0 2px 6px rgba(0,0,0,0.12); transform: translateY(-1px); }
+.mac-btn:active { transform: translateY(0); }
+.mac-btn.primary { background: #007aff; color: #ffffff; }
+.mac-btn.primary:hover { background: #0066d6; box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3); }
+.mac-btn.small { padding: 6px 14px; font-size: 12px; }
+
+/* ─── Field Inspector (Right) ─── */
+.mac-badge {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(0, 122, 255, 0.1);
+  color: #007aff;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.mac-form-group {
+  margin-bottom: 16px;
+}
+.mac-row-group { display: flex; gap: 12px; }
+.half { flex: 1; }
+.mac-form-group label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: #86868b;
+  margin-bottom: 6px;
+}
+.mac-textarea {
+  width: 100%;
+  background: #f5f5f7;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #1d1d1f;
+  transition: all 0.2s ease;
+  outline: none;
+  font-family: inherit;
+  resize: vertical;
+}
+.mac-input.disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Custom Select */
+.mac-select-wrapper { position: relative; }
+.mac-select {
+  width: 100%;
+  background: #f5f5f7;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 10px 32px 10px 14px;
+  font-size: 13px;
+  color: #1d1d1f;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+}
+.mac-select:focus { background: #ffffff; border-color: #007aff; box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2); }
+.select-icon {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  width: 16px; height: 16px; color: #86868b; pointer-events: none;
+}
+
+/* Custom Toggle Switch */
+.mac-toggle-group { margin: 20px 0; }
+.mac-toggle {
+  display: flex; align-items: center; gap: 12px; cursor: pointer;
+  position: relative;
+}
+.mac-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+.toggle-track {
+  width: 44px; height: 24px; background: #e5e5ea; border-radius: 24px;
+  position: relative; transition: background 0.3s;
+}
+.toggle-track::after {
+  content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px;
+  background: #ffffff; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.mac-toggle input:checked + .toggle-track { background: #34c759; }
+.mac-toggle input:checked + .toggle-track::after { transform: translateX(20px); }
+.toggle-label { font-size: 13px; font-weight: 500; color: #1d1d1f; }
+
+/* Divider */
+.mac-divider {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  color: #86868b; margin: 24px 0 16px;
+  padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Empty State */
+.mac-empty-inspector {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  height: 100%; color: #86868b; text-align: center; padding: 20px;
+}
+.icon-ring {
+  width: 64px; height: 64px; border-radius: 50%; background: #f5f5f7;
   display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px; color: #c7c7cc;
 }
-.insp-header {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 16px; padding-bottom: 10px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.insp-header h3 { font-size: 13px; font-weight: 600; color: #e2e8f0; margin: 0; }
-.type-badge {
-  font-size: 9px; padding: 2px 7px;
-  background: rgba(99,102,241,0.15); color: #a5b4fc;
-  border-radius: 6px; font-weight: 600; text-transform: uppercase;
-}
-.insp-field { margin-bottom: 12px; }
-.insp-field label {
-  display: block; font-size: 10px; font-weight: 600;
-  color: #94a3b8; margin-bottom: 4px;
-  text-transform: uppercase; letter-spacing: 0.5px;
-}
-.insp-field input[type="text"], .insp-field input:not([type]) {
-  width: 100%; padding: 7px 9px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 7px; color: #e2e8f0; font-size: 12px;
-  outline: none; box-sizing: border-box;
-}
-.insp-field input:focus { border-color: rgba(99,102,241,0.4); }
-.insp-field input:disabled { opacity: 0.5; }
-.insp-check label {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 12px; color: #cbd5e1; cursor: pointer;
-  text-transform: none; letter-spacing: 0;
-}
-.insp-divider {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 1.5px; color: #64748b; margin: 16px 0 10px;
-  padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06);
-}
-.empty-state {
-  text-align: center; color: #475569; font-size: 13px;
-}
-.empty-state span { font-size: 28px; display: block; margin-bottom: 8px; opacity: 0.5; }
+.icon-ring svg { width: 32px; height: 32px; }
+
+/* Transitions */
+.slide-up-enter-active, .slide-up-leave-active { transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.slide-up-enter-from, .slide-up-leave-to { opacity: 0; transform: translate(-50%, 20px); }
 </style>

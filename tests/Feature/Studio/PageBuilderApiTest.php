@@ -75,19 +75,27 @@ class PageBuilderApiTest extends TestCase
 
     public function test_can_validate_page_via_api()
     {
-        // Create a valid page
+        // Create a valid page with binding
         $step = $this->page->steps()->create([
             'step_key' => 'step1',
             'title' => 'Customer Info',
             'sort_order' => 1,
         ]);
 
-        $step->fields()->create([
+        $field = $step->fields()->create([
             'field_key' => 'name',
             'label' => 'Full Name',
             'component_type' => 'input_text',
             'is_required' => true,
             'sort_order' => 1,
+        ]);
+
+        // Add binding to make it valid
+        $field->binding()->create([
+            'binding_type' => 'entity',
+            'target_entity' => 'Customer',
+            'target_path' => 'name',
+            'read_mode' => 'direct',
         ]);
 
         $response = $this->actingAs($this->user)
@@ -126,7 +134,7 @@ class PageBuilderApiTest extends TestCase
             ]);
     }
 
-    public function test_validation_detects_duplicate_field_keys()
+    public function test_database_prevents_duplicate_field_keys()
     {
         $step = $this->page->steps()->create([
             'step_key' => 'step1',
@@ -134,31 +142,28 @@ class PageBuilderApiTest extends TestCase
             'sort_order' => 1,
         ]);
 
-        // Create two fields with same key
-        $step->fields()->create([
+        // Create first field
+        $field1 = $step->fields()->create([
             'field_key' => 'name',
             'label' => 'Full Name',
             'component_type' => 'input_text',
             'sort_order' => 1,
         ]);
+        $field1->binding()->create([
+            'binding_type' => 'entity',
+            'target_entity' => 'Customer',
+            'target_path' => 'name',
+        ]);
 
+        // Try to create second field with same key - should fail
+        $this->expectException(\Illuminate\Database\UniqueConstraintViolationException::class);
+        
         $step->fields()->create([
             'field_key' => 'name', // Duplicate!
             'label' => 'Name Again',
             'component_type' => 'input_text',
             'sort_order' => 2,
         ]);
-
-        $response = $this->actingAs($this->user)
-            ->postJson("/api/studio/pages/{$this->page->id}/validate");
-
-        $response->assertStatus(200)
-            ->assertJson([
-                'valid' => false,
-            ]);
-
-        $errors = $response->json('errors');
-        $this->assertStringContainsString('duplicate', strtolower(json_encode($errors)));
     }
 
     public function test_unauthorized_user_cannot_save_page()
@@ -189,16 +194,14 @@ class PageBuilderApiTest extends TestCase
                             'component_type' => 'input_text',
                             'is_required' => true,
                             'sort_order' => 1,
+                            'binding' => [
+                                'binding_type' => 'entity',
+                                'target_entity' => 'Customer',
+                                'target_path' => 'name',
+                                'read_mode' => 'direct',
+                            ],
                         ],
                     ],
-                ],
-            ],
-            'bindings' => [
-                [
-                    'field_key' => 'name',
-                    'binding_mode' => 'direct',
-                    'entity_name' => 'Customer',
-                    'entity_path' => 'name',
                 ],
             ],
         ];
@@ -209,9 +212,8 @@ class PageBuilderApiTest extends TestCase
         $response->assertStatus(200);
 
         $this->assertDatabaseHas('field_bindings', [
-            'page_definition_id' => $this->page->id,
-            'field_key' => 'name',
-            'entity_name' => 'Customer',
+            'target_entity' => 'Customer',
+            'target_path' => 'name',
         ]);
     }
 }

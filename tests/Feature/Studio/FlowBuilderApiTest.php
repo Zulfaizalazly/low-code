@@ -81,7 +81,7 @@ class FlowBuilderApiTest extends TestCase
     public function test_can_validate_flow_via_api()
     {
         // Create a valid flow
-        $this->flow->nodes()->create([
+        $trigger = $this->flow->nodes()->create([
             'node_key' => 'trigger-1',
             'node_type' => 'trigger',
             'label' => 'Start',
@@ -95,6 +95,13 @@ class FlowBuilderApiTest extends TestCase
             'label' => 'End',
             'position_x' => 300,
             'position_y' => 100,
+        ]);
+
+        // Connect trigger to end
+        $this->flow->edges()->create([
+            'source_node_id' => $trigger->id,
+            'target_node_id' => $endNode->id,
+            'condition_type' => 'always',
         ]);
 
         $response = $this->actingAs($this->user)

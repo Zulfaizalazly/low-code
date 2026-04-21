@@ -29,7 +29,7 @@ class PageBuilderController extends Controller
                 $step = $page->steps()->create([
                     'title' => $sData['title'],
                     'step_key' => $sData['step_key'] ?? 'step_'.($sIdx+1),
-                    'order' => $sData['order'] ?? $sIdx,
+                    'sort_order' => $sData['sort_order'] ?? $sData['order'] ?? $sIdx,
                     'config' => $sData['config'] ?? [],
                 ]);
 
@@ -38,7 +38,7 @@ class PageBuilderController extends Controller
                         'field_key' => $fData['field_key'],
                         'label' => $fData['label'],
                         'component_type' => $fData['component_type'],
-                        'order' => $fData['order'] ?? $fIdx,
+                        'sort_order' => $fData['sort_order'] ?? $fData['order'] ?? $fIdx,
                         'is_required' => $fData['is_required'] ?? false,
                         'config' => $fData['config'] ?? [],
                         'default_value' => $fData['default_value'] ?? null,
@@ -46,10 +46,12 @@ class PageBuilderController extends Controller
 
                     if (!empty($fData['binding'])) {
                         $field->binding()->create([
-                            'target_entity' => $fData['binding']['target_entity'],
-                            'target_path' => $fData['binding']['target_path'],
-                            'mapping_type' => $fData['binding']['mapping_type'] ?? 'direct',
-                            'config' => $fData['binding']['config'] ?? [],
+                            'binding_type' => $fData['binding']['binding_type'] ?? 'entity',
+                            'target_entity' => $fData['binding']['target_entity'] ?? null,
+                            'target_path' => $fData['binding']['target_path'] ?? null,
+                            'write_mode' => $fData['binding']['write_mode'] ?? 'create',
+                            'read_mode' => $fData['binding']['read_mode'] ?? ($fData['binding']['mapping_type'] ?? 'direct'),
+                            'transformer_key' => $fData['binding']['transformer_key'] ?? null,
                         ]);
                     }
                 }
@@ -72,13 +74,15 @@ class PageBuilderController extends Controller
     {
         // Mocking available entities for now, should eventually come from a SchemaRegistry
         return response()->json([
-            'customers' => ['id', 'name', 'ic_number', 'phone', 'email', 'address'],
-            'facilities' => ['id', 'facility_no', 'principal_amount', 'tenure', 'margin', 'status'],
-            'facility_items' => ['id', 'facility_id', 'gold_type', 'weight_gross', 'weight_net', 'value_market'],
-            'facility_nominees' => ['id', 'facility_id', 'name', 'ic_number', 'relationship'],
-            'valuations' => ['id', 'valuation_no', 'total_gold_value', 'total_loan_eligible'],
-            'approval_tasks' => ['id', 'task_type', 'status', 'assigned_role'],
-            'payment_transactions' => ['id', 'transaction_no', 'amount', 'payment_method'],
+            'entities' => [
+                'customers' => ['id', 'name', 'ic_number', 'phone', 'email', 'address'],
+                'facilities' => ['id', 'facility_no', 'principal_amount', 'tenure', 'margin', 'status'],
+                'facility_items' => ['id', 'facility_id', 'gold_type', 'weight_gross', 'weight_net', 'value_market'],
+                'facility_nominees' => ['id', 'facility_id', 'name', 'ic_number', 'relationship'],
+                'valuations' => ['id', 'valuation_no', 'total_gold_value', 'total_loan_eligible'],
+                'approval_tasks' => ['id', 'task_type', 'status', 'assigned_role'],
+                'payment_transactions' => ['id', 'transaction_no', 'amount', 'payment_method'],
+            ]
         ]);
     }
 }
