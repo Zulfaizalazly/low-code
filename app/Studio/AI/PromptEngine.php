@@ -49,7 +49,7 @@ The PageDefinition MUST follow this structure:
       "fields": [
         {
           "field_key": "field_1",
-          "component": "text_input",
+          "component_type": "text_input",
           "label": "Field Label",
           "placeholder": "...",
           "required": true,

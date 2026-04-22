@@ -90,6 +90,7 @@ class FlowCanvasProxy extends Component
                 'options' => $options
             ]);
         } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('AI Generation Error: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
             $this->dispatch('ui-generation-failed', [
                 'message' => $e->getMessage(),
                 'error_context' => [
@@ -121,6 +122,7 @@ class FlowCanvasProxy extends Component
                 'options' => $options
             ]);
         } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('AI Refinement Error: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
             $this->dispatch('ui-refinement-failed', [
                 'message' => $e->getMessage(),
                 'error_context' => [
@@ -142,12 +144,12 @@ class FlowCanvasProxy extends Component
             $page = PageDefinition::updateOrCreate(
                 [
                     'feature_version_id' => $this->flow->feature_version_id,
-                    'page_key' => $definition['page_key'] ?? 'ai_gen_' . time()
+                    'key' => $definition['page_key'] ?? 'ai_gen_' . time()
                 ],
                 [
                     'name' => $definition['name'] ?? 'AI Generated Page',
-                    'config' => $definition, // Store full JSON in config for safety
-                    'status' => 'draft'
+                    'page_type' => 'workflow_form',
+                    'config' => $definition // Store full JSON in config for safety
                 ]
             );
 
@@ -166,7 +168,7 @@ class FlowCanvasProxy extends Component
                 foreach ($stepData['fields'] ?? [] as $fieldIndex => $fieldData) {
                     $field = $step->fields()->create([
                         'field_key' => $fieldData['field_key'] ?? "field_{$fieldIndex}",
-                        'component' => $fieldData['component'] ?? 'text_input',
+                        'component_type' => $fieldData['component_type'] ?? $fieldData['component'] ?? 'text_input',
                         'label' => $fieldData['label'] ?? 'Untitled Field',
                         'is_required' => $fieldData['required'] ?? false,
                         'sort_order' => $fieldIndex,
@@ -176,16 +178,26 @@ class FlowCanvasProxy extends Component
                     // 4. Create Binding
                     if (isset($fieldData['binding'])) {
                         $field->binding()->create([
+                            'binding_type' => 'direct',
                             'target_entity' => $fieldData['binding']['target_entity'] ?? null,
                             'target_path' => $fieldData['binding']['target_path'] ?? null,
-                            'config' => $fieldData['binding']
                         ]);
                     }
                 }
             }
         });
 
-        $this->dispatch('ui-published');
+        // Query the page we just created since transaction doesn't return it implicitly here
+        $page = PageDefinition::where('feature_version_id', $this->flow->feature_version_id)
+            ->where('key', $definition['page_key'] ?? '')
+            ->first();
+            
+        if (!$page) {
+            $page = PageDefinition::where('feature_version_id', $this->flow->feature_version_id)->latest('id')->first();
+        }
+
+        $url = "/studio/page-builder/{$this->flow->feature_version_id}/{$page->id}";
+        $this->dispatch('ui-published', ['page_id' => $page->id, 'url' => $url]);
     }
 
     /**
@@ -193,14 +205,14 @@ class FlowCanvasProxy extends Component
      */
     public function createAIDraft(array $definition): int
     {
-        return DB::transaction(function () use ($definition) {
+        return \Illuminate\Support\Facades\DB::transaction(function () use ($definition) {
             // 1. Create PageDefinition as Draft
             $page = PageDefinition::create([
                 'feature_version_id' => $this->flow->feature_version_id,
-                'page_key' => 'ai_manual_' . time(),
+                'key' => 'ai_manual_' . time(),
                 'name' => ($definition['name'] ?? 'AI Draft') . ' (Manual Override)',
-                'config' => $definition,
-                'status' => 'draft'
+                'page_type' => 'workflow_form',
+                'config' => $definition
             ]);
 
             // 2. Create Steps and Fields (similar to publish AI UI)
@@ -215,7 +227,7 @@ class FlowCanvasProxy extends Component
                 foreach ($stepData['fields'] ?? [] as $fieldIndex => $fieldData) {
                     $field = $step->fields()->create([
                         'field_key' => $fieldData['field_key'] ?? "field_{$fieldIndex}",
-                        'component_type' => $fieldData['component'] ?? 'text', // Map to builder type
+                        'component_type' => $fieldData['component_type'] ?? $fieldData['component'] ?? 'text_input', // Map to builder type
                         'label' => $fieldData['label'] ?? 'Untitled Field',
                         'is_required' => $fieldData['required'] ?? false,
                         'sort_order' => $fieldIndex,
@@ -224,6 +236,7 @@ class FlowCanvasProxy extends Component
 
                     if (isset($fieldData['binding'])) {
                         $field->binding()->create([
+                            'binding_type' => 'direct',
                             'target_entity' => $fieldData['binding']['target_entity'] ?? null,
                             'target_path' => $fieldData['binding']['target_path'] ?? null,
                         ]);
@@ -231,6 +244,9 @@ class FlowCanvasProxy extends Component
                 }
             }
 
+            $url = "/studio/page-builder/{$this->flow->feature_version_id}/{$page->id}";
+            $this->dispatch('ui-published', ['page_id' => $page->id, 'url' => $url]);
+            
             return $page->id;
         });
     }

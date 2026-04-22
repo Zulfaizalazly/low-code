@@ -1,4 +1,4 @@
-@section('builder-title', $pageName . ' — Page Builder')
+@section('builder-title', ($featureName ? $featureName . ' — ' : '') . $pageName . ' — Page Builder')
 
 @section('builder-actions')
     @if($saveStatus === 'saved')
@@ -18,8 +18,11 @@
     wire:ignore
     id="page-builder"
     data-page-id="{{ $pageId }}"
+    data-version-id="{{ $featureVersionId }}"
     data-steps='@json($steps)'
     data-entities='@json($entities)'
+    data-feature-name="{{ $featureName }}"
+    data-flow-name="{{ $flowName }}"
     style="height: calc(100vh - 108px); border-radius: 14px; overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.06);"
     x-data
     x-on:vue-page-save.window="$wire.savePageState($event.detail.steps)"

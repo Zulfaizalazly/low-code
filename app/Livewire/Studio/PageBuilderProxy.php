@@ -20,6 +20,8 @@ class PageBuilderProxy extends Component
     public array $steps = [];
     public array $entities = [];
     public string $saveStatus = '';
+    public string $featureName = '';
+    public string $flowName = '';
 
     public function mount(int $featureVersionId, int $pageId)
     {
@@ -44,10 +46,13 @@ class PageBuilderProxy extends Component
      */
     public function loadPageState(): void
     {
-        $page = PageDefinition::with('steps.fields.binding')
+        $page = PageDefinition::with(['featureVersion.feature', 'featureVersion.flows', 'steps.fields.binding'])
             ->findOrFail($this->pageId);
 
         $this->pageName = $page->name;
+        $this->featureName = $page->featureVersion->feature->name ?? 'Unknown Feature';
+        $flow = $page->featureVersion->flows->first();
+        $this->flowName = $flow ? $flow->name : '';
 
         $this->steps = $page->steps->map(function ($step) {
             return [
@@ -138,6 +143,27 @@ class PageBuilderProxy extends Component
 
         $this->saveStatus = 'saved';
         $this->loadPageState(); // Reload to get fresh IDs
+    }
+
+    public function generateUI(\App\Studio\AI\AIUIGenerator $generator): void
+    {
+        try {
+            $page = PageDefinition::with('featureVersion.flows')->findOrFail($this->pageId);
+            $flow = $page->featureVersion->flows->first();
+            
+            if (!$flow) {
+                $this->dispatch('ui-generation-failed', message: 'No flow found for this feature to infer UI from.');
+                return;
+            }
+
+            $definition = $generator->generateFromFlow($flow);
+            
+            $this->dispatch('ui-generated', [
+                'definition' => $definition
+            ]);
+        } catch (\Exception $e) {
+            $this->dispatch('ui-generation-failed', message: $e->getMessage());
+        }
     }
 
     public function render()

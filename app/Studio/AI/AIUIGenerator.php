@@ -151,6 +151,21 @@ class AIUIGenerator
         $content = $data['choices'][0]['message']['content'] ?? '{}';
         $result = json_decode($content, true);
 
+        // Normalize schema if LLM returns 'component' instead of 'component_type'
+        if (isset($result['steps'])) {
+            foreach ($result['steps'] as &$step) {
+                if (isset($step['fields'])) {
+                    foreach ($step['fields'] as &$field) {
+                        if (isset($field['component']) && !isset($field['component_type'])) {
+                            $field['component_type'] = $field['component'];
+                            unset($field['component']);
+                        }
+                        $field['component_type'] = $field['component_type'] ?? 'text_input';
+                    }
+                }
+            }
+        }
+
         // Record Attempt
         RateLimiter::hit("ai-gen:{$userId}", 60);
 

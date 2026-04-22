@@ -21,6 +21,9 @@ const isDirty = ref(false)
 const showPreview = ref(false)
 const previewMode = ref('desktop')
 
+const featureName = ref(document.getElementById('page-builder')?.getAttribute('data-feature-name') || '')
+const flowName = ref(document.getElementById('page-builder')?.getAttribute('data-flow-name') || '')
+
 const canvasWidth = computed(() => {
   if (previewMode.value === 'mobile') return '375px'
   if (previewMode.value === 'tablet') return '768px'
@@ -199,7 +202,7 @@ function removeField(fieldKey) {
 }
 
 // ─── Save ───
-function savePage() {
+async function savePage() {
   const serialized = steps.value.map((step, si) => ({
     step_key: step.step_key,
     title: step.title,
@@ -212,13 +215,52 @@ function savePage() {
     })),
   }))
 
-  window.dispatchEvent(new CustomEvent('vue-page-save', {
-    detail: { steps: serialized }
-  }))
-  isDirty.value = false
+  return new Promise((resolve) => {
+    window.dispatchEvent(new CustomEvent('vue-page-save', {
+      detail: { steps: serialized }
+    }))
+    isDirty.value = false
+    setTimeout(resolve, 300)
+  })
 }
 
 window.savePageToLivewire = savePage
+
+// ─── AI UI Generation ───
+const isGenerating = ref(false)
+async function triggerAIGeneration() {
+  if (isDirty.value) {
+    if (!confirm('You have unsaved changes. Save now and generate UI?')) return
+    await savePage()
+  }
+  isGenerating.value = true
+  if (window.Livewire) {
+    window.Livewire.find(document.querySelector('[wire\\:id]').getAttribute('wire:id')).generateUI()
+  }
+}
+
+window.addEventListener('ui-generated', (event) => {
+  isGenerating.value = false
+  const def = event.detail[0]?.definition || event.detail[0] || {}
+  if (def.steps) {
+    steps.value = def.steps.map((step, idx) => ({
+      ...step,
+      sort_order: idx,
+      fields: (step.fields || []).map((f, fIdx) => ({
+        ...f,
+        sort_order: fIdx,
+        field_key: f.field_key || `${f.component_type || 'text'}_${Math.floor(Math.random()*10000)}`,
+        binding: f.binding || { binding_type: 'direct', target_entity: '', target_path: '' }
+      }))
+    }))
+    isDirty.value = true
+  }
+})
+
+window.addEventListener('ui-generation-failed', (event) => {
+  isGenerating.value = false
+  alert('Generation failed: ' + (event.detail[0]?.message || event.detail?.message || 'Unknown error'))
+})
 
 async function submitForReview() {
   if (isDirty.value) {
@@ -300,6 +342,12 @@ async function submitForReview() {
 
         <div class="island-divider"></div>
 
+        <button class="island-btn magic" @click="triggerAIGeneration" :disabled="isGenerating">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+          <span v-if="isGenerating">Building...</span>
+          <span v-else>{{ steps.length > 0 ? 'Re-Gen UI' : 'Gen-UI' }}</span>
+        </button>
+
         <button class="island-btn submit" @click="submitForReview">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
           Submit Review
@@ -331,6 +379,10 @@ async function submitForReview() {
           
           <!-- Step Config Header -->
           <div v-if="activeStep" class="mac-card step-header-card">
+            <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: #86868b; letter-spacing: 0.05em; display: flex; align-items: center; gap: 8px;">
+               Feature: {{ featureName || 'Unknown' }} 
+               <span v-if="flowName" style="color: #007aff; background: rgba(0,122,255,0.1); padding: 2px 6px; border-radius: 4px;">Flow Ref: {{ flowName }}</span>
+            </div>
             <input v-model="activeStep.title" class="mac-input large header-input" placeholder="Page Title (e.g. Personal Details)" @change="isDirty = true" />
             <input v-model="activeStep.entity_binding" class="mac-input small mono" placeholder="entity (e.g. user_profile)" @change="isDirty = true" />
           </div>
@@ -636,6 +688,7 @@ async function submitForReview() {
   font-size: 13px;
   font-weight: 500;
   color: #1d1d1f;
+  white-space: nowrap;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -643,8 +696,23 @@ async function submitForReview() {
 .island-btn.segmented { padding: 6px 12px; }
 .island-btn.active { background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 .island-divider { width: 1px; height: 18px; background: rgba(0,0,0,0.1); margin: 0 4px; }
+.island-btn.primary:hover:not(:disabled) { background: #0066d6; }
+
 .island-btn.submit { color: #007aff; }
 .island-btn.submit:hover { background: rgba(0, 122, 255, 0.08); }
+
+.island-btn.magic {
+  color: #af52de;
+  background: rgba(175, 82, 222, 0.08);
+}
+.island-btn.magic:hover:not(:disabled) {
+  background: rgba(175, 82, 222, 0.15);
+}
+
+.island-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 
 /* Canvas Scrollable Content */
 .canvas-scroll {
@@ -869,6 +937,21 @@ async function submitForReview() {
 }
 .mac-btn:hover { box-shadow: 0 2px 6px rgba(0,0,0,0.12); transform: translateY(-1px); }
 .mac-btn:active { transform: translateY(0); }
+.island-btn.primary {
+  background: #007aff;
+  color: white;
+}
+.island-btn.primary:hover:not(:disabled) { background: #005bb5; }
+.island-btn.magic {
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.island-btn.magic:hover:not(:disabled) {
+  background: linear-gradient(135deg, #9333ea 0%, #db2777 100%);
+  box-shadow: 0 6px 16px rgba(236, 72, 153, 0.35);
+}
 .mac-btn.primary { background: #007aff; color: #ffffff; }
 .mac-btn.primary:hover { background: #0066d6; box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3); }
 .mac-btn.small { padding: 6px 14px; font-size: 12px; }

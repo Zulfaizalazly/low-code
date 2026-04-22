@@ -54,8 +54,8 @@
                 <div class="flex items-center gap-3">
                     @yield('builder-actions')
                     <div class="flex items-center gap-2 pl-3 border-l border-black/5">
-                        <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-gray-200 to-gray-300 shadow-inner flex items-center justify-center">
-                            <svg class="w-3.5 h-3.5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                        <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-[#e5e5ea] to-[#f5f5f7] shadow-inner border border-black/5 flex items-center justify-center shrink-0">
+                            <svg class="w-3.5 h-3.5 text-[#86868b]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                         </div>
                         <span class="text-xs font-medium text-[#86868b]">{{ auth()->user()->name ?? 'Admin' }}</span>
                     </div>

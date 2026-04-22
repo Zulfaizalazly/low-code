@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
 import { VueFlow, useVueFlow, Position, MarkerType, Handle } from '@vue-flow/core'
 import { Background } from '@vue-flow/background'
 import { Controls } from '@vue-flow/controls'
@@ -58,11 +58,21 @@ const showAIPreview = ref(false)
 const showSimulation = ref(false)
 const iterationCount = ref(0)
 const isFullscreen = ref(false)
+const generatedPageUrl = ref('')
+const toastMessage = ref('')
+const toastType = ref('success')
+
+function showToast(msg, type = 'success') {
+  toastMessage.value = msg;
+  toastType.value = type;
+  setTimeout(() => { toastMessage.value = '' }, 5000);
+}
 
 function goBack() {
-  if (confirm('Any unsaved changes will be lost. Go back?')) {
-    window.history.back()
+  if (isDirty.value) {
+    if (!confirm('Any unsaved changes will be lost. Go back?')) return
   }
+  window.history.back()
 }
 
 function toggleFullscreen() {
@@ -168,6 +178,19 @@ onMounted(() => {
             saveFlow()
         }
     }, 30000)
+
+    // Browser navigation protection
+    window.onbeforeunload = (e) => {
+        if (isDirty.value) {
+            e.preventDefault()
+            e.returnValue = ''
+        }
+    }
+})
+
+onUnmounted(() => {
+    window.removeEventListener('keydown', handleKeyDown)
+    window.onbeforeunload = null
 })
 
 function handleKeyDown(e) {
@@ -370,8 +393,9 @@ window.addEventListener('ui-refined', (event) => {
 
 window.addEventListener('ui-generation-failed', (event) => {
   isGenerating.value = false
-  if (confirm('Generation failed: ' + event.detail.message + '\n\nWould you like to report this issue to Arrahnumation support?')) {
-    window.open('/studio/support/report?context=ai_generation_fail&msg=' + encodeURIComponent(event.detail.message))
+  const msg = event.detail[0]?.message || event.detail?.message || 'Unknown error';
+  if (confirm('Generation failed: ' + msg + '\n\nWould you like to report this issue to Arrahnumation support?')) {
+    window.open('/studio/support/report?context=ai_generation_fail&msg=' + encodeURIComponent(msg))
   }
 })
 
@@ -386,6 +410,22 @@ function publishAIUI() {
   }
 }
 
+window.addEventListener('ui-published', (event) => {
+  const payload = event.detail[0] || event.detail;
+  if (payload && payload.url) {
+    generatedPageUrl.value = payload.url;
+    showToast('Success! UI has been published to the registry.');
+  } else {
+    showToast('UI has been successfully submitted.');
+  }
+})
+
+function viewGeneratedUI() {
+  if (generatedPageUrl.value) {
+    window.location.href = generatedPageUrl.value;
+  }
+}
+
 function handleManualOverride() {
   if (confirm('This will open the manual Page Builder with the generated definition. Continue?')) {
     // Save to Livewire first to create the draft record
@@ -394,7 +434,8 @@ function handleManualOverride() {
         .createAIDraft(generatedUIData.value.definition)
         .then(pageId => {
           if (pageId) {
-            window.location.href = `/studio/pages/builder/${pageId}?from_ai=1`
+            generatedPageUrl.value = `/studio/pages/builder/${pageId}?from_ai=1`
+            window.location.href = generatedPageUrl.value
           }
         })
     }
@@ -533,10 +574,15 @@ async function submitForReview() {
 
         <div class="island-divider"></div>
 
+        <button v-if="generatedPageUrl" @click="viewGeneratedUI" class="island-btn view-generated" title="View Generated UI">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          View UI
+        </button>
+
         <button @click="triggerAIGeneration" class="island-btn magic" :disabled="isGenerating || nodes.length < 2">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
           <span v-if="isGenerating">Building...</span>
-          <span v-else>AI Gen UI</span>
+          <span v-else>{{ generatedPageUrl ? 'Re-Gen UI' : 'Gen-UI' }}</span>
         </button>
       </div>
 
@@ -573,6 +619,14 @@ async function submitForReview() {
         <span>● Unsaved changes</span>
       </div>
 
+      <!-- Toast Notification -->
+      <transition name="fade">
+        <div v-if="toastMessage" class="mac-toast" :class="toastType">
+          <span class="v-icon">{{ toastType === 'success' ? '✅' : '⚠️' }}</span>
+          <span>{{ toastMessage }}</span>
+        </div>
+      </transition>
+
       <VueFlow
         v-model:nodes="nodes"
         v-model:edges="edges"
@@ -581,6 +635,7 @@ async function submitForReview() {
         @pane-click="onPaneClick"
         @dragover="onDragOver"
         @drop="onDrop"
+        @node-drag-stop="isDirty = true"
         :default-viewport="{ zoom: 1 }"
         :min-zoom="0.2"
         :max-zoom="4"
@@ -715,32 +770,50 @@ async function submitForReview() {
 .island-btn {
   background: transparent;
   border: none;
-  border-radius: 100px;
-  padding: 6px 14px;
+  min-height: 28px;
+  min-width: 28px;
+  padding: 0 10px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
+  color: #1d1d1f;
   font-size: 13px;
   font-weight: 500;
-  color: #1d1d1f;
+  white-space: nowrap;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-
-.island-btn:hover:not(:disabled) {
-  background: rgba(0,0,0,0.06);
-  transform: scale(1.02);
-}
-.island-btn:active:not(:disabled) {
-  transform: scale(0.96);
-  background: rgba(0,0,0,0.1);
-}
-
+.island-btn:hover { background: rgba(0,0,0,0.04); }
+.island-btn:active { transform: scale(0.96); }
 .island-btn.primary {
   background: #007aff;
   color: white;
 }
-.island-btn.primary:hover:not(:disabled) { background: #0066d6; }
+.island-btn.primary:hover { background: #0066d6; }
+
+.island-btn.magic {
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.island-btn.magic:hover {
+  background: linear-gradient(135deg, #9333ea 0%, #db2777 100%);
+  box-shadow: 0 6px 16px rgba(236, 72, 153, 0.35);
+}
+
+.island-btn.view-generated {
+  background: rgba(255, 255, 255, 0.9);
+  color: #007aff;
+  border: 1px solid rgba(0, 122, 255, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 122, 255, 0.1);
+}
+.island-btn.view-generated:hover {
+  background: #f0f7ff;
+  border-color: rgba(0, 122, 255, 0.3);
+}
 
 .island-btn.submit {
   background: #34c759;
@@ -944,6 +1017,37 @@ async function submitForReview() {
   font-size: 11px;
   color: #a5b4fc;
   backdrop-filter: blur(12px);
+}
+
+.mac-toast {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 100px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.05);
+  color: #1d1d1f;
+  font-size: 14px;
+  font-weight: 500;
+}
+.mac-toast.success {
+  border: 1px solid rgba(52, 199, 89, 0.3);
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -20px);
 }
 
 .vue-flow__node {

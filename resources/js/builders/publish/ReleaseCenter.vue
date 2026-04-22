@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 
 const activeTab = ref('drafts')
 const loading = ref(true)
@@ -86,131 +86,165 @@ function formatDate(dateString) {
 </script>
 
 <template>
-  <div class="release-center">
-    <header class="page-header">
-      <div class="title-section">
-        <h1>Release Center</h1>
-        <p>Manage gobernance, approvals, and deployments for all features.</p>
+  <div class="h-full bg-transparent p-4 sm:p-8 max-w-[1300px] mx-auto font-sans">
+    <!-- Header -->
+    <header class="flex justify-between items-end mb-10 mt-2">
+      <div>
+        <h1 class="text-[32px] font-bold tracking-tight text-[#1d1d1f]">Release Center</h1>
+        <p class="text-[15px] text-[#86868b] mt-1.5 font-medium">Manage deployment lifecycles, approvals, and live features.</p>
       </div>
-      <div class="actions">
-        <button class="refresh-btn" @click="fetchData" :disabled="loading">
-          <span :class="{ 'spinning': loading }">🔄</span> Refresh
+      <div>
+        <button @click="fetchData" :disabled="loading" class="flex items-center gap-2 px-4 py-2.5 bg-white border border-black/5 shadow-sm rounded-xl text-[14px] font-semibold text-[#1d1d1f] hover:bg-[#f5f5f7] transition-all active:scale-95 disabled:opacity-50">
+          <svg :class="{'animate-spin': loading}" class="w-4 h-4 text-[#86868b]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+          Refresh
         </button>
       </div>
     </header>
 
     <!-- Summary Cards -->
-    <div class="summary-cards">
-      <div class="summary-card">
-        <div class="card-icon">📝</div>
-        <div class="card-content">
-          <div class="card-value">{{ summaryStats.drafts }}</div>
-          <div class="card-label">Draft Features</div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-10">
+      <!-- Card 1 -->
+      <div class="bg-white border border-black/[0.04] p-5 rounded-[20px] shadow-sm flex items-center gap-4 transition-transform hover:-translate-y-0.5 duration-300">
+        <div class="w-12 h-12 rounded-[14px] bg-blue-50 flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+        </div>
+        <div>
+          <div class="text-[28px] font-bold text-[#1d1d1f] leading-none tracking-tight">{{ summaryStats.drafts }}</div>
+          <div class="text-[12px] font-semibold text-[#86868b] tracking-wide uppercase mt-1">Drafts</div>
         </div>
       </div>
-      <div class="summary-card highlight">
-        <div class="card-icon">🕵️</div>
-        <div class="card-content">
-          <div class="card-value">{{ summaryStats.pending_reviews }}</div>
-          <div class="card-label">Pending Reviews</div>
+      <!-- Card 2 -->
+      <div class="bg-white border border-black/[0.04] p-5 rounded-[20px] shadow-sm flex items-center gap-4 transition-transform hover:-translate-y-0.5 duration-300 relative overflow-hidden">
+        <div class="absolute inset-0 bg-amber-50/30"></div>
+        <div class="relative w-12 h-12 rounded-[14px] bg-amber-100/60 flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+        </div>
+        <div class="relative">
+          <div class="text-[28px] font-bold text-[#1d1d1f] leading-none tracking-tight">{{ summaryStats.pending_reviews }}</div>
+          <div class="text-[12px] font-semibold text-[#86868b] tracking-wide uppercase mt-1">In Review</div>
         </div>
       </div>
-      <div class="summary-card">
-        <div class="card-icon">🚀</div>
-        <div class="card-content">
-          <div class="card-value">{{ summaryStats.published }}</div>
-          <div class="card-label">Published</div>
+      <!-- Card 3 -->
+      <div class="bg-white border border-black/[0.04] p-5 rounded-[20px] shadow-sm flex items-center gap-4 transition-transform hover:-translate-y-0.5 duration-300">
+        <div class="w-12 h-12 rounded-[14px] bg-emerald-50 flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7" /></svg>
+        </div>
+        <div>
+          <div class="text-[28px] font-bold text-[#1d1d1f] leading-none tracking-tight">{{ summaryStats.published }}</div>
+          <div class="text-[12px] font-semibold text-[#86868b] tracking-wide uppercase mt-1">Published</div>
         </div>
       </div>
-      <div class="summary-card">
-        <div class="card-icon">⚠️</div>
-        <div class="card-content">
-          <div class="card-value">{{ summaryStats.failed_simulations }}</div>
-          <div class="card-label">Failed Simulations</div>
+      <!-- Card 4 -->
+      <div class="bg-white border border-black/[0.04] p-5 rounded-[20px] shadow-sm flex items-center gap-4 transition-transform hover:-translate-y-0.5 duration-300">
+        <div class="w-12 h-12 rounded-[14px] bg-rose-50 flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+        </div>
+        <div>
+          <div class="text-[28px] font-bold text-[#1d1d1f] leading-none tracking-tight">{{ summaryStats.failed_simulations }}</div>
+          <div class="text-[12px] font-semibold text-[#86868b] tracking-wide uppercase mt-1">Sim. Failures</div>
         </div>
       </div>
     </div>
 
-    <div class="dashboard-grid">
-      <!-- Tabs Sidebar -->
-      <aside class="sidebar-tabs">
+    <div class="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-10">
+      <!-- Tabs Sidebar (macOS style segmented logic) -->
+      <aside class="flex flex-col gap-1">
         <button 
           v-for="tab in ['drafts', 'in_review', 'approved', 'published', 'archived', 'rollbacks']" 
           :key="tab"
-          :class="['tab-btn', { active: activeTab === tab }]"
           @click="activeTab = tab"
+          class="flex items-center gap-3 px-4 py-3 rounded-[12px] transition-all text-left group"
+          :class="activeTab === tab ? 'bg-black/[0.06] text-[#1d1d1f] font-semibold shadow-inner' : 'text-[#86868b] hover:bg-black/[0.03] hover:text-[#1d1d1f] font-medium'"
         >
-          <span class="tab-icon">{{ 
-            tab === 'drafts' ? '📝' : 
-            tab === 'in_review' ? '🕵️' : 
-            tab === 'approved' ? '✅' : 
-            tab === 'published' ? '🚀' : 
-            tab === 'archived' ? '📦' : '↩️' 
-          }}</span>
-          <span class="tab-label">{{ tab.replace('_', ' ').toUpperCase() }}</span>
-          <span class="tab-count" v-if="versions[tab]">{{ versions[tab].length }}</span>
+          <!-- Elegant SVGs for Tabs -->
+          <svg v-if="tab === 'drafts'" class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+          <svg v-else-if="tab === 'in_review'" class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+          <svg v-else-if="tab === 'approved'" class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          <svg v-else-if="tab === 'published'" class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+          <svg v-else-if="tab === 'archived'" class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" /></svg>
+          <svg v-else class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" /></svg>
+
+          <span class="flex-1 text-[13px] leading-none tracking-wide">{{ tab.replace('_', ' ').toUpperCase() }}</span>
+          
+          <span v-if="versions[tab] && versions[tab].length > 0" class="bg-[#1d1d1f]/10 text-[#1d1d1f] text-[11px] px-2 py-0.5 rounded-full font-bold group-hover:bg-[#1d1d1f]/20 transition-colors">
+            {{ versions[tab].length }}
+          </span>
         </button>
       </aside>
 
       <!-- Content Area -->
-      <main class="content-view">
-        <!-- Filters & Search -->
-        <div class="content-toolbar">
-          <div class="search-box">
-            <span class="search-icon">🔍</span>
+      <main class="min-h-[500px]">
+        <!-- Filters Toolbar -->
+        <div class="flex justify-between items-center mb-6 gap-4">
+          <div class="relative w-full max-w-sm">
+            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#86868b]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
             <input 
               v-model="searchQuery" 
               type="text" 
               placeholder="Search features..." 
-              class="search-input"
+              class="w-full bg-white border border-black/[0.08] rounded-xl py-2 pl-9 pr-4 text-[13px] text-[#1d1d1f] outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 shadow-sm transition-all"
             />
           </div>
-          <div class="sort-controls">
-            <label>Sort by:</label>
-            <select v-model="sortBy" class="sort-select">
+          <div class="flex items-center gap-3">
+            <label class="text-[12px] font-semibold tracking-wide text-[#86868b] uppercase">Sort by</label>
+            <select v-model="sortBy" class="bg-white border border-black/[0.08] rounded-xl py-1.5 px-3 pr-8 text-[13px] text-[#1d1d1f] font-semibold outline-none focus:ring-2 focus:ring-blue-500/20 shadow-sm cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5%22%20fill%3D%22none%22%20stroke%3D%22%2386868b%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_4px_center]">
               <option value="date">Date (Newest)</option>
               <option value="name">Name (A-Z)</option>
             </select>
           </div>
         </div>
 
-        <div v-if="loading" class="loading-state">
-          <div class="spinner"></div>
-          <p>Loading deployment data...</p>
+        <div v-if="loading" class="flex flex-col items-center justify-center p-24">
+            <svg class="animate-spin w-8 h-8 text-black/20 mb-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+            <p class="text-[#86868b] font-medium text-[14px]">Fetching deployment statuses...</p>
         </div>
 
-        <div v-else class="version-list">
-          <!-- Versions List -->
+        <div v-else class="space-y-4">
           <template v-if="activeTab !== 'rollbacks'">
-            <div v-if="filteredVersions.length === 0" class="empty-state">
-              <p>{{ searchQuery ? 'No matching versions found.' : 'No versions in this state.' }}</p>
-            </div>
-            <div v-for="v in filteredVersions" :key="v.id" class="version-card glass">
-              <div class="card-info">
-                <div class="feature-name">{{ v.feature.name }}</div>
-                <div class="version-tag">V{{ v.version_no }}</div>
-                <div class="update-time">Last updated: {{ formatDate(v.updated_at) }}</div>
+            <div v-if="filteredVersions.length === 0" class="py-24 flex flex-col items-center justify-center border-2 border-dashed border-black/5 rounded-3xl">
+              <div class="w-16 h-16 bg-black/[0.02] rounded-2xl flex items-center justify-center mb-4">
+                 <svg class="w-8 h-8 text-black/20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
               </div>
-              <div class="card-actions">
-                <button v-if="activeTab === 'drafts'" @click="continueDraft(v)" class="primary-btn">Continue Design</button>
-                <button v-if="activeTab === 'in_review'" @click="viewReview(v.id)" class="secondary-btn">Review Impact</button>
-                <button v-if="activeTab === 'approved'" @click="viewReview(v.id)" class="primary-btn">Deploy to Production</button>
-                <button v-if="activeTab === 'published'" @click="viewReview(v.id)" class="secondary-btn">Monitor & Rollback</button>
+              <p class="text-[#86868b] font-semibold text-[15px]">{{ searchQuery ? 'No matching versions found.' : 'No items found in this section.' }}</p>
+            </div>
+            
+            <div v-for="v in filteredVersions" :key="v.id" class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border border-black/[0.04] p-5 sm:px-6 sm:py-5 rounded-[20px] shadow-[0_1px_4px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)] hover:border-black/[0.08] transition-all group">
+              <div>
+                <div class="flex items-center gap-3 mb-1.5">
+                  <h3 class="text-[17px] font-bold text-[#1d1d1f] tracking-tight">{{ v.feature.name }}</h3>
+                  <span class="bg-blue-50 text-blue-600 text-[11px] font-bold px-2 py-0.5 rounded-md tracking-wider">v{{ v.version_no }}</span>
+                </div>
+                <p class="text-[13px] text-[#86868b] font-medium flex items-center gap-1.5">
+                  <svg class="w-4 h-4 text-black/20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  Updated {{ formatDate(v.updated_at) }}
+                </p>
+              </div>
+              <div class="flex items-center gap-2">
+                <button v-if="activeTab === 'drafts'" @click="continueDraft(v)" class="px-5 py-2 min-w-[140px] bg-blue-600 hover:bg-blue-700 text-white text-[13px] font-bold rounded-xl shadow-sm transition-colors active:scale-95">Continue Design</button>
+                <button v-if="activeTab === 'in_review'" @click="viewReview(v.id)" class="px-5 py-2 min-w-[140px] bg-white border border-black/10 hover:border-black/20 hover:bg-gray-50/50 text-[#1d1d1f] text-[13px] font-bold rounded-xl shadow-sm transition-all active:scale-95">Review Impact</button>
+                <button v-if="activeTab === 'approved'" @click="viewReview(v.id)" class="px-5 py-2 min-w-[140px] bg-emerald-500 hover:bg-emerald-600 text-white text-[13px] font-bold rounded-xl shadow-sm transition-colors active:scale-95">Publish to Prod</button>
+                <button v-if="activeTab === 'published'" @click="viewReview(v.id)" class="px-5 py-2 min-w-[140px] bg-white border border-black/10 hover:border-black/20 hover:bg-gray-50/50 text-[#1d1d1f] text-[13px] font-bold rounded-xl shadow-sm transition-all active:scale-95">Monitor & Rollback</button>
               </div>
             </div>
           </template>
 
-          <!-- Rollback Logs List -->
           <template v-else>
-            <div v-if="rollbackLogs.length === 0" class="empty-state">
-              <p>No rollback events recorded.</p>
+            <div v-if="rollbackLogs.length === 0" class="py-24 flex flex-col items-center justify-center border-2 border-dashed border-black/5 rounded-3xl">
+              <p class="text-[#86868b] font-semibold text-[15px]">No rollback events to display.</p>
             </div>
-            <div v-for="log in rollbackLogs" :key="log.id" class="log-card glass danger">
-              <div class="log-info">
-                <div class="feature-name">{{ log.feature_name }} V{{ log.version_no }}</div>
-                <div class="log-reason">"{{ log.reason }}"</div>
-                <div class="log-meta">By {{ log.user_name }} on {{ formatDate(log.rolled_back_at) }}</div>
+            <div v-for="log in rollbackLogs" :key="log.id" class="bg-white border border-rose-100 border-l-4 border-l-rose-500 p-6 rounded-[20px] shadow-sm hover:shadow-md transition-all">
+              <div class="flex items-center justify-between mb-3">
+                  <div class="flex items-center gap-3">
+                    <h3 class="text-[16px] font-bold text-[#1d1d1f] tracking-tight">{{ log.feature_name }}</h3>
+                    <span class="bg-rose-50 text-rose-600 text-[11px] font-bold px-2 py-0.5 rounded-md tracking-wider">v{{ log.version_no }}</span>
+                  </div>
               </div>
+              <p class="text-[14px] text-rose-600/90 italic font-medium leading-relaxed">"{{ log.reason }}"</p>
+              <div class="h-px w-full bg-black/5 my-3"></div>
+              <p class="text-[12px] text-[#86868b] font-medium flex items-center gap-1.5">
+                  <svg class="w-4 h-4 text-black/20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                  Rolled back by <b class="text-[#1d1d1f]">{{ log.user_name }}</b> on {{ formatDate(log.rolled_back_at) }}
+              </p>
             </div>
           </template>
         </div>
@@ -220,228 +254,12 @@ function formatDate(dateString) {
 </template>
 
 <style scoped>
-.release-center {
-  padding: 32px; color: #1e293b; min-height: 100vh;
-  background: linear-gradient(135deg, #f0f9ff 0%, #fef3c7 100%);
+/* Scoped css completely bypassed in favor of unified visual Tailwind config */
+.animate-spin {
+    animation: spin 1s linear infinite;
 }
-
-.page-header {
-  display: flex; justify-content: space-between; align-items: flex-end;
-  margin-bottom: 40px;
-}
-.page-header h1 { font-size: 32px; font-weight: 800; margin: 0; color: #0f172a; }
-.page-header p { color: #475569; margin: 8px 0 0; }
-
-.summary-cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  margin-bottom: 32px;
-}
-
-.summary-card {
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 20px;
-  padding: 24px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.summary-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(99, 102, 241, 0.3);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.summary-card.highlight {
-  border-color: rgba(99, 102, 241, 0.3);
-  background: rgba(99, 102, 241, 0.05);
-}
-
-.card-icon {
-  font-size: 32px;
-  opacity: 0.8;
-}
-
-.card-content {
-  flex: 1;
-}
-
-.card-value {
-  font-size: 32px;
-  font-weight: 800;
-  color: #0f172a;
-  line-height: 1;
-  margin-bottom: 6px;
-}
-
-.card-label {
-  font-size: 12px;
-  color: #64748b;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.refresh-btn {
-  background: white; border: 1px solid rgba(0,0,0,0.1);
-  color: #1e293b; padding: 10px 16px; border-radius: 12px; cursor: pointer;
-  display: flex; align-items: center; gap: 8px; transition: all 0.2s;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-.refresh-btn:hover { background: #f8fafc; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
-.spinning { animation: spin 1s linear infinite; display: inline-block; }
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-.dashboard-grid {
-  display: grid; grid-template-columns: 280px 1fr; gap: 32px;
-}
-
-.sidebar-tabs {
-  display: flex; flex-direction: column; gap: 8px;
-}
-.tab-btn {
-  display: flex; align-items: center; gap: 12px; padding: 14px 18px;
-  background: transparent; border: 1px solid transparent; border-radius: 16px;
-  color: #475569; cursor: pointer; transition: all 0.2s; text-align: left;
-}
-.tab-btn:hover { background: rgba(0,0,0,0.03); color: #1e293b; }
-.tab-btn.active { 
-  background: white; border: 1px solid rgba(99, 102, 241, 0.2);
-  color: #6366f1;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-.tab-icon { font-size: 18px; }
-.tab-label { flex: 1; font-size: 13px; font-weight: 700; letter-spacing: 0.05em; }
-.tab-count {
-  background: rgba(99,102,241,0.1); padding: 2px 8px; border-radius: 20px;
-  font-size: 11px; color: #4338ca; font-weight: 700;
-}
-
-.content-view {
-  min-height: 500px;
-}
-
-.content-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  gap: 16px;
-}
-
-.search-box {
-  flex: 1;
-  max-width: 400px;
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.search-icon {
-  position: absolute;
-  left: 14px;
-  font-size: 16px;
-  opacity: 0.5;
-}
-
-.search-input {
-  width: 100%;
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  padding: 10px 14px 10px 42px;
-  color: #1e293b;
-  font-size: 14px;
-  outline: none;
-  transition: all 0.2s;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-.search-input:focus {
-  border-color: #6366f1;
-  background: white;
-  box-shadow: 0 2px 8px rgba(99,102,241,0.15);
-}
-
-.sort-controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.sort-controls label {
-  font-size: 13px;
-  color: #475569;
-  font-weight: 600;
-}
-
-.sort-select {
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 8px 12px;
-  color: #1e293b;
-  font-size: 13px;
-  outline: none;
-  cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-.glass {
-  background: white; 
-  border: 1px solid rgba(0, 0, 0, 0.08); 
-  border-radius: 24px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.version-card {
-  padding: 24px; margin-bottom: 16px; display: flex; justify-content: space-between;
-  align-items: center; transition: transform 0.2s;
-}
-.version-card:hover { transform: translateY(-2px); border-color: rgba(99, 102, 241, 0.3); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-
-.card-info .feature-name { font-size: 18px; font-weight: 700; color: #0f172a; }
-.card-info .version-tag { 
-  display: inline-block; margin-top: 4px; padding: 2px 10px; 
-  background: #e0e7ff; border-radius: 6px; font-size: 12px; color: #4338ca;
-}
-.card-info .update-time { margin-top: 12px; font-size: 12px; color: #64748b; }
-
-.card-actions { display: flex; gap: 12px; }
-.primary-btn {
-  background: #6366f1; color: white; padding: 10px 20px; border-radius: 12px;
-  border: none; font-weight: 600; cursor: pointer; transition: all 0.2s;
-}
-.primary-btn:hover { background: #4f46e5; box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
-
-.secondary-btn {
-  background: white; color: #475569; padding: 10px 20px; 
-  border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); font-weight: 600; 
-  cursor: pointer; transition: all 0.2s;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-.secondary-btn:hover { background: #f8fafc; color: #1e293b; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-
-.log-card { padding: 20px; margin-bottom: 12px; }
-.log-card.danger { border-left: 4px solid #ef4444; }
-.log-reason { margin: 8px 0; color: #ef4444; font-style: italic; font-size: 14px; }
-.log-meta { font-size: 12px; color: #64748b; }
-
-.empty-state {
-  text-align: center; padding: 80px 0; color: #94a3b8;
-}
-.loading-state {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 100px 0;
-}
-.spinner {
-  width: 40px; height: 40px; border: 3px solid rgba(99, 102, 241, 0.1);
-  border-top-color: #6366f1; border-radius: 50%; animation: spin 1s infinite linear;
-  margin-bottom: 16px;
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 </style>
