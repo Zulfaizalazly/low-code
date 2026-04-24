@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Studio\Registry\Feature;
+use App\Models\Feature;
 
 class FeaturePolicy
 {

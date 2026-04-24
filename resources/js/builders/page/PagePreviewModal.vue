@@ -127,6 +127,23 @@ const themeColorAlpha = computed(() => {
                       <span>{{ field.placeholder || 'Option Label' }}</span>
                   </div>
                 </template>
+                <template v-else-if="field.component_type === 'signature_pad'">
+                  <div class="mock-signature-pad">
+                    <div class="mock-watermark">Sign Here</div>
+                  </div>
+                </template>
+                <template v-else-if="field.component_type === 'camera_capture'">
+                  <div class="mock-camera-capture">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                    <span>Tap to Capture Photo</span>
+                  </div>
+                </template>
+                <template v-else-if="field.component_type === 'scanner_input'">
+                  <div class="mock-scanner-input">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3"></path><path d="M4 17v3h16v-3"></path><path d="M7 10v4"></path><path d="M10 10v4"></path><path d="M14 10v4"></path><path d="M17 10v4"></path></svg>
+                    <input type="text" disabled :placeholder="field.placeholder || 'Scan barcode / IC here...'" />
+                  </div>
+                </template>
                 <template v-else>
                   <input type="text" disabled :placeholder="field.placeholder || 'Enter value...'" />
                 </template>
@@ -375,4 +392,23 @@ const themeColorAlpha = computed(() => {
 }
 .btn-secondary:hover:not(:disabled) { background: #e2e8f0; color: #1e293b; }
 .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.mock-signature-pad {
+  width: 100%; height: 120px; border: 2px dashed #cbd5e1; border-radius: 12px;
+  background: #f8fafc; display: flex; align-items: center; justify-content: center;
+}
+.mock-watermark { font-size: 24px; font-weight: 700; color: #e2e8f0; opacity: 0.8; letter-spacing: 0.1em; text-transform: uppercase; }
+
+.mock-camera-capture {
+  width: 100%; height: 160px; border: 1px solid #cbd5e1; border-radius: 12px;
+  background: #f1f5f9; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  color: #64748b; font-size: 13px; font-weight: 500;
+}
+.mock-camera-capture svg { width: 32px; height: 32px; stroke: #94a3b8; }
+
+.mock-scanner-input {
+  display: flex; align-items: center; gap: 12px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 0 16px;
+}
+.mock-scanner-input svg { width: 20px; height: 20px; stroke: #94a3b8; flex-shrink: 0; }
+.mock-scanner-input input { border: none; padding: 12px 0; background: transparent; box-shadow: none; border-radius: 0; }
 </style>

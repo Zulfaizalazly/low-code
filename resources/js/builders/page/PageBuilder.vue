@@ -31,13 +31,20 @@ const canvasWidth = computed(() => {
 })
 
 // ─── Auto-save logic ───
+let autosaveInterval = null;
+
 onMounted(() => {
-  setInterval(() => {
+  autosaveInterval = setInterval(() => {
     if (isDirty.value) {
       console.log('Auto-saving page...')
-      savePage()
+      savePage().catch(() => {})
     }
   }, 30000)
+})
+
+import { onUnmounted } from 'vue'
+onUnmounted(() => {
+  if (autosaveInterval) clearInterval(autosaveInterval)
 })
 
 // ─── Field Type Library ───
@@ -65,12 +72,21 @@ const fieldCategories = [
     ]
   },
   {
+    name: 'Ar-Rahnu Core',
+    types: [
+      { type: 'signature_pad', label: 'E-Signature', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>', dataType: 'base64' },
+      { type: 'camera_capture', label: 'Camera Capture', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>', dataType: 'file' },
+      { type: 'scanner_input', label: 'Hardware Scanner', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"></path><path d="M4 17v3h16v-3"></path><path d="M7 10v4"></path><path d="M10 10v4"></path><path d="M14 10v4"></path><path d="M17 10v4"></path></svg>', dataType: 'string' },
+    ]
+  },
+  {
     name: 'Display & Layout',
     types: [
       { type: 'summary_panel', label: 'Summary Panel', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3zM3 9h18M9 21V9"></path></svg>', dataType: 'display' },
       { type: 'timeline', label: 'Timeline', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>', dataType: 'display' },
       { type: 'alert', label: 'Alert Banner', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>', dataType: 'display' },
       { type: 'badge', label: 'Status Badge', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>', dataType: 'display' },
+      { type: 'html_display', label: 'HTML / Text Content', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>', dataType: 'display' },
     ]
   }
 ]
@@ -215,13 +231,35 @@ async function savePage() {
     })),
   }))
 
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
+    const onSaved = () => {
+      window.removeEventListener('page-saved', onSaved)
+      window.removeEventListener('page-save-failed', onFailed)
+      isDirty.value = false
+      resolve()
+    }
+
+    const onFailed = (event) => {
+      window.removeEventListener('page-saved', onSaved)
+      window.removeEventListener('page-save-failed', onFailed)
+      const msg = event.detail[0]?.message || event.detail?.message || 'Unknown error'
+      reject(new Error(msg))
+    }
+
+    window.addEventListener('page-saved', onSaved)
+    window.addEventListener('page-save-failed', onFailed)
     window.dispatchEvent(new CustomEvent('vue-page-save', {
       detail: { steps: serialized }
     }))
-    isDirty.value = false
-    setTimeout(resolve, 300)
   })
+}
+
+async function savePageWithFeedback() {
+  try {
+    await savePage()
+  } catch (error) {
+    alert('Save failed: ' + error.message)
+  }
 }
 
 window.savePageToLivewire = savePage
@@ -231,7 +269,12 @@ const isGenerating = ref(false)
 async function triggerAIGeneration() {
   if (isDirty.value) {
     if (!confirm('You have unsaved changes. Save now and generate UI?')) return
-    await savePage()
+    try {
+      await savePage()
+    } catch (error) {
+      alert('Save failed: ' + error.message)
+      return
+    }
   }
   isGenerating.value = true
   if (window.Livewire) {
@@ -265,7 +308,12 @@ window.addEventListener('ui-generation-failed', (event) => {
 async function submitForReview() {
   if (isDirty.value) {
     if (!confirm('You have unsaved changes. Save now before submitting?')) return
-    await savePage()
+    try {
+      await savePage()
+    } catch (error) {
+      alert('Save failed: ' + error.message)
+      return
+    }
   }
 
   if (confirm('Submit this feature version for review? This will lock it for designers.')) {
@@ -418,7 +466,28 @@ async function submitForReview() {
                   {{ field.label }}
                   <span v-if="field.is_required" class="required-mark">*</span>
                 </label>
-                <div class="fake-input" :class="field.component_type">
+                <!-- Signature Pad Preview -->
+                <div v-if="field.component_type === 'signature_pad'" class="fake-input signature_pad">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                  <span>Sign Here</span>
+                </div>
+                <!-- Camera Capture Preview -->
+                <div v-else-if="field.component_type === 'camera_capture'" class="fake-input camera_capture">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                  <span>Tap to Capture</span>
+                </div>
+                <!-- Scanner Input Preview -->
+                <div v-else-if="field.component_type === 'scanner_input'" class="fake-input scanner_input">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M4 7V4h16v3"></path><path d="M4 17v3h16v-3"></path><path d="M7 10v4"></path><path d="M10 10v4"></path><path d="M14 10v4"></path><path d="M17 10v4"></path></svg>
+                  <span>{{ field.placeholder || 'Scan barcode / IC here...' }}</span>
+                </div>
+                <!-- HTML Display Preview -->
+                <div v-else-if="field.component_type === 'html_display'" class="fake-html-preview">
+                  <div class="html-label">HTML Content / Akad Text</div>
+                  <div class="html-snippet" v-html="field.config.content || 'No content defined...'"></div>
+                </div>
+                <!-- Default Input Preview -->
+                <div v-else class="fake-input" :class="field.component_type">
                   {{ field.placeholder || 'Enter value...' }}
                 </div>
               </div>
@@ -439,7 +508,7 @@ async function submitForReview() {
             <span class="dot pulse"></span>
             Unsaved Changes
           </div>
-          <button class="mac-btn primary small" @click="savePage">Save Now</button>
+          <button class="mac-btn primary small" @click="savePageWithFeedback">Save Now</button>
         </div>
       </transition>
     </div>
@@ -476,6 +545,20 @@ async function submitForReview() {
               <div class="toggle-track"></div>
               <span class="toggle-label">Required Field</span>
             </label>
+          </div>
+
+          <!-- Domain Specific Config -->
+          <div v-if="selectedField.component_type === 'ic_input'" class="mac-toggle-group">
+            <label class="mac-toggle">
+              <input type="checkbox" v-model="selectedField.config.enable_ocr" @change="updateField" />
+              <div class="toggle-track"></div>
+              <span class="toggle-label">Enable MyKad OCR</span>
+            </label>
+          </div>
+
+          <div v-if="selectedField.component_type === 'html_display'" class="mac-form-group">
+            <label>HTML Content</label>
+            <textarea v-model="selectedField.config.content" class="mac-textarea mono" rows="4" @change="updateField"></textarea>
           </div>
 
           <div class="mac-divider">Validation Rules</div>
@@ -877,6 +960,20 @@ async function submitForReview() {
   color: #86868b;
   user-select: none;
 }
+.fake-input.signature_pad {
+  background: #fefce8; border: 2px dashed #e5d5a0; text-align: center;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  height: 56px; color: #a3a07a; font-style: italic;
+}
+.fake-input.camera_capture {
+  background: #f0f9ff; border: 1px dashed #93c5fd; text-align: center;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  height: 56px; color: #60a5fa;
+}
+.fake-input.scanner_input {
+  background: #f0fdf4; border: 1px solid #86efac;
+  display: flex; align-items: center; gap: 8px; color: #4ade80;
+}
 .remove-action {
   background: transparent;
   border: none;
@@ -1056,5 +1153,116 @@ async function submitForReview() {
 
 /* Transitions */
 .slide-up-enter-active, .slide-up-leave-active { transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
-.slide-up-enter-from, .slide-up-leave-to { opacity: 0; transform: translate(-50%, 20px); }
+.slide-up-enter-from, .slide-up-leave-to { opacity: 0; transform: translate(-50%, 20px); }/* ─── Field Card Previews ─── */
+.fake-html-preview {
+  background: rgba(0,0,0,0.02);
+  border: 1px dashed rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 8px;
+}
+.html-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #86868b;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.html-snippet {
+  font-size: 12px;
+  color: #1d1d1f;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ─── Inspector Styles ─── */
+.mac-toggle-group {
+  margin: 16px 0;
+}
+.mac-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+.mac-toggle input { display: none; }
+.toggle-track {
+  width: 36px;
+  height: 20px;
+  background: #e5e5e7;
+  border-radius: 20px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+.toggle-track::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.mac-toggle input:checked + .toggle-track {
+  background: #34c759; /* Apple Green */
+}
+.mac-toggle input:checked + .toggle-track::after {
+  transform: translateX(16px);
+}
+.toggle-label {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.mac-divider {
+  margin: 24px 0 16px 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: #86868b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.mac-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(0,0,0,0.06);
+}
+
+.mac-form-group {
+  margin-bottom: 16px;
+}
+.mac-form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: #86868b;
+  margin-bottom: 6px;
+}
+.mac-input, .mac-textarea, .mac-select {
+  width: 100%;
+  background: rgba(0,0,0,0.04);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+.mac-input:focus, .mac-textarea:focus {
+  background: #ffffff;
+  border-color: #007aff;
+  box-shadow: 0 0 0 3px rgba(0,122,255,0.1);
+  outline: none;
+}
+.mac-textarea.mono { font-family: 'SF Mono', 'Menlo', monospace; font-size: 12px; }
+
 </style>

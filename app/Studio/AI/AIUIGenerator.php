@@ -79,9 +79,6 @@ class AIUIGenerator
         return $result;
     }
 
-    /**
-     * Extract context from Flow nodes and edges.
-     */
     protected function extractWorkflowContext(FlowDefinition $flow): array
     {
         $flow->load(['nodes', 'edges']);
@@ -95,8 +92,8 @@ class AIUIGenerator
                 'config' => $node->config,
             ])->toArray(),
             'edges' => $flow->edges->map(fn($edge) => [
-                'source' => $edge->source_node_key,
-                'target' => $edge->target_node_key,
+                'source' => $flow->nodes->firstWhere('id', $edge->source_node_id)?->node_key ?? (string)$edge->source_node_id,
+                'target' => $flow->nodes->firstWhere('id', $edge->target_node_id)?->node_key ?? (string)$edge->target_node_id,
                 'condition' => $edge->condition_config,
             ])->toArray(),
         ];
@@ -118,7 +115,8 @@ class AIUIGenerator
         $this->checkBudget();
 
         $apiKey = config('services.openai.key');
-        $model = config('ai.primary_model', 'gpt-5.4-turbo');
+        $model = $this->resolveModel();
+        $baseUrl = rtrim((string) config('ai.openai.base_url', 'https://api.openai.com/v1'), '/');
 
         if (!$apiKey) {
             throw new \Exception("AI API Key not configured.");
@@ -127,24 +125,30 @@ class AIUIGenerator
         $startTime = microtime(true);
 
         $response = Http::withToken($apiKey)
-            ->retry(3, 1000)
+            ->retry(3, 1000, throw: false)
             ->timeout(60)
-            ->post('https://api.openai.com/v1/chat/completions', [
+            ->post("{$baseUrl}/chat/completions", [
                 'model' => $model,
                 'messages' => [
                     ['role' => 'system', 'content' => $systemPrompt],
                     ['role' => 'user', 'content' => $userPrompt],
                 ],
-                'temperature' => 0.7,
+                'temperature' => config('ai.openai.temperature', 0.7),
+                'max_tokens' => config('ai.openai.max_tokens', 4000),
                 'response_format' => ['type' => 'json_object'],
             ]);
 
         if ($response->failed()) {
+            $errorMessage = data_get($response->json(), 'error.message')
+                ?: $response->reason()
+                ?: 'Unknown error';
+
             Log::error("AI API Call Failed", [
                 'status' => $response->status(),
                 'body' => $response->body(),
+                'model' => $model,
             ]);
-            throw new \Exception("AI Generation failed: " . $response->reason());
+            throw new \Exception("AI Generation failed: {$errorMessage}");
         }
 
         $data = $response->json();
@@ -201,8 +205,8 @@ class AIUIGenerator
         $inputTokens = $usage['prompt_tokens'] ?? 0;
         $outputTokens = $usage['completion_tokens'] ?? 0;
 
-        // Pricing for GPT-5.4 Turbo (April 2026): $0.15/1M input, $0.60/1M output
-        $cost = ($inputTokens * 0.00000015) + ($outputTokens * 0.0000006);
+        // Approximate GPT-5.2 pricing: $1.75/1M input, $14/1M output.
+        $cost = ($inputTokens * 0.00000175) + ($outputTokens * 0.000014);
 
         \DB::table('ai_usage_logs')->insert([
             'user_id' => auth()->id() ?? 1, // Fallback for testing
@@ -267,5 +271,18 @@ class AIUIGenerator
                 'percent_used' => ($mtdCost / $budget) * 100,
             ]);
         }
+    }
+
+    protected function resolveModel(): string
+    {
+        $configuredModel = trim((string) config('ai.primary_model', 'gpt-5.2'));
+        $fallbackModel = trim((string) config('ai.openai.fallback_model', 'gpt-5.2'));
+        $aliases = config('ai.openai.model_aliases', []);
+
+        if ($configuredModel === '') {
+            return $fallbackModel;
+        }
+
+        return $aliases[$configuredModel] ?? $configuredModel;
     }
 }

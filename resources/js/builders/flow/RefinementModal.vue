@@ -30,11 +30,6 @@ const filteredAspects = computed(() => {
   return base.filter(a => a.label.toLowerCase().includes(searchText.value.toLowerCase()))
 })
 
-const estimatedCost = computed(() => {
-  // Rough estimate: $0.01 per field + $0.05 base for simple refinement
-  const fieldCount = props.aspects.filter(a => a.type === 'field_property').length
-  return (0.05 + (fieldCount * 0.01)).toFixed(3)
-})
 
 const isLimitReached = computed(() => (props.iterationCount || 0) >= 5)
 
@@ -98,17 +93,19 @@ window.addEventListener('ui-refinement-failed', (event) => {
 </script>
 
 <template>
-  <div v-if="show" class="refinement-overlay">
-    <div class="refinement-modal liquid-glass">
-      <div class="refinement-header">
-        <div class="header-main">
-          <h3>🛠️ Visual Refinement Engine</h3>
-          <span class="iteration-badge" :class="{ warning: iterationCount >= 4 }">
-            Iteration {{ iterationCount || 0 }}/5
-          </span>
-        </div>
-        <button @click="$emit('close')" class="close-btn">&times;</button>
-      </div>
+  <Transition name="fade">
+    <div v-if="show" class="refinement-overlay" @click.self="$emit('close')">
+      <Transition name="slide-up">
+        <div v-if="show" class="refinement-modal liquid-glass">
+          <div class="refinement-header">
+            <div class="header-main">
+              <h3>✨ Visual Refinement Engine</h3>
+              <span class="iteration-badge" :class="{ warning: iterationCount >= 4 }">
+                Iteration {{ iterationCount || 0 }}/5
+              </span>
+            </div>
+            <button @click="$emit('close')" class="close-btn">&times;</button>
+          </div>
 
       <div class="refinement-body">
         <div class="refinement-search">
@@ -179,10 +176,7 @@ window.addEventListener('ui-refinement-failed', (event) => {
       </div>
 
       <div class="refinement-footer">
-        <div class="cost-indicator">
-          <span>Est. Cost:</span>
-          <strong>${{ estimatedCost }}</strong>
-        </div>
+
         <div class="footer-actions">
           <button @click="$emit('close')" class="btn-secondary">Cancel</button>
           <button 
@@ -196,15 +190,19 @@ window.addEventListener('ui-refinement-failed', (event) => {
         </div>
       </div>
     </div>
-  </div>
+      </Transition>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>
 .refinement-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 110;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -432,24 +430,19 @@ window.addEventListener('ui-refinement-failed', (event) => {
   padding: 16px 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-}
-
-.cost-indicator {
-  font-size: 11px;
-  color: #94a3b8;
-  display: flex;
-  gap: 4px;
-  align-items: baseline;
-}
-
-.cost-indicator strong {
-  color: #a5b4fc;
 }
 
 .footer-actions {
   display: flex;
   gap: 12px;
 }
+
+/* Transitions */
+.fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
+
+.slide-up-enter-active, .slide-up-leave-active { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.slide-up-enter-from, .slide-up-leave-to { opacity: 0; transform: translateY(20px) scale(0.98); }
 </style>

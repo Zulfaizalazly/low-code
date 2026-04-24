@@ -69,6 +69,11 @@ class RolePermissionSeeder extends Seeder
             // Runtime
             'runtime.execute',
             'runtime.view-logs',
+
+            // Branch Dashboard
+            'branch.dashboard',
+            'branch.staff-activity',
+            'branch.support',
         ];
 
         foreach ($permissions as $permission) {
@@ -147,6 +152,24 @@ class RolePermissionSeeder extends Seeder
             'audit.view',
             'monitor.view',
             'runtime.view-logs',
+        ]);
+
+        // Branch Staff - basic runtime execution
+        $branchStaff = Role::create(['name' => 'branch_staff']);
+        $branchStaff->givePermissionTo([
+            'runtime.execute',
+        ]);
+
+        // Branch Manager - operational monitoring only, NO technical editing
+        $branchManager = Role::create(['name' => 'branch_manager']);
+        $branchManager->givePermissionTo([
+            'features.view',
+            'monitor.view',
+            'runtime.execute',
+            'runtime.view-logs',
+            'branch.dashboard',
+            'branch.staff-activity',
+            'branch.support',
         ]);
 
         $this->command->info('Roles and permissions created successfully!');

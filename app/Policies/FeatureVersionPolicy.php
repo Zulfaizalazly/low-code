@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Studio\Registry\FeatureVersion;
+use App\Models\FeatureVersion;
 
 class FeatureVersionPolicy
 {
@@ -36,8 +36,7 @@ class FeatureVersionPolicy
      */
     public function submit(User $user, FeatureVersion $version): bool
     {
-        return $user->hasPermissionTo('versions.submit') 
-            && $version->status === 'draft';
+        return $user->hasPermissionTo('versions.submit');
     }
 
     /**
@@ -45,8 +44,7 @@ class FeatureVersionPolicy
      */
     public function review(User $user, FeatureVersion $version): bool
     {
-        return $user->hasPermissionTo('versions.review')
-            && $version->status === 'pending_review';
+        return $user->hasPermissionTo('versions.review');
     }
 
     /**
@@ -54,8 +52,7 @@ class FeatureVersionPolicy
      */
     public function approve(User $user, FeatureVersion $version): bool
     {
-        return $user->hasPermissionTo('versions.approve')
-            && $version->status === 'pending_review';
+        return $user->hasPermissionTo('versions.approve');
     }
 
     /**
@@ -63,8 +60,7 @@ class FeatureVersionPolicy
      */
     public function reject(User $user, FeatureVersion $version): bool
     {
-        return $user->hasPermissionTo('versions.reject')
-            && $version->status === 'pending_review';
+        return $user->hasPermissionTo('versions.reject');
     }
 
     /**
@@ -72,8 +68,7 @@ class FeatureVersionPolicy
      */
     public function publish(User $user, FeatureVersion $version): bool
     {
-        return $user->hasPermissionTo('versions.publish')
-            && $version->status === 'approved';
+        return $user->hasPermissionTo('versions.publish');
     }
 
     /**
@@ -81,7 +76,6 @@ class FeatureVersionPolicy
      */
     public function rollback(User $user, FeatureVersion $version): bool
     {
-        return $user->hasPermissionTo('versions.rollback')
-            && $version->status === 'published';
+        return $user->hasPermissionTo('versions.rollback');
     }
 }

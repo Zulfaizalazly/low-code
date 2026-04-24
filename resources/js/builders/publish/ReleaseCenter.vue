@@ -15,6 +15,16 @@ const versions = ref({
 
 const rollbackLogs = ref([])
 
+const icons = {
+  drafts: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>',
+  in_review: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
+  approved: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>',
+  published: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>',
+  archived: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>',
+  rollbacks: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>'
+}
+
+
 const summaryStats = computed(() => ({
   drafts: versions.value.drafts.length,
   pending_reviews: versions.value.in_review.length,
@@ -51,9 +61,17 @@ const filteredVersions = computed(() => {
 async function fetchData() {
   loading.value = true
   try {
+    const fetchOptions = {
+      headers: {
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      },
+      credentials: 'same-origin'
+    }
+
     const [vRes, hRes] = await Promise.all([
-      fetch('/api/studio/versions'),
-      fetch('/api/studio/versions/rollback-history')
+      fetch('/api/studio/versions', fetchOptions),
+      fetch('/api/studio/versions/rollback-history', fetchOptions)
     ])
     
     const vData = await vRes.json()
@@ -157,12 +175,12 @@ function formatDate(dateString) {
           :class="activeTab === tab ? 'bg-black/[0.06] text-[#1d1d1f] font-semibold shadow-inner' : 'text-[#86868b] hover:bg-black/[0.03] hover:text-[#1d1d1f] font-medium'"
         >
           <!-- Elegant SVGs for Tabs -->
-          <svg v-if="tab === 'drafts'" class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-          <svg v-else-if="tab === 'in_review'" class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-          <svg v-else-if="tab === 'approved'" class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-          <svg v-else-if="tab === 'published'" class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-          <svg v-else-if="tab === 'archived'" class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" /></svg>
-          <svg v-else class="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" /></svg>
+          <span v-if="tab === 'drafts'" class="w-[18px] h-[18px]" v-html="icons.drafts"></span>
+          <span v-else-if="tab === 'in_review'" class="w-[18px] h-[18px]" v-html="icons.in_review"></span>
+          <span v-else-if="tab === 'approved'" class="w-[18px] h-[18px]" v-html="icons.approved"></span>
+          <span v-else-if="tab === 'published'" class="w-[18px] h-[18px]" v-html="icons.published"></span>
+          <span v-else-if="tab === 'archived'" class="w-[18px] h-[18px]" v-html="icons.archived"></span>
+          <span v-else class="w-[18px] h-[18px]" v-html="icons.rollbacks"></span>
 
           <span class="flex-1 text-[13px] leading-none tracking-wide">{{ tab.replace('_', ' ').toUpperCase() }}</span>
           

@@ -96,53 +96,61 @@ class PageBuilderProxy extends Component
      */
     public function savePageState(array $stepsData): void
     {
-        DB::transaction(function () use ($stepsData) {
-            $page = PageDefinition::findOrFail($this->pageId);
+        try {
+            DB::transaction(function () use ($stepsData) {
+                $page = PageDefinition::findOrFail($this->pageId);
 
-            // Delete existing steps, fields, and bindings (cascade)
-            $page->steps()->delete();
+                // Delete existing steps, fields, and bindings (cascade)
+                $page->steps()->delete();
 
-            foreach ($stepsData as $stepData) {
-                $step = FormStep::create([
-                    'page_definition_id' => $page->id,
-                    'step_key' => $stepData['step_key'],
-                    'title' => $stepData['title'],
-                    'description' => $stepData['description'] ?? null,
-                    'entity_binding' => $stepData['entity_binding'] ?? null,
-                    'sort_order' => $stepData['sort_order'] ?? 0,
-                ]);
-
-                foreach ($stepData['fields'] ?? [] as $fieldData) {
-                    $field = FormField::create([
-                        'form_step_id' => $step->id,
-                        'field_key' => $fieldData['field_key'],
-                        'label' => $fieldData['label'],
-                        'component_type' => $fieldData['component_type'],
-                        'data_type' => $fieldData['data_type'] ?? 'string',
-                        'is_required' => $fieldData['is_required'] ?? false,
-                        'default_value' => $fieldData['default_value'] ?? null,
-                        'placeholder' => $fieldData['placeholder'] ?? null,
-                        'help_text' => $fieldData['help_text'] ?? null,
-                        'sort_order' => $fieldData['sort_order'] ?? 0,
-                        'config' => $fieldData['config'] ?? null,
+                foreach ($stepsData as $stepData) {
+                    $step = FormStep::create([
+                        'page_definition_id' => $page->id,
+                        'step_key' => $stepData['step_key'],
+                        'title' => $stepData['title'],
+                        'description' => $stepData['description'] ?? null,
+                        'entity_binding' => $stepData['entity_binding'] ?? null,
+                        'sort_order' => $stepData['sort_order'] ?? 0,
                     ]);
 
-                    // Create binding if target is specified
-                    $binding = $fieldData['binding'] ?? null;
-                    if ($binding && !empty($binding['target_entity'])) {
-                        FieldBinding::create([
-                            'form_field_id' => $field->id,
-                            'binding_type' => $binding['binding_type'] ?? 'direct',
-                            'target_entity' => $binding['target_entity'],
-                            'target_path' => $binding['target_path'] ?? null,
+                    foreach ($stepData['fields'] ?? [] as $fieldData) {
+                        $field = FormField::create([
+                            'form_step_id' => $step->id,
+                            'field_key' => $fieldData['field_key'],
+                            'label' => $fieldData['label'],
+                            'component_type' => $fieldData['component_type'],
+                            'data_type' => $fieldData['data_type'] ?? 'string',
+                            'is_required' => $fieldData['is_required'] ?? false,
+                            'default_value' => $fieldData['default_value'] ?? null,
+                            'placeholder' => $fieldData['placeholder'] ?? null,
+                            'help_text' => $fieldData['help_text'] ?? null,
+                            'sort_order' => $fieldData['sort_order'] ?? 0,
+                            'config' => $fieldData['config'] ?? null,
                         ]);
+
+                        // Create binding if target is specified
+                        $binding = $fieldData['binding'] ?? null;
+                        if ($binding && !empty($binding['target_entity'])) {
+                            FieldBinding::create([
+                                'form_field_id' => $field->id,
+                                'binding_type' => $binding['binding_type'] ?? 'direct',
+                                'target_entity' => $binding['target_entity'],
+                                'target_path' => $binding['target_path'] ?? null,
+                            ]);
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        $this->saveStatus = 'saved';
-        $this->loadPageState(); // Reload to get fresh IDs
+            $this->saveStatus = 'saved';
+            $this->loadPageState(); // Reload to get fresh IDs
+            $this->dispatch('page-saved');
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Page Save Error: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
+            $this->dispatch('page-save-failed', [
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 
     public function generateUI(\App\Studio\AI\AIUIGenerator $generator): void

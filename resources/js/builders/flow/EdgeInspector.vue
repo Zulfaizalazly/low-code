@@ -28,6 +28,12 @@ function save() {
     conditionConfig: localConditionConfig.value,
   })
 }
+
+function confirmDelete() {
+  if (confirm('Remove this connection?')) {
+    emit('delete', props.edge.id)
+  }
+}
 </script>
 
 <template>
@@ -70,6 +76,13 @@ function save() {
             rows="3" 
             @change="save"
           ></textarea>
+        </div>
+
+        <div class="inspector-actions">
+          <button class="btn-delete" @click="confirmDelete">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"></path></svg>
+            Remove Edge
+          </button>
         </div>
       </div>
     </template>
@@ -178,5 +191,32 @@ function save() {
   resize: vertical;
   min-height: 80px;
   font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+}
+
+.inspector-actions {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.btn-delete {
+  width: 100%;
+  padding: 10px 16px;
+  background: #fff;
+  border: 1px solid #d93025;
+  border-radius: 6px;
+  color: #d93025;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-delete:hover {
+  background: #fce8e6;
 }
 </style>

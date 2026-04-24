@@ -1,6 +1,6 @@
 {
   "system": "Liquid Glass V3",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "components": [
     {
       "key": "text_input",
@@ -90,6 +90,62 @@
       "key": "tabs",
       "label": "Navigation Tabs",
       "props": ["items", "active_key"]
+    },
+    {
+      "key": "signature_pad",
+      "label": "E-Signature Pad",
+      "category": "ar_rahnu_core",
+      "props": ["label", "required", "help_text"],
+      "data_type": "base64",
+      "description": "Touch-enabled signature canvas. Captures customer digital signature as base64 PNG. Used for PDPA consent, SAG acceptance, and redemption authorization."
+    },
+    {
+      "key": "camera_capture",
+      "label": "Camera Capture",
+      "category": "ar_rahnu_core",
+      "props": ["label", "required", "capture_count", "help_text"],
+      "data_type": "file",
+      "description": "Device camera access for capturing marhun (collateral) photos. Supports multi-angle capture (front and side). Images stored as file attachments."
+    },
+    {
+      "key": "scanner_input",
+      "label": "Hardware Scanner Input",
+      "category": "ar_rahnu_core",
+      "props": ["label", "required", "scan_type", "placeholder"],
+      "data_type": "string",
+      "description": "Input field optimized for USB/HID barcode scanners and IC card readers. Listens for rapid keystrokes (< 50ms between characters) to distinguish scanner input from manual typing. Use scan_type: 'ic_reader' for MyKad or 'barcode' for item tags."
+    },
+    {
+      "key": "gold_repeater",
+      "label": "Gold Items Repeater",
+      "category": "ar_rahnu_core",
+      "props": ["label", "min_items", "max_items"],
+      "data_type": "collection",
+      "description": "Specialized repeater for gold item entry. Each row captures: gold_type (916/999/750), weight_gross, weight_net, description, and market_value."
+    },
+    {
+      "key": "nominee_repeater",
+      "label": "Nominee Repeater",
+      "category": "ar_rahnu_core",
+      "props": ["label", "min_items", "max_items"],
+      "data_type": "collection",
+      "description": "Repeater for nominee registration. Each row captures: name, ic_number, relationship, and allocation_percentage."
+    },
+    {
+      "key": "summary_panel",
+      "label": "Summary Panel",
+      "category": "display",
+      "props": ["title", "data_source"],
+      "data_type": "display",
+      "description": "Read-only summary card displaying computed values from flow context. Used to show calculation results like Murabahah sale price, total ujrah, and redemption amount."
+    },
+    {
+      "key": "timeline",
+      "label": "Timeline",
+      "category": "display",
+      "props": ["data_source"],
+      "data_type": "display",
+      "description": "Vertical timeline showing facility lifecycle events: application, valuation, approval, disbursement, repayment, redemption/auction."
     }
   ],
   "tokens": {

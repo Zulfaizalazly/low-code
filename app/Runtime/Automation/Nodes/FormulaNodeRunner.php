@@ -18,9 +18,19 @@ class FormulaNodeRunner implements NodeRunner
     {
         $config = $node->config ?? [];
 
+        $formulaKey = $config['formula_key'] ?? null;
         $formula = $config['formula'] ?? null;
         $variables = $config['variables'] ?? [];
         $outputKey = $config['output_key'] ?? 'result';
+
+        if ($formulaKey) {
+            $registryFormula = \App\Services\FormulaRegistry::getFormula($formulaKey);
+            if ($registryFormula) {
+                $formula = $registryFormula['formula'] ?? $formula;
+                $variables = array_merge($registryFormula['variables'] ?? [], $variables);
+                $outputKey = $registryFormula['output_key'] ?? $outputKey;
+            }
+        }
 
         if (!$formula) {
             throw new Exception("FormulaNodeRunner: No formula defined for node {$node->node_key}");

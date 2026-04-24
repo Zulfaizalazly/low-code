@@ -27,14 +27,19 @@ class PublishWorkflowPermissions
             ], 401);
         }
 
-        // Get user role (assuming User model has a 'role' attribute or relationship)
-        $userRole = $user->role ?? 'designer';
+        $userRole = $user->getRoleNames()->first() ?? ($user->role ?? 'unknown');
 
         $allowed = match ($action) {
-            'submit' => in_array($userRole, ['branch_staff', 'designer', 'reviewer', 'admin']),
-            'review' => in_array($userRole, ['reviewer', 'admin']),
-            'publish' => in_array($userRole, ['admin']),
-            'rollback' => in_array($userRole, ['admin']),
+            'submit' => $user->hasAnyRole(['super-admin', 'system-admin', 'feature-developer', 'reviewer'])
+                || $user->can('versions.submit'),
+            'review' => $user->hasAnyRole(['super-admin', 'system-admin', 'reviewer'])
+                || $user->can('versions.review')
+                || $user->can('versions.approve')
+                || $user->can('versions.reject'),
+            'publish' => $user->hasAnyRole(['super-admin', 'system-admin', 'publisher'])
+                || $user->can('versions.publish'),
+            'rollback' => $user->hasAnyRole(['super-admin', 'system-admin', 'publisher'])
+                || $user->can('versions.rollback'),
             default => false,
         };
 
@@ -53,10 +58,10 @@ class PublishWorkflowPermissions
     private function getRequiredRoles(string $action): array
     {
         return match ($action) {
-            'submit' => ['designer', 'reviewer', 'admin'],
-            'review' => ['reviewer', 'admin'],
-            'publish' => ['admin'],
-            'rollback' => ['admin'],
+            'submit' => ['super-admin', 'system-admin', 'feature-developer'],
+            'review' => ['super-admin', 'system-admin', 'reviewer'],
+            'publish' => ['super-admin', 'system-admin', 'publisher'],
+            'rollback' => ['super-admin', 'system-admin', 'publisher'],
             default => [],
         };
     }

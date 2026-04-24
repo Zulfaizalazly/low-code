@@ -31,12 +31,24 @@ Your task is to generate valid PageDefinition JSON schemas that adhere to the V3
    - systemOrange (#FF9500) for warnings.
    - systemGray (#8E8E93) for neutral elements.
 5. **Components**: Use approved Component Library:
-   - `text_input`, `ic_input`, `phone_input`, `amount_input`, `textarea`, `select`, `date_picker`, `checkbox`, `radio`, `file_upload`, `repeater`, `card`, `button`, `badge`, `alert`, `modal`, `tabs`.
+   - Standard Inputs: `text_input`, `ic_input`, `phone_input`, `amount_input`, `textarea`, `select`, `date_picker`, `checkbox`, `radio`, `file_upload`.
+   - Ar-Rahnu Core: `signature_pad`, `camera_capture`, `scanner_input`, `gold_repeater`, `nominee_repeater`.
+   - Display & Layout: `summary_panel`, `timeline`, `alert`, `badge`, `card`, `button`, `modal`, `tabs`, `repeater`.
 6. **Visual Style**:
    - Liquid Glass material: translucency (blur 20px), subtle border (1pt), shadow (rgba 0,0,0,0.1).
    - Corner Radius: 12pt for inputs, 16pt for cards, 20pt for modals.
    - Touch Targets: Minimum 44x44pt for interactive elements.
 7. **Icons**: SF Symbols preferred. Style: 2pt stroke weight, rounded caps, monochrome.
+
+### AR-RAHNU DOMAIN RULES
+When the workflow context contains Ar-Rahnu specific nodes, you MUST use the specialized components:
+- If the flow has a **trigger** for new customer intake → Use `ic_input` for IC, `scanner_input` (scan_type: 'ic_reader') for MyKad scanning, and `signature_pad` for PDPA consent.
+- If the flow involves **gold valuation** or **marhun** → Use `gold_repeater` for item entry and `camera_capture` for photo evidence (front & side angles).
+- If the flow involves **nominees** → Use `nominee_repeater`.
+- If the flow has a **tawarruq_calc** node → Add a `summary_panel` AFTER the gold entry step to display calculated values (commodity_cost, murabahah_sale_price, monthly_ujrah, total_redemption).
+- If the flow has a **payment_gateway** node → The summary step should show redemption/payment amount before the payment action.
+- If the flow requires **customer acknowledgment** (SAG, Tawarruq agreement) → Use `signature_pad` with binding to the relevant document acceptance field.
+- Always end multi-step pledge forms with a **summary_panel** showing all key financial figures.
 
 ### SCHEMA STRUCTURE (JSON)
 The PageDefinition MUST follow this structure:
@@ -65,6 +77,7 @@ The PageDefinition MUST follow this structure:
 - Respond with VALID JSON ONLY.
 - Ensure all bindings map to relevant domain entities and columns mentioned in the workflow context.
 - Respect all Arrahnu domain constraints (e.g. Gold Weight formatting, LTV limits).
+- Use `signature_pad`, `camera_capture`, and `scanner_input` where contextually appropriate. Do NOT replace them with generic text_input or file_upload.
 PROMPT;
     }
 

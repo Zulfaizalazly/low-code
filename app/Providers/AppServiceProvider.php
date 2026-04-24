@@ -39,6 +39,11 @@ class AppServiceProvider extends ServiceProvider
             Gate::policy($model, $policy);
         }
 
+        // Enforce SQLite Foreign Key constraints
+        if (config('database.default') === 'sqlite') {
+            \Illuminate\Support\Facades\DB::statement('PRAGMA foreign_keys=ON;');
+        }
+
         // Register domain event logging for all concrete DomainEvent subclasses
         $domainEvents = [
             \App\Domain\Customer\Events\CustomerCreated::class,

@@ -92,7 +92,8 @@ class UIConsistencyValidator
     {
         return in_array($type, [
             'text_input', 'ic_input', 'phone_input', 'amount_input', 
-            'date_picker', 'checkbox', 'radio', 'textarea', 'select', 'file_upload'
+            'date_picker', 'checkbox', 'radio', 'textarea', 'select', 'file_upload',
+            'signature_pad', 'camera_capture', 'scanner_input'
         ]);
     }
 

@@ -33,40 +33,47 @@ class FlowCanvasProxy extends Component
      */
     public function saveFlowState(array $nodes, array $edges)
     {
-        \Illuminate\Support\Facades\DB::transaction(function () use ($nodes, $edges) {
-            // 1. Clean old edges and nodes
-            $this->flow->edges()->delete();
-            $this->flow->nodes()->delete();
+        try {
+            \Illuminate\Support\Facades\DB::transaction(function () use ($nodes, $edges) {
+                // 1. Clean old edges and nodes
+                $this->flow->edges()->delete();
+                $this->flow->nodes()->delete();
 
-            // 2. Re-create Nodes
-            $nodeMap = [];
-            foreach ($nodes as $node) {
-                $newNode = $this->flow->nodes()->create([
-                    'node_key' => $node['node_key'] ?? $node['id'] ?? 'unknown',
-                    'node_type' => $node['node_type'] ?? $node['type'] ?? 'command',
-                    'label' => $node['label'] ?? $node['data']['label'] ?? 'Untitled',
-                    'config' => $node['config'] ?? $node['data']['config'] ?? [],
-                    'position_x' => (int) ($node['position_x'] ?? $node['position']['x'] ?? 0),
-                    'position_y' => (int) ($node['position_y'] ?? $node['position']['y'] ?? 0),
-                ]);
-                $nodeMap[$node['node_key'] ?? $node['id']] = $newNode->id;
-            }
+                // 2. Re-create Nodes
+                $nodeMap = [];
+                foreach ($nodes as $node) {
+                    $newNode = $this->flow->nodes()->create([
+                        'node_key' => $node['node_key'] ?? $node['id'] ?? 'unknown',
+                        'node_type' => $node['node_type'] ?? $node['type'] ?? 'command',
+                        'label' => $node['label'] ?? $node['data']['label'] ?? 'Untitled',
+                        'config' => $node['config'] ?? $node['data']['config'] ?? [],
+                        'position_x' => (int) ($node['position_x'] ?? $node['position']['x'] ?? 0),
+                        'position_y' => (int) ($node['position_y'] ?? $node['position']['y'] ?? 0),
+                    ]);
+                    $nodeMap[$node['node_key'] ?? $node['id']] = $newNode->id;
+                }
 
-            // 3. Re-create Edges
-            foreach ($edges as $edge) {
-                $sourceKey = $edge['source_node_key'] ?? $edge['source'] ?? null;
-                $targetKey = $edge['target_node_key'] ?? $edge['target'] ?? null;
+                // 3. Re-create Edges
+                foreach ($edges as $edge) {
+                    $sourceKey = $edge['source_node_key'] ?? $edge['source'] ?? null;
+                    $targetKey = $edge['target_node_key'] ?? $edge['target'] ?? null;
 
-                $this->flow->edges()->create([
-                    'source_node_id' => $nodeMap[$sourceKey] ?? null,
-                    'target_node_id' => $nodeMap[$targetKey] ?? null,
-                    'condition_type' => $edge['condition_type'] ?? $edge['data']['condition_type'] ?? 'always',
-                    'condition_config' => $edge['condition_config'] ?? $edge['data']['condition_config'] ?? [],
-                ]);
-            }
-        });
+                    $this->flow->edges()->create([
+                        'source_node_id' => $nodeMap[$sourceKey] ?? null,
+                        'target_node_id' => $nodeMap[$targetKey] ?? null,
+                        'condition_type' => $edge['condition_type'] ?? $edge['data']['condition_type'] ?? 'always',
+                        'condition_config' => $edge['condition_config'] ?? $edge['data']['condition_config'] ?? [],
+                    ]);
+                }
+            });
 
-        $this->dispatch('flow-saved');
+            $this->dispatch('flow-saved');
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Flow Save Error: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
+            $this->dispatch('flow-save-failed', [
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     /**

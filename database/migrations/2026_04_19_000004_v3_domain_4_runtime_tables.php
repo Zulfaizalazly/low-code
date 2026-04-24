@@ -92,24 +92,8 @@ return new class extends Migration
             $table->index(['submitted_at']);
         });
 
-        // 6. audit_trails
-        Schema::create('audit_trails', function (Blueprint $table) {
-            $table->id();
-            $table->string('auditable_type');
-            $table->unsignedBigInteger('auditable_id');
-            $table->string('action');               // created, updated, deleted, approved, etc.
-            $table->json('old_values')->nullable();
-            $table->json('new_values')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->string('ip_address')->nullable();
-            $table->string('user_agent')->nullable();
-            $table->timestamp('performed_at');
-            $table->timestamps();
-            $table->index(['auditable_type', 'auditable_id']);
-            $table->index(['user_id']);
-            $table->index(['action']);
-            $table->index(['performed_at']);
-        });
+        // 6. audit_trails - REMOVED: Now created in 2026_04_24_045228_create_audit_trails_table.php
+        // This prevents duplicate table creation conflicts
 
         // 7. dead_letter_jobs
         Schema::create('dead_letter_jobs', function (Blueprint $table) {
@@ -130,7 +114,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('dead_letter_jobs');
-        Schema::dropIfExists('audit_trails');
+        // audit_trails now dropped in 2026_04_24_045228_create_audit_trails_table.php
         Schema::dropIfExists('ui_submission_logs');
         Schema::dropIfExists('command_logs');
         Schema::dropIfExists('automation_node_logs');

@@ -124,6 +124,79 @@ const configFields = computed(() => {
         { key: 'input_mapping', label: 'Input Mapping (JSON)', type: 'json' },
         { key: 'result_path', label: 'Store Result In', type: 'text', placeholder: '$.calculated_value' },
       ]
+    case 'payment_gateway':
+      const pgFields = [
+        { key: 'provider', label: 'Payment Provider', type: 'select', options: ['billplz', 'bayarcash', 'toyyibpay', 'stripe', 'chip'] },
+        { key: 'amount', label: 'Amount (Context Path)', type: 'text', placeholder: 'e.g., $.total_redemption' },
+        { key: 'description', label: 'Payment Description', type: 'text', placeholder: 'e.g., Ar-Rahnu Repayment' },
+        { key: 'type', label: 'Transaction Type', type: 'select', options: ['collection', 'disbursement'] },
+        { key: 'output_key', label: 'Store Result In', type: 'text', placeholder: 'payment_response' },
+      ];
+      
+      const provider = localConfig.value.provider;
+      if (provider) {
+        pgFields.push({ key: '_provider_creds', label: 'Provider Credentials', type: 'divider' });
+      }
+
+      if (provider === 'billplz') {
+         pgFields.push({ key: 'credentials.collection_id', label: 'Collection ID', type: 'text' });
+         pgFields.push({ key: 'credentials.api_key', label: 'API Secret Key', type: 'text' });
+      } else if (provider === 'toyyibpay') {
+         pgFields.push({ key: 'credentials.category_code', label: 'Category Code', type: 'text' });
+         pgFields.push({ key: 'credentials.user_secret_key', label: 'User Secret Key', type: 'text' });
+      } else if (provider === 'stripe') {
+         pgFields.push({ key: 'credentials.secret_key', label: 'Secret API Key (sk_live/test)', type: 'text' });
+      } else if (provider === 'bayarcash') {
+         pgFields.push({ key: 'credentials.portal_key', label: 'Portal Key', type: 'text' });
+         pgFields.push({ key: 'credentials.pat', label: 'Personal Access Token (PAT)', type: 'text' });
+         pgFields.push({ key: 'credentials.secret_key', label: 'API Secret Key', type: 'text' });
+      } else if (provider === 'chip') {
+         pgFields.push({ key: 'credentials.brand_id', label: 'Brand ID', type: 'text' });
+         pgFields.push({ key: 'credentials.api_key', label: 'API Key', type: 'text' });
+      }
+      return pgFields;
+    case 'tawarruq_calc':
+      return [
+        { key: 'marhun_value', label: 'Marhun Value Path', type: 'text', placeholder: '$.marhun_value' },
+        { key: 'margin_rate', label: 'Margin Rate Path', type: 'text', placeholder: '$.margin_rate (e.g. 0.025)' },
+        { key: 'ltv_ratio', label: 'LTV Ratio Path', type: 'text', placeholder: '$.ltv_ratio (e.g. 0.70)' },
+        { key: 'ujrah_rate', label: 'Ujrah Rate Path', type: 'text', placeholder: '$.ujrah_rate (e.g. 0.75 per 100)' },
+        { key: 'tenure_months', label: 'Tenure Months Path', type: 'text', placeholder: '$.tenure_months (e.g. 6)' },
+        { key: 'output_key', label: 'Store Result In', type: 'text', placeholder: 'tawarruq' },
+      ]
+    case 'generate_pdf':
+      return [
+        { key: 'template_id', label: 'Template ID', type: 'text', placeholder: 'e.g., sag_standard_v1' },
+      ]
+    case 'vault_action':
+      return [
+        { key: 'action', label: 'Vault Action', type: 'select', options: ['check_in', 'check_out', 'audit'] },
+        { key: 'marhun_id', label: 'Marhun ID Path', type: 'text', placeholder: '$.marhun_id' },
+      ]
+    case 'api_request':
+      const apiFields = [
+        { key: 'method', label: 'HTTP Method', type: 'select', options: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'] },
+        { key: 'url', label: 'API Endpoint URL', type: 'text', placeholder: 'https://api.example.com/v1/...' },
+        { key: 'auth_type', label: 'Authentication', type: 'select', options: ['none', 'bearer', 'basic'] },
+      ];
+      
+      const authType = localConfig.value.auth_type;
+      if (authType === 'bearer') {
+        apiFields.push({ key: 'auth_token', label: 'Bearer Token', type: 'text', placeholder: 'e.g., sk_test_...' });
+      } else if (authType === 'basic') {
+        apiFields.push({ key: 'auth_username', label: 'Username', type: 'text' });
+        apiFields.push({ key: 'auth_password', label: 'Password', type: 'text' });
+      }
+
+      apiFields.push({ key: 'headers', label: 'Headers (JSON)', type: 'json', placeholder: '{"Content-Type": "application/json"}' });
+      
+      if (['POST', 'PUT', 'PATCH'].includes(localConfig.value.method)) {
+        apiFields.push({ key: 'payload', label: 'Request Body (JSON or Mapping)', type: 'json' });
+      }
+      
+      apiFields.push({ key: 'output_key', label: 'Store Response In', type: 'text', placeholder: 'api_response' });
+      
+      return apiFields;
     default:
       return []
   }

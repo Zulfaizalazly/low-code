@@ -22,7 +22,23 @@
     @livewireStyles
 </head>
 <body class="h-full font-sans antialiased text-slate-900">
-    <div class="flex h-full overflow-hidden">
+    @if(auth()->check() && auth()->user()->hasRole('branch_manager') && session('branch_view_mode') === 'staff')
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-700 px-4 py-2.5 flex items-center justify-between text-white z-[60] relative shadow-md">
+            <div class="flex items-center gap-2.5 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8">
+                <svg class="w-5 h-5 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                <span class="text-[13px] font-bold tracking-wide">Manager Staff View Active <span class="opacity-80 font-normal ml-1">— You have full staff capabilities for this branch.</span></span>
+                
+                <form action="{{ route('branch.toggle-view') }}" method="POST" class="ml-auto">
+                    @csrf
+                    <button type="submit" class="text-[12px] font-bold px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-lg border border-white/20 transition-colors flex items-center gap-2">
+                        Return to Ops
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    @endif
+    <div class="flex h-full overflow-hidden @if(auth()->check() && auth()->user()->hasRole('branch_manager') && session('branch_view_mode') === 'staff') h-[calc(100%-48px)] @endif">
         <!-- Sidebar -->
         <aside class="hidden lg:flex lg:flex-shrink-0">
             <div class="flex flex-col w-64 border-r border-slate-200 bg-white shadow-sm">

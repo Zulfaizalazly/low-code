@@ -46,7 +46,7 @@ const props = defineProps({
   commands: { type: Array, default: () => [] },
 })
 
-const { onPaneReady, onConnect, addEdges, removeNodes, toObject, project } = useVueFlow()
+const { onPaneReady, onConnect, addEdges, removeNodes, removeEdges, toObject, project } = useVueFlow()
 
 const nodes = ref([])
 const edges = ref([])
@@ -67,6 +67,8 @@ function showToast(msg, type = 'success') {
   toastType.value = type;
   setTimeout(() => { toastMessage.value = '' }, 5000);
 }
+
+let autosaveInterval = null;
 
 function goBack() {
   if (isDirty.value) {
@@ -173,9 +175,9 @@ onMounted(() => {
     window.addEventListener('keydown', handleKeyDown)
 
     // Auto-save every 30 seconds
-    setInterval(() => {
+    autosaveInterval = setInterval(() => {
         if (isDirty.value && !isGenerating.value) {
-            saveFlow()
+            saveFlow().catch(() => {})
         }
     }, 30000)
 
@@ -191,6 +193,7 @@ onMounted(() => {
 onUnmounted(() => {
     window.removeEventListener('keydown', handleKeyDown)
     window.onbeforeunload = null
+    if (autosaveInterval) clearInterval(autosaveInterval)
 })
 
 function handleKeyDown(e) {
@@ -206,6 +209,8 @@ function handleKeyDown(e) {
         
         if (selectedNode.value) {
             deleteNode(selectedNode.value.id)
+        } else if (selectedEdge.value) {
+            deleteEdge(selectedEdge.value.id)
         }
     }
 }
@@ -274,9 +279,14 @@ function updateNodeConfig(update) {
 
 // ─── Delete Node ───
 function deleteNode(nodeId) {
-  nodes.value = nodes.value.filter(n => n.id !== nodeId)
-  edges.value = edges.value.filter(e => e.source !== nodeId && e.target !== nodeId)
+  removeNodes([nodeId])
   selectedNode.value = null
+  isDirty.value = true
+}
+
+function deleteEdge(edgeId) {
+  removeEdges([edgeId])
+  selectedEdge.value = null
   isDirty.value = true
 }
 
@@ -323,7 +333,7 @@ function onDragOver(event) {
 
 // ─── Save to Livewire ───
 function saveFlow() {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const flowObject = toObject()
 
     const serializedNodes = flowObject.nodes.map(node => ({
@@ -350,16 +360,24 @@ function saveFlow() {
     // Listen for the return event from Livewire to resolve the promise
     const onSaved = () => {
         window.removeEventListener('flow-saved', onSaved)
+        window.removeEventListener('flow-save-failed', onFailed)
         toast.success('Flow definition updated successfully')
+        isDirty.value = false
         resolve()
     }
+    const onFailed = (event) => {
+        window.removeEventListener('flow-saved', onSaved)
+        window.removeEventListener('flow-save-failed', onFailed)
+        const msg = event.detail[0]?.message || event.detail?.message || 'Unknown error'
+        toast.error('Failed to save flow: ' + msg)
+        reject(new Error(msg))
+    }
     window.addEventListener('flow-saved', onSaved)
+    window.addEventListener('flow-save-failed', onFailed)
 
     window.dispatchEvent(new CustomEvent('vue-flow-save', {
         detail: { nodes: serializedNodes, edges: serializedEdges }
     }))
-
-    isDirty.value = false
   })
 }
 
@@ -367,16 +385,23 @@ window.saveFlowToLivewire = saveFlow
 
 // ─── AI UI Generation ───
 function triggerAIGeneration() {
-  if (isDirty.value) {
-    if (!confirm('You have unsaved changes. Save now and generate UI?')) return
-    saveFlow()
-  }
-  
-  isGenerating.value = true
-  // Call Livewire component method via global bridge or standard Livewire dispatch
-  if (window.Livewire) {
-    window.Livewire.find(document.querySelector('[wire\\:id]').getAttribute('wire:id')).generateUI()
-  }
+  return (async () => {
+    if (isDirty.value) {
+      if (!confirm('You have unsaved changes. Save now and generate UI?')) return
+
+      try {
+        await saveFlow()
+      } catch {
+        return
+      }
+    }
+
+    isGenerating.value = true
+
+    if (window.Livewire) {
+      window.Livewire.find(document.querySelector('[wire\\:id]').getAttribute('wire:id')).generateUI()
+    }
+  })()
 }
 
 window.addEventListener('ui-generated', (event) => {
@@ -683,6 +708,7 @@ async function submitForReview() {
     <EdgeInspector
       :edge="selectedEdge"
       @update="updateEdgeConfig"
+      @delete="deleteEdge"
     />
 
     <!-- AI Preview & Refinement -->

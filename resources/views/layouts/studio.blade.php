@@ -107,11 +107,10 @@
                     <svg class="w-5 h-5 {{ request()->routeIs('studio.monitor') ? 'text-[#1d1d1f]' : 'text-[#86868b] group-hover:text-[#515154]' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
                     Runtime Monitor
                 </a>
-                <div class="flex items-center gap-3 px-3 py-2 text-[14px] leading-5 font-medium rounded-[10px] text-[#86868b]/60 cursor-not-allowed">
-                    <svg class="w-5 h-5 text-[#86868b]/40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                    <span class="flex-1">Audit Logs</span>
-                    <span class="text-[9px] font-semibold px-1.5 py-[1px] rounded text-[#86868b]/60 bg-[#86868b]/10 uppercase tracking-widest">Soon</span>
-                </div>
+                <a href="{{ route('studio.audit') }}" class="flex items-center gap-3 px-3 py-2 text-[14px] leading-5 rounded-[10px] {{ request()->routeIs('studio.audit') ? 'bg-[#1d1d1f]/[0.06] text-[#1d1d1f] font-semibold' : 'text-[#515154] hover:text-[#1d1d1f] hover:bg-[#1d1d1f]/[0.04] font-medium' }} transition-colors duration-200 group">
+                    <svg class="w-5 h-5 {{ request()->routeIs('studio.audit') ? 'text-[#1d1d1f]' : 'text-[#86868b] group-hover:text-[#515154]' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    Audit Logs
+                </a>
             </nav>
 
             <div class="p-3 w-[260px]">

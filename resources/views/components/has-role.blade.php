@@ -1,0 +1,3 @@
+@if($hasRole)
+    {{ $slot }}
+@endif

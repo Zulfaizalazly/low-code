@@ -1,0 +1,1 @@
+<?php namespace App\Commands; class SendNotificationCommand extends BaseCommand { public function __construct(public ?string $recipient = null, public ?string $channel = 'sms', public ?string $message_template = null) {} }

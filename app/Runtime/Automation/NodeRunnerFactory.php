@@ -17,6 +17,11 @@ class NodeRunnerFactory
         'document' => Nodes\DocumentNodeRunner::class,
         'gl_action' => Nodes\GLActionNodeRunner::class,
         'formula' => Nodes\FormulaNodeRunner::class,
+        'tawarruq_calc' => Nodes\TawarruqCalcNodeRunner::class,
+        'generate_pdf' => Nodes\GeneratePdfNodeRunner::class,
+        'vault_action' => Nodes\VaultActionNodeRunner::class,
+        'payment_gateway' => Nodes\PaymentGatewayNodeRunner::class,
+        'api_request' => Nodes\ApiRequestNodeRunner::class,
     ];
 
     /**

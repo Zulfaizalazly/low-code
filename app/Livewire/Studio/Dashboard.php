@@ -22,10 +22,21 @@ class Dashboard extends Component
     // Auto-fill when blueprint changes
     public function updatedSelectedBlueprint($val): void
     {
-        if ($val === 'pledge_intake') {
-            $this->newFeatureName = 'Pledge Intake';
-            $this->newFeatureKey = 'pledge-intake';
-            $this->newFeatureDomain = 'Facility';
+        $autoFill = [
+            'pledge_intake'      => ['Pledge Intake', 'pledge-intake', 'Facility'],
+            'pledge_renewal'     => ['Pledge Renewal', 'pledge-renewal', 'Facility'],
+            'pledge_redemption'  => ['Pledge Redemption', 'pledge-redemption', 'Facility'],
+            'additional_margin'  => ['Additional Margin', 'additional-margin', 'Facility'],
+            'margin_call'        => ['Margin Call', 'margin-call', 'Risk'],
+            'auction_process'    => ['Auction Process', 'auction-process', 'Auction'],
+            'payment_collection' => ['Payment Collection', 'payment-collection', 'Finance'],
+            'vault_recon'        => ['Vault Reconciliation', 'vault-recon', 'Operations'],
+            'kyc_update'         => ['Customer KYC Update', 'kyc-update', 'Customer'],
+            'bnm_report'         => ['BNM Compliance Report', 'bnm-report', 'Compliance'],
+        ];
+
+        if (isset($autoFill[$val])) {
+            [$this->newFeatureName, $this->newFeatureKey, $this->newFeatureDomain] = $autoFill[$val];
         }
     }
 

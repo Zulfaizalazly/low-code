@@ -86,8 +86,14 @@ if (pageElement) {
     app.use(Toast, toastOptions);
     app.mount('#page-builder');
 
-    document.getElementById('save-page-btn')?.addEventListener('click', () => {
-        if (window.savePageToLivewire) window.savePageToLivewire();
+    document.getElementById('save-page-btn')?.addEventListener('click', async () => {
+        if (!window.savePageToLivewire) return;
+
+        try {
+            await window.savePageToLivewire();
+        } catch (error) {
+            console.error('Page save failed:', error);
+        }
     });
 }
 

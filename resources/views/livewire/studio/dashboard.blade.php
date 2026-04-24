@@ -129,24 +129,137 @@
             <div class="px-8 py-6 space-y-5">
                 {{-- Blueprint / Template Selector --}}
                 <div>
-                    <label class="block text-[12px] font-semibold text-[#1d1d1f] uppercase tracking-wide mb-2">Industry Blueprint</label>
-                    <div class="grid grid-cols-2 gap-3">
-                        <label class="relative flex items-center p-3 rounded-xl border cursor-pointer transition-all {{ $selectedBlueprint === 'blank' ? 'border-blue-500 bg-blue-50 ring-1 ring-blue-500' : 'border-[#1d1d1f]/10 bg-white hover:bg-[#1d1d1f]/[0.02]' }}">
-                            <input type="radio" wire:model.live="selectedBlueprint" value="blank" class="sr-only">
-                            <div>
-                                <p class="text-[14px] font-semibold text-[#1d1d1f]">Scratch / Blank Feature</p>
-                                <p class="text-[12px] text-[#86868b]">Empty canvas, no presets.</p>
-                            </div>
-                        </label>
+                    <label class="block text-[12px] font-semibold text-[#1d1d1f] uppercase tracking-wide mb-3">Industry Blueprint</label>
+                    <div class="relative">
+                        {{-- Carousel Container --}}
+                        <div class="overflow-x-auto scrollbar-hide snap-x snap-mandatory" id="blueprintCarousel">
+                            <div class="flex gap-3 pb-2">
+                                {{-- Blank Option --}}
+                            <label class="snap-start shrink-0 w-[170px] relative flex flex-col p-4 rounded-xl border cursor-pointer transition-all {{ $selectedBlueprint === 'blank' ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-500' : 'border-[#1d1d1f]/10 bg-white hover:bg-[#1d1d1f]/[0.02] hover:border-[#1d1d1f]/20' }}">
+                                <input type="radio" wire:model.live="selectedBlueprint" value="blank" class="sr-only">
+                                <div>
+                                    <p class="text-[14px] font-semibold text-[#1d1d1f] mb-1">Blank Canvas</p>
+                                    <p class="text-[11px] text-[#86868b]">Start from scratch</p>
+                                </div>
+                            </label>
 
-                        <label class="relative flex items-center p-3 rounded-xl border cursor-pointer transition-all {{ $selectedBlueprint === 'pledge_intake' ? 'border-emerald-500 bg-emerald-50 ring-1 ring-emerald-500' : 'border-[#1d1d1f]/10 bg-white hover:bg-[#1d1d1f]/[0.02]' }}">
-                            <input type="radio" wire:model.live="selectedBlueprint" value="pledge_intake" class="sr-only">
-                            <div class="absolute top-[-10px] right-2 bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">SKM 2026</div>
-                            <div>
-                                <p class="text-[14px] font-semibold text-[#1d1d1f]">Standard Pledge Intake</p>
-                                <p class="text-[12px] text-[#86868b]">AMLA, Valuation, Surat Pajak.</p>
-                            </div>
-                        </label>
+                            {{-- Blueprint 1: Pledge Intake --}}
+                            <label class="snap-start shrink-0 w-[170px] relative flex flex-col p-4 rounded-xl border cursor-pointer transition-all {{ $selectedBlueprint === 'pledge_intake' ? 'border-emerald-500 bg-emerald-50 ring-2 ring-emerald-500' : 'border-[#1d1d1f]/10 bg-white hover:bg-[#1d1d1f]/[0.02] hover:border-[#1d1d1f]/20' }}">
+                                <input type="radio" wire:model.live="selectedBlueprint" value="pledge_intake" class="sr-only">
+                                <div class="absolute top-2 right-2 bg-emerald-100 text-emerald-800 text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">SKM 2026</div>
+                                <div>
+                                    <p class="text-[14px] font-semibold text-[#1d1d1f] mb-1">Pledge Intake</p>
+                                    <p class="text-[11px] text-[#86868b] mb-2">Gadaian Baru</p>
+                                    <span class="inline-block px-2 py-0.5 text-[9px] font-semibold bg-blue-100 text-blue-700 rounded">Facility</span>
+                                </div>
+                            </label>
+
+                            {{-- Blueprint 2: Pledge Renewal --}}
+                            <label class="snap-start shrink-0 w-[170px] relative flex flex-col p-4 rounded-xl border cursor-pointer transition-all {{ $selectedBlueprint === 'pledge_renewal' ? 'border-emerald-500 bg-emerald-50 ring-2 ring-emerald-500' : 'border-[#1d1d1f]/10 bg-white hover:bg-[#1d1d1f]/[0.02] hover:border-[#1d1d1f]/20' }}">
+                                <input type="radio" wire:model.live="selectedBlueprint" value="pledge_renewal" class="sr-only">
+                                <div class="absolute top-2 right-2 bg-emerald-100 text-emerald-800 text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">SKM 2026</div>
+                                <div>
+                                    <p class="text-[14px] font-semibold text-[#1d1d1f] mb-1">Pledge Renewal</p>
+                                    <p class="text-[11px] text-[#86868b] mb-2">Sambung Pajak</p>
+                                    <span class="inline-block px-2 py-0.5 text-[9px] font-semibold bg-blue-100 text-blue-700 rounded">Facility</span>
+                                </div>
+                            </label>
+
+                            {{-- Blueprint 3: Pledge Redemption --}}
+                            <label class="snap-start shrink-0 w-[170px] relative flex flex-col p-4 rounded-xl border cursor-pointer transition-all {{ $selectedBlueprint === 'pledge_redemption' ? 'border-emerald-500 bg-emerald-50 ring-2 ring-emerald-500' : 'border-[#1d1d1f]/10 bg-white hover:bg-[#1d1d1f]/[0.02] hover:border-[#1d1d1f]/20' }}">
+                                <input type="radio" wire:model.live="selectedBlueprint" value="pledge_redemption" class="sr-only">
+                                <div class="absolute top-2 right-2 bg-emerald-100 text-emerald-800 text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">SKM 2026</div>
+                                <div>
+                                    <p class="text-[14px] font-semibold text-[#1d1d1f] mb-1">Pledge Redemption</p>
+                                    <p class="text-[11px] text-[#86868b] mb-2">Tebus Barang</p>
+                                    <span class="inline-block px-2 py-0.5 text-[9px] font-semibold bg-blue-100 text-blue-700 rounded">Facility</span>
+                                </div>
+                            </label>
+
+                            {{-- Blueprint 4: Additional Margin --}}
+                            <label class="snap-start shrink-0 w-[170px] relative flex flex-col p-4 rounded-xl border cursor-pointer transition-all {{ $selectedBlueprint === 'additional_margin' ? 'border-emerald-500 bg-emerald-50 ring-2 ring-emerald-500' : 'border-[#1d1d1f]/10 bg-white hover:bg-[#1d1d1f]/[0.02] hover:border-[#1d1d1f]/20' }}">
+                                <input type="radio" wire:model.live="selectedBlueprint" value="additional_margin" class="sr-only">
+                                <div class="absolute top-2 right-2 bg-emerald-100 text-emerald-800 text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">SKM 2026</div>
+                                <div>
+                                    <p class="text-[14px] font-semibold text-[#1d1d1f] mb-1">Additional Margin</p>
+                                    <p class="text-[11px] text-[#86868b] mb-2">Tambah Margin</p>
+                                    <span class="inline-block px-2 py-0.5 text-[9px] font-semibold bg-blue-100 text-blue-700 rounded">Facility</span>
+                                </div>
+                            </label>
+
+                            {{-- Blueprint 5: Margin Call --}}
+                            <label class="snap-start shrink-0 w-[170px] relative flex flex-col p-4 rounded-xl border cursor-pointer transition-all {{ $selectedBlueprint === 'margin_call' ? 'border-emerald-500 bg-emerald-50 ring-2 ring-emerald-500' : 'border-[#1d1d1f]/10 bg-white hover:bg-[#1d1d1f]/[0.02] hover:border-[#1d1d1f]/20' }}">
+                                <input type="radio" wire:model.live="selectedBlueprint" value="margin_call" class="sr-only">
+                                <div class="absolute top-2 right-2 bg-emerald-100 text-emerald-800 text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">SKM 2026</div>
+                                <div>
+                                    <p class="text-[14px] font-semibold text-[#1d1d1f] mb-1">Margin Call</p>
+                                    <p class="text-[11px] text-[#86868b] mb-2">Panggilan Margin</p>
+                                    <span class="inline-block px-2 py-0.5 text-[9px] font-semibold bg-orange-100 text-orange-700 rounded">Risk</span>
+                                </div>
+                            </label>
+
+                            {{-- Blueprint 6: Auction Process --}}
+                            <label class="snap-start shrink-0 w-[170px] relative flex flex-col p-4 rounded-xl border cursor-pointer transition-all {{ $selectedBlueprint === 'auction_process' ? 'border-emerald-500 bg-emerald-50 ring-2 ring-emerald-500' : 'border-[#1d1d1f]/10 bg-white hover:bg-[#1d1d1f]/[0.02] hover:border-[#1d1d1f]/20' }}">
+                                <input type="radio" wire:model.live="selectedBlueprint" value="auction_process" class="sr-only">
+                                <div class="absolute top-2 right-2 bg-emerald-100 text-emerald-800 text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">SKM 2026</div>
+                                <div>
+                                    <p class="text-[14px] font-semibold text-[#1d1d1f] mb-1">Auction Process</p>
+                                    <p class="text-[11px] text-[#86868b] mb-2">Proses Lelongan</p>
+                                    <span class="inline-block px-2 py-0.5 text-[9px] font-semibold bg-purple-100 text-purple-700 rounded">Auction</span>
+                                </div>
+                            </label>
+
+                            {{-- Blueprint 7: Payment Collection --}}
+                            <label class="snap-start shrink-0 w-[170px] relative flex flex-col p-4 rounded-xl border cursor-pointer transition-all {{ $selectedBlueprint === 'payment_collection' ? 'border-emerald-500 bg-emerald-50 ring-2 ring-emerald-500' : 'border-[#1d1d1f]/10 bg-white hover:bg-[#1d1d1f]/[0.02] hover:border-[#1d1d1f]/20' }}">
+                                <input type="radio" wire:model.live="selectedBlueprint" value="payment_collection" class="sr-only">
+                                <div class="absolute top-2 right-2 bg-emerald-100 text-emerald-800 text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">SKM 2026</div>
+                                <div>
+                                    <p class="text-[14px] font-semibold text-[#1d1d1f] mb-1">Payment Collection</p>
+                                    <p class="text-[11px] text-[#86868b] mb-2">Kutipan Bayaran</p>
+                                    <span class="inline-block px-2 py-0.5 text-[9px] font-semibold bg-green-100 text-green-700 rounded">Finance</span>
+                                </div>
+                            </label>
+
+                            {{-- Blueprint 8: Vault Reconciliation --}}
+                            <label class="snap-start shrink-0 w-[170px] relative flex flex-col p-4 rounded-xl border cursor-pointer transition-all {{ $selectedBlueprint === 'vault_recon' ? 'border-emerald-500 bg-emerald-50 ring-2 ring-emerald-500' : 'border-[#1d1d1f]/10 bg-white hover:bg-[#1d1d1f]/[0.02] hover:border-[#1d1d1f]/20' }}">
+                                <input type="radio" wire:model.live="selectedBlueprint" value="vault_recon" class="sr-only">
+                                <div class="absolute top-2 right-2 bg-emerald-100 text-emerald-800 text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">SKM 2026</div>
+                                <div>
+                                    <p class="text-[14px] font-semibold text-[#1d1d1f] mb-1">Vault Reconciliation</p>
+                                    <p class="text-[11px] text-[#86868b] mb-2">Rekonsiliasi Peti Besi</p>
+                                    <span class="inline-block px-2 py-0.5 text-[9px] font-semibold bg-indigo-100 text-indigo-700 rounded">Operations</span>
+                                </div>
+                            </label>
+
+                            {{-- Blueprint 9: Customer KYC Update --}}
+                            <label class="snap-start shrink-0 w-[170px] relative flex flex-col p-4 rounded-xl border cursor-pointer transition-all {{ $selectedBlueprint === 'kyc_update' ? 'border-emerald-500 bg-emerald-50 ring-2 ring-emerald-500' : 'border-[#1d1d1f]/10 bg-white hover:bg-[#1d1d1f]/[0.02] hover:border-[#1d1d1f]/20' }}">
+                                <input type="radio" wire:model.live="selectedBlueprint" value="kyc_update" class="sr-only">
+                                <div class="absolute top-2 right-2 bg-emerald-100 text-emerald-800 text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">SKM 2026</div>
+                                <div>
+                                    <p class="text-[14px] font-semibold text-[#1d1d1f] mb-1">Customer KYC Update</p>
+                                    <p class="text-[11px] text-[#86868b] mb-2">Kemas Kini Profil</p>
+                                    <span class="inline-block px-2 py-0.5 text-[9px] font-semibold bg-cyan-100 text-cyan-700 rounded">Customer</span>
+                                </div>
+                            </label>
+
+                            {{-- Blueprint 10: BNM Compliance Report --}}
+                            <label class="snap-start shrink-0 w-[170px] relative flex flex-col p-4 rounded-xl border cursor-pointer transition-all {{ $selectedBlueprint === 'bnm_report' ? 'border-emerald-500 bg-emerald-50 ring-2 ring-emerald-500' : 'border-[#1d1d1f]/10 bg-white hover:bg-[#1d1d1f]/[0.02] hover:border-[#1d1d1f]/20' }}">
+                                <input type="radio" wire:model.live="selectedBlueprint" value="bnm_report" class="sr-only">
+                                <div class="absolute top-2 right-2 bg-emerald-100 text-emerald-800 text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">SKM 2026</div>
+                                <div>
+                                    <p class="text-[14px] font-semibold text-[#1d1d1f] mb-1">BNM Compliance Report</p>
+                                    <p class="text-[11px] text-[#86868b] mb-2">Laporan Pematuhan</p>
+                                    <span class="inline-block px-2 py-0.5 text-[9px] font-semibold bg-red-100 text-red-700 rounded">Compliance</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    {{-- Scroll Hint --}}
+                    <div class="flex items-center justify-center gap-2 mt-3">
+                        <svg class="w-4 h-4 text-[#86868b]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" /></svg>
+                        <p class="text-[10px] text-[#86868b] uppercase tracking-wide font-medium">Scroll to see more</p>
+                        <svg class="w-4 h-4 text-[#86868b]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                     </div>
                 </div>
 
@@ -194,6 +307,8 @@
                         <option>Finance</option>
                         <option>Operations</option>
                         <option>Compliance</option>
+                        <option>Risk</option>
+                        <option>Auction</option>
                         <option>HR</option>
                     </select>
                     @error('newFeatureDomain')<p class="text-[12px] text-rose-500 mt-1.5">{{ $message }}</p>@enderror
@@ -221,3 +336,15 @@
     </div>
     @endif
 </div>
+
+
+<style>
+    /* Hide scrollbar for blueprint carousel */
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>

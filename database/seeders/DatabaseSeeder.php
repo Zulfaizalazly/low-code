@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'branch_staff',
             'entity_id' => 1,
             'branch_id' => 101, // KL Branch
-        ]);
+        ])->assignRole('branch_staff');
 
         // 3. Create Demo Branch Manager
         User::create([
@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'branch_manager',
             'entity_id' => 1,
             'branch_id' => 101,
-        ]);
+        ])->assignRole('branch_manager');
 
         // 4. Create Staff at different branch (for scoping tests)
         User::create([
@@ -55,6 +55,6 @@ class DatabaseSeeder extends Seeder
             'role' => 'branch_staff',
             'entity_id' => 1,
             'branch_id' => 102, // JB Branch
-        ]);
+        ])->assignRole('branch_staff');
     }
 }

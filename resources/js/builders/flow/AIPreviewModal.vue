@@ -99,8 +99,10 @@ function handleRefinementApplied(newResult) {
           <div class="apple-modal-footer">
             <button @click="$emit('manual-override')" class="apple-btn outline">Manual Override</button>
             <div class="footer-actions">
-              <button @click="onRefine" class="apple-btn magic-outline">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              <button @click="onRefine" class="apple-btn magic-premium">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                  <path d="M12 2l1.3 4.2a5.5 5.5 0 003.5 3.5L21 11l-4.2 1.3a5.5 5.5 0 00-3.5 3.5L12 20l-1.3-4.2a5.5 5.5 0 00-3.5-3.5L3 11l4.2-1.3a5.5 5.5 0 003.5-3.5L12 2z"></path>
+                </svg>
                 Refine with AI
               </button>
               <button @click="$emit('publish')" class="apple-btn primary">Accept & Publish</button>
@@ -388,11 +390,28 @@ function handleRefinementApplied(newResult) {
 }
 .apple-btn.outline:hover { background: #f2f2f7; }
 
-.apple-btn.magic-outline {
-  background: rgba(175, 82, 222, 0.08);
-  color: #af52de;
+.apple-btn.magic-premium {
+  background: linear-gradient(135deg, #af52de 0%, #5856d6 100%);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 15px rgba(175, 82, 222, 0.3);
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
 }
-.apple-btn.magic-outline:hover { background: rgba(175, 82, 222, 0.15); }
+.apple-btn.magic-premium:hover { 
+  background: linear-gradient(135deg, #9f42ce 0%, #4846c6 100%); 
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(175, 82, 222, 0.4);
+}
+.apple-btn.magic-premium:active { transform: scale(0.98); }
+.apple-btn.magic-premium svg {
+  animation: pulse-magic 2s infinite ease-in-out;
+}
+@keyframes pulse-magic {
+  0%, 100% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 2px rgba(255,255,255,0.5)); }
+  50% { transform: scale(1.15); opacity: 0.9; filter: drop-shadow(0 0 6px rgba(255,255,255,0.8)); }
+}
 
 .apple-btn.primary {
   background: #007aff;
