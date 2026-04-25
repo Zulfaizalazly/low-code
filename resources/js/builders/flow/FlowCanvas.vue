@@ -277,6 +277,32 @@ function updateNodeConfig(update) {
   }
 }
 
+// ─── Modal Config Writeback ───
+function handleModalConfigUpdate({ nodeId, key, value }) {
+  const nodeIdx = nodes.value.findIndex(n => n.id === nodeId)
+  if (nodeIdx === -1) {
+    toast.error(`Node not found: ${nodeId}`)
+    return
+  }
+
+  const config = { ...nodes.value[nodeIdx].data.config }
+
+  // Dot-notation support for nested keys (e.g., "credentials.api_key")
+  if (key.includes('.')) {
+    const [branch, leaf] = key.split('.')
+    if (!config[branch]) config[branch] = {}
+    config[branch][leaf] = value
+  } else {
+    config[key] = value
+  }
+
+  nodes.value[nodeIdx].data = {
+    ...nodes.value[nodeIdx].data,
+    config,
+  }
+  isDirty.value = true
+}
+
 // ─── Delete Node ───
 function deleteNode(nodeId) {
   removeNodes([nodeId])
@@ -730,7 +756,10 @@ async function submitForReview() {
       :flow-id="flowId"
       :version-id="versionId"
       :flow-key="flowKey"
+      :nodes="nodes"
+      :commands="commands"
       @close="showSimulation = false"
+      @update-node-config="handleModalConfigUpdate"
     />
   </div>
 </template>

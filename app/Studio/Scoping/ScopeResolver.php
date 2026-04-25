@@ -21,13 +21,6 @@ class ScopeResolver
 
     /**
      * Resolve configuration value with scope overrides.
-     *
-     * @param int $featureVersionId
-     * @param string $targetTable
-     * @param string $targetKey
-     * @param array $scopeContext
-     * @param mixed $defaultValue
-     * @return mixed
      */
     public function resolve(
         int $featureVersionId,
@@ -37,6 +30,9 @@ class ScopeResolver
         $defaultValue = null
     ) {
         $cacheKey = $this->getCacheKey($featureVersionId, $targetTable, $targetKey, $scopeContext);
+
+        // Register key for bulk clearing (no tags needed)
+        $this->registerCacheKey($featureVersionId, $cacheKey);
 
         return Cache::remember($cacheKey, 3600, function () use (
             $featureVersionId,
@@ -65,7 +61,6 @@ class ScopeResolver
         array $scopeContext,
         $defaultValue
     ) {
-        // Get all active overrides for this target
         $overrides = ScopeOverride::where('feature_version_id', $featureVersionId)
             ->forTarget($targetTable, $targetKey)
             ->active()
@@ -75,7 +70,6 @@ class ScopeResolver
             return $defaultValue;
         }
 
-        // Apply precedence logic
         foreach ($this->precedence as $scopeType) {
             if (!isset($scopeContext[$scopeType])) {
                 continue;
@@ -84,7 +78,7 @@ class ScopeResolver
             $scopeId = $scopeContext[$scopeType];
 
             $override = $overrides->first(function ($override) use ($scopeType, $scopeId) {
-                return $override->scope_type === $scopeType 
+                return $override->scope_type === $scopeType
                     && $override->scope_id == $scopeId;
             });
 
@@ -98,13 +92,6 @@ class ScopeResolver
 
     /**
      * Resolve multiple values at once.
-     *
-     * @param int $featureVersionId
-     * @param string $targetTable
-     * @param array $targetKeys
-     * @param array $scopeContext
-     * @param array $defaults
-     * @return array
      */
     public function resolveMany(
         int $featureVersionId,
@@ -114,22 +101,16 @@ class ScopeResolver
         array $defaults = []
     ): array {
         $results = [];
-
         foreach ($targetKeys as $key) {
             $results[$key] = $this->resolve(
-                $featureVersionId,
-                $targetTable,
-                $key,
-                $scopeContext,
-                $defaults[$key] ?? null
+                $featureVersionId, $targetTable, $key, $scopeContext, $defaults[$key] ?? null
             );
         }
-
         return $results;
     }
 
     /**
-     * Clear cache for specific override.
+     * Clear cache for specific override (compatible with all cache drivers).
      */
     public function clearCache(
         int $featureVersionId,
@@ -138,11 +119,8 @@ class ScopeResolver
         array $scopeContext = []
     ): void {
         if (empty($scopeContext)) {
-            // Clear all variations
-            Cache::tags([
-                "scope_override_{$featureVersionId}",
-                "scope_override_{$targetTable}_{$targetKey}"
-            ])->flush();
+            // Clear all registered keys for this feature version
+            $this->clearFeatureCache($featureVersionId);
         } else {
             $cacheKey = $this->getCacheKey($featureVersionId, $targetTable, $targetKey, $scopeContext);
             Cache::forget($cacheKey);
@@ -150,11 +128,32 @@ class ScopeResolver
     }
 
     /**
-     * Clear all cache for a feature version.
+     * Clear all cache for a feature version (compatible with all drivers).
      */
     public function clearFeatureCache(int $featureVersionId): void
     {
-        Cache::tags(["scope_override_{$featureVersionId}"])->flush();
+        $registryKey = "scope_override_registry_{$featureVersionId}";
+        $keys = Cache::get($registryKey, []);
+
+        foreach ($keys as $key) {
+            Cache::forget($key);
+        }
+
+        Cache::forget($registryKey);
+    }
+
+    /**
+     * Register a cache key in the feature version registry.
+     */
+    protected function registerCacheKey(int $featureVersionId, string $cacheKey): void
+    {
+        $registryKey = "scope_override_registry_{$featureVersionId}";
+        $keys = Cache::get($registryKey, []);
+
+        if (!in_array($cacheKey, $keys)) {
+            $keys[] = $cacheKey;
+            Cache::put($registryKey, $keys, 7200); // 2 hours
+        }
     }
 
     /**
@@ -179,7 +178,6 @@ class ScopeResolver
             'user' => $user->id,
             'branch' => $user->branch_id,
             'entity' => $user->entity_id,
-            // Add more scope types as needed
         ];
     }
 

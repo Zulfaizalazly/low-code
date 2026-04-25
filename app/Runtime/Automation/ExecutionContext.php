@@ -25,8 +25,11 @@ class ExecutionContext
     /**
      * Get data from the context using dot notation.
      */
-    public function get(string $path, mixed $default = null): mixed
+    public function get(string|null $path, mixed $default = null): mixed
     {
+        if ($path === null || $path === '') {
+            return $default;
+        }
         return data_get($this->data, $path, $default);
     }
 

@@ -15,7 +15,7 @@ return [
     'openai' => [
         'base_url' => env('OPENAI_API_BASE', 'https://api.openai.com/v1'),
         'temperature' => (float) env('AI_TEMPERATURE', 0.7),
-        'max_tokens' => (int) env('AI_MAX_TOKENS', 4000),
+        'max_completion_tokens' => (int) env('AI_MAX_TOKENS', 4000),
         'fallback_model' => env('AI_FALLBACK_MODEL', 'gpt-5.2'),
         'model_aliases' => [
             'gpt-5.4-turbo' => 'gpt-5.4',

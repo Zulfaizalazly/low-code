@@ -18,7 +18,7 @@
     </header>
 
     {{-- ─── Summary Stats ─── --}}
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-10">
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-5 mb-10">
         <div class="p-5 rounded-[20px] bg-white border border-[#1d1d1f]/[0.04] shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
             <p class="text-[11px] font-semibold text-[#86868b] uppercase tracking-wide mb-2">Total Staff</p>
             <p class="text-[28px] font-bold text-[#1d1d1f] tracking-tight">{{ $totalStaff }}</p>
@@ -36,6 +36,17 @@
             <p class="text-[11px] font-semibold text-[#86868b] uppercase tracking-wide mb-2">Completion Rate</p>
             <p class="text-[28px] font-bold tracking-tight {{ $completionPercent >= 90 ? 'text-emerald-500' : ($completionPercent >= 70 ? 'text-amber-500' : 'text-rose-500') }}">{{ $completionPercent }}%</p>
             <p class="text-[11px] text-[#86868b] mt-0.5">{{ $totalExecutions }} workflow executions</p>
+        </div>
+        <div class="p-5 rounded-[20px] bg-white border border-[#1d1d1f]/[0.04] shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+            <p class="text-[11px] font-semibold text-[#86868b] uppercase tracking-wide mb-2">Avg Completion Time</p>
+            <p class="text-[28px] font-bold text-[#1d1d1f] tracking-tight">
+                @if($avgCompletionTime >= 60)
+                    {{ floor($avgCompletionTime / 60) }}m {{ round($avgCompletionTime % 60) }}s
+                @else
+                    {{ round($avgCompletionTime) }}s
+                @endif
+            </p>
+            <p class="text-[11px] text-[#86868b] mt-0.5">{{ $period === 'today' ? 'Today' : 'This week' }}</p>
         </div>
     </div>
 
@@ -114,4 +125,61 @@
             @endforelse
         </div>
     </div>
+
+    {{-- ─── Staff Efficiency Metrics ─── --}}
+    @if($staffEfficiency->isNotEmpty())
+        <div class="mt-10 bg-white border border-[#1d1d1f]/[0.06] shadow-[0_4px_20px_rgba(0,0,0,0.03)] rounded-[20px] overflow-hidden">
+            <div class="px-6 py-4 border-b border-[#1d1d1f]/[0.04] bg-[#fafafa]">
+                <h3 class="text-[13px] font-semibold text-[#1d1d1f] uppercase tracking-wide">Staff Efficiency Metrics</h3>
+            </div>
+
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b border-[#1d1d1f]/[0.04]">
+                        <th class="px-6 py-3 text-left text-[11px] font-semibold text-[#86868b] uppercase tracking-wide">Staff Member</th>
+                        <th class="px-6 py-3 text-center text-[11px] font-semibold text-[#86868b] uppercase tracking-wide">Total Executions</th>
+                        <th class="px-6 py-3 text-center text-[11px] font-semibold text-[#86868b] uppercase tracking-wide">Success Rate</th>
+                        <th class="px-6 py-3 text-center text-[11px] font-semibold text-[#86868b] uppercase tracking-wide">Avg Completion Time</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#1d1d1f]/[0.04]">
+                    @foreach($staffEfficiency as $efficiency)
+                        @php
+                            $staffMember = $branchStaff->firstWhere('id', $efficiency->user_id);
+                            $staffName = $staffMember ? $staffMember->name : 'Unknown';
+                            $successRate = round($efficiency->success_rate ?? 0, 1);
+                            $avgSeconds = $efficiency->avg_completion_seconds ?? 0;
+                        @endphp
+                        <tr class="hover:bg-[#fafafa] transition-colors">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-400 to-blue-500 flex items-center justify-center shadow-sm">
+                                        <span class="text-[11px] font-bold text-white">{{ substr($staffName, 0, 1) }}</span>
+                                    </div>
+                                    <span class="text-[14px] font-semibold text-[#1d1d1f]">{{ $staffName }}</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <span class="text-[14px] font-bold text-[#1d1d1f]">{{ $efficiency->total_executions }}</span>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <span class="px-2.5 py-1 text-[12px] font-bold rounded-full {{ $successRate >= 90 ? 'bg-emerald-50 text-emerald-600' : ($successRate >= 70 ? 'bg-amber-50 text-amber-600' : 'bg-rose-50 text-rose-600') }}">
+                                    {{ $successRate }}%
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <span class="text-[14px] font-medium text-[#1d1d1f]">
+                                    @if($avgSeconds >= 60)
+                                        {{ floor($avgSeconds / 60) }}m {{ round($avgSeconds % 60) }}s
+                                    @else
+                                        {{ round($avgSeconds) }}s
+                                    @endif
+                                </span>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
 </div>

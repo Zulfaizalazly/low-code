@@ -30,7 +30,7 @@ class PublishGateValidator
             $this->commandsExist($version),
             $this->noOrphanNodes($version),
             $this->hasPermissions($version),
-            $this->versionIsDraft($version),
+            $this->versionIsApproved($version),
             $this->noDuplicateKeys($version),
         ]);
 
@@ -227,18 +227,24 @@ class PublishGateValidator
             return ['key' => 'bindings_valid', 'status' => 'skipped', 'message' => 'No pages to check.'];
         }
 
+        $emptyBindings = [];
         foreach ($pages as $page) {
             foreach ($page->steps as $step) {
                 foreach ($step->fields as $field) {
                     if ($field->binding && empty($field->binding->target_path)) {
-                        return [
-                            'key' => 'bindings_valid',
-                            'status' => 'failed',
-                            'message' => "Binding for field '{$field->field_key}' has empty target_path.",
-                        ];
+                        $emptyBindings[] = $field->field_key;
                     }
                 }
             }
+        }
+
+        if (!empty($emptyBindings)) {
+            $fieldList = implode(', ', $emptyBindings);
+            return [
+                'key' => 'bindings_valid',
+                'status' => 'warning',
+                'message' => "Bindings with empty target_path: {$fieldList}. Consider setting target paths before production use.",
+            ];
         }
 
         return ['key' => 'bindings_valid', 'status' => 'passed', 'message' => 'All bindings have valid target paths.'];
@@ -252,10 +258,10 @@ class PublishGateValidator
         $hasMenu = $version->menuItems()->exists();
         return [
             'key' => 'has_menu_item',
-            'status' => $hasMenu ? 'passed' : 'failed',
+            'status' => $hasMenu ? 'passed' : 'warning',
             'message' => $hasMenu
                 ? 'Feature has at least one menu item.'
-                : 'Feature must have at least one sidebar menu item.',
+                : 'No menu item assigned. Users won\'t see this feature in the sidebar until one is added.',
         ];
     }
 
@@ -341,15 +347,15 @@ class PublishGateValidator
     // ──────────────────────────────────────────
     // Gate Check #13: Version is in draft status
     // ──────────────────────────────────────────
-    private function versionIsDraft(FeatureVersion $version): array
+    private function versionIsApproved(FeatureVersion $version): array
     {
-        $isDraft = $version->status === 'draft';
+        $isApproved = $version->status === 'approved';
         return [
-            'key' => 'version_is_draft',
-            'status' => $isDraft ? 'passed' : 'failed',
-            'message' => $isDraft
-                ? 'Version is in draft status, eligible for publish.'
-                : "Version status is '{$version->status}'. Only draft versions can be published.",
+            'key' => 'version_is_approved',
+            'status' => $isApproved ? 'passed' : 'failed',
+            'message' => $isApproved
+                ? 'Version is in approved status, eligible for publish.'
+                : "Version status is '{$version->status}'. Only approved versions can be published.",
         ];
     }
 

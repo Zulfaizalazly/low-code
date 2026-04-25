@@ -38,9 +38,15 @@ class FormulaNodeRunner implements NodeRunner
 
         // 1. Resolve all variable values from context
         $resolvedVars = [];
+        $warnings = [];
         foreach ($variables as $varName => $contextPath) {
             $value = $context->get($contextPath);
             if (!is_numeric($value)) {
+                if ($context->isSimulation) {
+                    $resolvedVars[$varName] = 0.0;
+                    $warnings[] = "Variable '{$varName}' (path: '{$contextPath}') is missing or non-numeric — defaulted to 0 for simulation.";
+                    continue;
+                }
                 throw new Exception("FormulaNodeRunner: Variable '{$varName}' resolved to non-numeric value from path '{$contextPath}'");
             }
             $resolvedVars[$varName] = (float) $value;
@@ -52,12 +58,21 @@ class FormulaNodeRunner implements NodeRunner
         // 3. Store the result in the execution context for downstream nodes
         $context->set("formula.{$outputKey}", $result);
 
-        return [
+        $output = [
             'result' => $result,
             'formula' => $formula,
             'variables' => $resolvedVars,
             'output_key' => $outputKey,
         ];
+
+        if ($context->isSimulation) {
+            $output['simulated_execution'] = true;
+            if (!empty($warnings)) {
+                $output['warnings'] = $warnings;
+            }
+        }
+
+        return $output;
     }
 
     /**

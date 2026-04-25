@@ -142,7 +142,7 @@ class ApprovalController extends Controller
     public function approve(Request $request, int $id): JsonResponse
     {
         $version = FeatureVersion::findOrFail($id);
-        $comments = $request->input('comments', '');
+        $comments = (string) ($request->input('comments') ?? '');
 
         try {
             $workflow = $this->approvalService->approve($version, $request->user(), $comments);
@@ -159,7 +159,7 @@ class ApprovalController extends Controller
     public function reject(Request $request, int $id): JsonResponse
     {
         $version = FeatureVersion::findOrFail($id);
-        $comments = $request->input('comments', '');
+        $comments = (string) ($request->input('comments') ?? '');
 
         if (empty($comments)) {
             return response()->json(['success' => false, 'message' => 'Comments are required for rejection.'], 422);
@@ -186,7 +186,7 @@ class ApprovalController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Feature version published successfully.',
-                'validations' => $result->getEntries()
+                'validations' => $result->toArray()
             ]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
@@ -207,6 +207,26 @@ class ApprovalController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => "Successfully rolled back to version {$targetVersion->version_no}."
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
+        }
+    }
+
+    public function retire(Request $request, int $id): JsonResponse
+    {
+        $version = FeatureVersion::findOrFail($id);
+        $reason = $request->input('reason', '');
+
+        if (empty($reason)) {
+            return response()->json(['success' => false, 'message' => 'Reason is required for retirement.'], 422);
+        }
+
+        try {
+            $this->publisher->retire($version, $request->user()->id, $reason);
+            return response()->json([
+                'success' => true,
+                'message' => "Feature has been retired successfully."
             ]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 422);

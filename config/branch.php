@@ -35,5 +35,11 @@ return [
 
         // Minutes within which a staff is considered "currently active"
         'active_staff_window_minutes' => 15,
+
+        // Percentage drop in feature usage (week-over-week) that triggers an alert
+        'usage_drop_threshold_percent' => 30,
+
+        // Minimum avg executions per hour before a performance degradation alert fires
+        'perf_degradation_threshold_per_hour' => 2,
     ],
 ];

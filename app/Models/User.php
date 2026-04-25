@@ -143,7 +143,7 @@ class User extends Authenticatable
         }
 
         // Branch manager can access own branch
-        if ($this->hasRole('branch-manager')) {
+        if ($this->hasRole('branch_manager')) {
             $primaryBranch = $this->getPrimaryBranch();
             return $primaryBranch && $primaryBranch->id === $branchId;
         }
@@ -170,7 +170,7 @@ class User extends Authenticatable
             return Branch::where('entity_id', $this->entity_id)->get();
         }
 
-        if ($this->hasRole('branch-manager') || $this->isBranchStaff()) {
+        if ($this->hasRole('branch_manager') || $this->isBranchStaff()) {
             $primaryBranch = $this->getPrimaryBranch();
             return $primaryBranch ? collect([$primaryBranch]) : collect();
         }

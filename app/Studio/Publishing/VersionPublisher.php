@@ -48,7 +48,17 @@ class VersionPublisher
             // 3. Update parent feature status
             $version->feature->update(['status' => 'published']);
 
-            // 4. Audit trail
+            // 4. Create ChangeDeployment for branch visibility
+            \App\Models\Branch\ChangeDeployment::create([
+                'feature_id' => $version->feature_id,
+                'feature_version_id' => $version->id,
+                'deployed_by' => $userId,
+                'deployed_at' => now(),
+                'change_summary' => $version->change_summary ?? "Published v{$version->version_no}",
+                'is_visible_to_branches' => true,
+            ]);
+
+            // 5. Audit trail
             AuditLog::record('published', $version,
                 ['status' => 'approved'],
                 ['status' => 'published', 'published_by' => $userId]
@@ -72,6 +82,16 @@ class VersionPublisher
         }
 
         if ($currentPublished->id === $targetVersion->id) {
+            // Version 1 with no previous version — can't rollback, suggest retire
+            $hasPreviousVersion = FeatureVersion::where('feature_id', $targetVersion->feature_id)
+                ->where('id', '!=', $currentPublished->id)
+                ->whereIn('status', ['archived', 'rolled_back'])
+                ->exists();
+
+            if (!$hasPreviousVersion) {
+                throw new Exception("Cannot rollback — this is the only version. Use 'Retire Feature' to decommission it.");
+            }
+
             throw new Exception("Feature is already on version {$targetVersion->version_no}.");
         }
 
@@ -98,10 +118,66 @@ class VersionPublisher
                 'updated_at' => now(),
             ]);
 
-            // 4. Audit trail
+            // 4. Create ChangeDeployment for rollback visibility
+            \App\Models\Branch\ChangeDeployment::create([
+                'feature_id' => $targetVersion->feature_id,
+                'feature_version_id' => $targetVersion->id,
+                'deployed_by' => $userId,
+                'deployed_at' => now(),
+                'change_summary' => "Rollback to v{$targetVersion->version_no}: {$reason}",
+                'is_visible_to_branches' => true,
+            ]);
+
+            // 5. Audit trail
             AuditLog::record('rolled_back', $targetVersion,
                 ['status' => 'published', 'id' => $currentPublished->id],
                 ['status' => 'published', 'id' => $targetVersion->id, 'reason' => $reason]
+            );
+        });
+    }
+
+    /**
+     * Retire a feature — archive all versions and mark feature as archived.
+     * Data is preserved for audit/compliance (BNM/SKM), but feature is no longer active.
+     */
+    public function retire(FeatureVersion $version, int $userId, string $reason): void
+    {
+        $feature = $version->feature;
+
+        DB::transaction(function () use ($feature, $version, $userId, $reason) {
+            // 1. Archive all versions of this feature
+            FeatureVersion::where('feature_id', $feature->id)
+                ->whereNotIn('status', ['archived'])
+                ->update(['status' => 'archived']);
+
+            // 2. Mark feature as archived
+            $feature->update(['status' => 'archived']);
+
+            // 3. Log retirement
+            DB::table('rollback_logs')->insert([
+                'feature_version_id' => $version->id,
+                'rolled_back_from_version' => $version->id,
+                'reason' => "[RETIRED] {$reason}",
+                'rolled_back_by' => $userId,
+                'rolled_back_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            // 4. Notify branches
+            \App\Models\Branch\ChangeDeployment::create([
+                'feature_id' => $feature->id,
+                'feature_version_id' => $version->id,
+                'deployed_by' => $userId,
+                'deployed_at' => now(),
+                'change_summary' => "Feature retired: {$reason}",
+                'is_visible_to_branches' => true,
+            ]);
+
+            // 5. Audit trail
+            AuditLog::record('retired', $version,
+                ['status' => 'published', 'feature_status' => 'published'],
+                ['status' => 'archived', 'feature_status' => 'archived', 'reason' => $reason]
             );
         });
     }

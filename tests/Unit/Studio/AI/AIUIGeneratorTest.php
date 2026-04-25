@@ -50,7 +50,7 @@ class AIUIGeneratorTest extends TestCase
         config()->set('ai.primary_model', 'gpt-5.2');
         config()->set('ai.openai.base_url', 'https://api.openai.com/v1');
         config()->set('ai.openai.temperature', 0.7);
-        config()->set('ai.openai.max_tokens', 4000);
+        config()->set('ai.openai.max_completion_tokens', 4000);
 
         Http::fake([
             'https://api.openai.com/v1/chat/completions' => Http::response([

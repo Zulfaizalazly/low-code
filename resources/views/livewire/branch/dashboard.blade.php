@@ -15,6 +15,34 @@
         </div>
     </header>
 
+    {{-- ─── Notification Toasts (Req 7.2, 7.4) ─── --}}
+    @if(count($notifications) > 0)
+        <div class="mb-8 space-y-3">
+            @foreach($notifications as $index => $notification)
+                <div
+                    x-data="{ show: true }"
+                    x-show="show"
+                    x-transition:leave="transition ease-in duration-200"
+                    x-transition:leave-start="opacity-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 -translate-y-2"
+                    class="flex items-center justify-between gap-3 px-5 py-3.5 rounded-2xl border shadow-sm {{ $notification['type'] === 'unavailable' ? 'bg-rose-50 border-rose-200 text-rose-700' : 'bg-blue-50 border-blue-200 text-blue-700' }}"
+                >
+                    <div class="flex items-center gap-3 min-w-0">
+                        @if($notification['type'] === 'unavailable')
+                            <svg class="w-5 h-5 shrink-0 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+                        @else
+                            <svg class="w-5 h-5 shrink-0 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        @endif
+                        <p class="text-[13px] font-medium truncate">{{ $notification['message'] }}</p>
+                    </div>
+                    <button @click="show = false" class="shrink-0 w-7 h-7 rounded-full flex items-center justify-center hover:bg-black/5 transition-colors" title="Dismiss">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+            @endforeach
+        </div>
+    @endif
+
     {{-- ─── Stats Cards ─── --}}
     <div class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-10">
         {{-- Active Features --}}
@@ -73,6 +101,84 @@
         </div>
     </div>
 
+    {{-- ─── Weekly Performance Summary (Req 8.2, 8.5) ─── --}}
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-10">
+        {{-- Total Executions --}}
+        <div class="group p-6 rounded-[24px] bg-white border border-black/[0.03] shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-500 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-white/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+            <div class="flex items-center justify-between mb-4 relative">
+                <p class="text-[12px] font-semibold text-[#86868b] uppercase tracking-wider">Total Executions</p>
+                <div class="w-10 h-10 rounded-[14px] bg-gradient-to-br from-violet-50 to-purple-50 border border-violet-100/50 flex items-center justify-center text-violet-500 shadow-sm">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                </div>
+            </div>
+            <p class="text-[32px] font-bold text-[#1d1d1f] tracking-tight relative leading-none mb-2">{{ $weeklyPerformance['total_executions'] }}</p>
+            <p class="text-[13px] font-medium text-[#86868b] relative">This week</p>
+        </div>
+
+        {{-- Completion Rate --}}
+        <div class="group p-6 rounded-[24px] bg-white border border-black/[0.03] shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-500 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-white/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+            <div class="flex items-center justify-between mb-4 relative">
+                <p class="text-[12px] font-semibold text-[#86868b] uppercase tracking-wider">Completion Rate</p>
+                <div class="w-10 h-10 rounded-[14px] bg-gradient-to-br from-emerald-50 to-green-50 border border-emerald-100/50 flex items-center justify-center text-emerald-500 shadow-sm">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </div>
+            </div>
+            <p class="text-[32px] font-bold tracking-tight relative leading-none mb-2 {{ $weeklyPerformance['completion_rate'] >= 90 ? 'text-emerald-600' : ($weeklyPerformance['completion_rate'] >= 70 ? 'text-amber-600' : 'text-rose-600') }}">{{ $weeklyPerformance['completion_rate'] }}%</p>
+            <p class="text-[13px] font-medium text-[#86868b] relative">This week</p>
+        </div>
+
+        {{-- Avg Completion Time --}}
+        <div class="group p-6 rounded-[24px] bg-white border border-black/[0.03] shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-500 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-white/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+            <div class="flex items-center justify-between mb-4 relative">
+                <p class="text-[12px] font-semibold text-[#86868b] uppercase tracking-wider">Avg Completion</p>
+                <div class="w-10 h-10 rounded-[14px] bg-gradient-to-br from-sky-50 to-cyan-50 border border-sky-100/50 flex items-center justify-center text-sky-500 shadow-sm">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </div>
+            </div>
+            @php
+                $avgSeconds = $weeklyPerformance['avg_completion_seconds'];
+                $avgMinutes = floor($avgSeconds / 60);
+                $avgRemainderSeconds = round($avgSeconds % 60);
+            @endphp
+            <p class="text-[32px] font-bold text-[#1d1d1f] tracking-tight relative leading-none mb-2">{{ $avgMinutes }}m {{ $avgRemainderSeconds }}s</p>
+            <p class="text-[13px] font-medium text-[#86868b] relative">This week</p>
+        </div>
+
+        {{-- Active Staff This Week --}}
+        <div class="group p-6 rounded-[24px] bg-white border border-black/[0.03] shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-500 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-white/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+            <div class="flex items-center justify-between mb-4 relative">
+                <p class="text-[12px] font-semibold text-[#86868b] uppercase tracking-wider">Active Staff</p>
+                <div class="w-10 h-10 rounded-[14px] bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-100/50 flex items-center justify-center text-orange-500 shadow-sm">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                </div>
+            </div>
+            <p class="text-[32px] font-bold text-[#1d1d1f] tracking-tight relative leading-none mb-2">{{ $weeklyPerformance['active_staff_count'] }}</p>
+            <p class="text-[13px] font-medium text-[#86868b] relative">This week</p>
+        </div>
+    </div>
+
+    {{-- ─── Usage Drop Alert (Req 8.3) ─── --}}
+    @if($usageDropAlert)
+        <div class="mb-6 px-5 py-4 bg-amber-50 border border-amber-200 rounded-2xl flex items-center gap-3">
+            <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+            <p class="text-[13px] text-amber-700 font-medium">
+                Usage drop detected for <span class="font-bold">{{ $usageDropAlert['feature_name'] }}</span>: {{ $usageDropAlert['previous_week'] }} accesses last week → {{ $usageDropAlert['current_week'] }} this week ({{ $usageDropAlert['drop_percent'] }}% decrease).
+            </p>
+        </div>
+    @endif
+
+    {{-- ─── Performance Degradation Alert (Req 10.4) ─── --}}
+    @if($perfDegradationAlert)
+        <div class="mb-6 px-5 py-4 bg-rose-50 border border-rose-200 rounded-2xl flex items-center gap-3">
+            <svg class="w-5 h-5 text-rose-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+            <p class="text-[13px] text-rose-700 font-medium">{{ $perfDegradationAlert }}</p>
+        </div>
+    @endif
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
         {{-- ─── Change Tracker / Recent Deployments ─── --}}
         <div class="lg:col-span-2 bg-white border border-black/[0.04] shadow-[0_8px_30px_rgb(0,0,0,0.03)] rounded-[24px] overflow-hidden flex flex-col">
@@ -97,6 +203,12 @@
                                 <h4 class="text-[15px] font-semibold text-[#1d1d1f] truncate">{{ $deployment->feature?->name ?? 'Feature Update' }}</h4>
                                 @if($deployment->isNew())
                                     <span class="px-2 py-0.5 text-[10px] font-bold bg-blue-100/50 text-blue-700 rounded-full uppercase tracking-wider ring-1 ring-blue-500/20">New</span>
+                                @endif
+                                {{-- Version Diff (Req 5.2) --}}
+                                @if($deployment->previous_version_no)
+                                    <span class="px-2 py-0.5 text-[10px] font-semibold bg-gray-100 text-[#515154] rounded-full border border-gray-200/60">v{{ $deployment->previous_version_no }} → v{{ $deployment->featureVersion->version_no }}</span>
+                                @elseif($deployment->featureVersion)
+                                    <span class="px-2 py-0.5 text-[10px] font-bold bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200/60 uppercase tracking-wider">New feature</span>
                                 @endif
                             </div>
                             <p class="text-[13px] font-medium text-[#86868b] truncate">{{ $deployment->change_summary ?? 'System enhancement successfully deployed.' }}</p>

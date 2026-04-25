@@ -113,16 +113,36 @@
                 </a>
             </nav>
 
-            <div class="p-3 w-[260px]">
-                <div class="flex items-center gap-3 p-2 rounded-[12px] hover:bg-[#1d1d1f]/[0.04] transition-colors cursor-pointer group">
+            @if(auth()->user()?->hasRole('super-admin'))
+            <div class="px-3 pb-1 w-[260px]">
+                <a href="{{ route('admin.dashboard') }}" class="w-full flex items-center justify-between p-2.5 rounded-[12px] bg-gradient-to-r from-gray-50 to-slate-50 border border-gray-200/50 hover:shadow-sm hover:border-gray-300 transition-all group">
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 rounded-[8px] bg-white flex items-center justify-center text-gray-600 shadow-sm group-hover:bg-gray-800 group-hover:text-white transition-colors">
+                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        </div>
+                        <span class="text-[12px] font-bold text-gray-700 tracking-tight">Admin Panel</span>
+                    </div>
+                    <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                </a>
+            </div>
+            @endif
+
+            <div class="p-3 pt-1 w-[260px]">
+                <a href="{{ auth()->user()?->hasRole('super-admin') ? route('admin.dashboard') : '#' }}" class="flex items-center gap-3 p-2 rounded-[12px] hover:bg-[#1d1d1f]/[0.04] transition-colors cursor-pointer group">
                     <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-[#e5e5ea] to-[#f5f5f7] shadow-inner border border-black/5 flex items-center justify-center shrink-0 group-hover:border-black/10 transition-colors">
                         <svg class="w-4 h-4 text-[#86868b]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                     </div>
                     <div class="flex-1 min-w-0">
                         <p class="text-[13px] font-medium text-[#1d1d1f] truncate leading-tight">{{ auth()->user()->name ?? 'Administrator' }}</p>
-                        <p class="text-[11px] font-medium text-[#86868b] truncate leading-tight">HQ Admin</p>
+                        <p class="text-[11px] font-medium text-[#86868b] truncate leading-tight">
+                            @if(auth()->user()?->roles?->isNotEmpty())
+                                {{ ucwords(str_replace('-', ' ', auth()->user()->roles->first()->name)) }}
+                            @else
+                                HQ Admin
+                            @endif
+                        </p>
                     </div>
-                </div>
+                </a>
             </div>
         </aside>
 

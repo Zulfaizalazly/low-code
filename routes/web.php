@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Studio\ApprovalController;
 use App\Http\Controllers\Api\Studio\ImpactAnalysisController;
 use App\Http\Controllers\Api\Studio\SimulationController;
 use App\Http\Controllers\Api\Studio\ScopeOverrideController;
+use App\Http\Controllers\Api\Studio\AIFieldHintController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,42 +18,53 @@ Route::get('/login', function() {
     return redirect('/');
 })->name('login');
 
-Route::get('/login-hq', function() {
-    // `admin@arrahnu.com` is seeded with `super-admin` role via DatabaseSeeder.
-    $user = \App\Models\User::where('email', 'admin@arrahnu.com')->first();
-    if ($user) {
-        auth()->login($user);
-        return redirect('/studio');
-    }
-    return 'HQ Admin user not found. Please run `php artisan db:seed` first.';
-});
+// ─── Dev-only login shortcuts (NOT available in production) ───
+if (app()->environment(['local', 'testing'])) {
+    Route::get('/login-hq', function() {
+        $user = \App\Models\User::where('email', 'admin@arrahnu.com')->first();
+        if ($user) {
+            auth()->login($user);
+            return redirect('/studio');
+        }
+        return 'HQ Admin user not found. Please run `php artisan db:seed` first.';
+    });
 
-Route::get('/login-admin', function() {
-    $user = \App\Models\User::where('email', 'admin@arrahnu.com')->first();
-    if ($user) {
-        auth()->login($user);
-        return redirect('/studio');
-    }
-    return 'Admin user not found. Please seed database.';
-});
+    Route::get('/login-admin', function() {
+        $user = \App\Models\User::where('email', 'admin@arrahnu.com')->first();
+        if ($user) {
+            auth()->login($user);
+            return redirect('/studio');
+        }
+        return 'Admin user not found. Please seed database.';
+    });
 
-Route::get('/login-manager', function() {
-    $user = \App\Models\User::where('email', 'manager1@arrahnu.com')->first();
-    if ($user) {
-        auth()->login($user);
-        return redirect('/branch');
-    }
-    return 'Manager user not found. Please seed database.';
-});
+    Route::get('/login-admin-panel', function() {
+        $user = \App\Models\User::where('email', 'admin@arrahnu.com')->first();
+        if ($user) {
+            auth()->login($user);
+            return redirect('/admin');
+        }
+        return 'Admin user not found. Please seed database.';
+    });
 
-Route::get('/login-teller', function() {
-    $user = \App\Models\User::where('email', 'staff1@arrahnu.com')->first();
-    if ($user) {
-        auth()->login($user);
-        return redirect('/f/new-pledge');
-    }
-    return "Teller user not found. Please run seeders first.";
-});
+    Route::get('/login-manager', function() {
+        $user = \App\Models\User::where('email', 'manager1@arrahnu.com')->first();
+        if ($user) {
+            auth()->login($user);
+            return redirect('/branch');
+        }
+        return 'Manager user not found. Please seed database.';
+    });
+
+    Route::get('/login-teller', function() {
+        $user = \App\Models\User::where('email', 'staff1@arrahnu.com')->first();
+        if ($user) {
+            auth()->login($user);
+            return redirect('/f/new-pledge');
+        }
+        return "Teller user not found. Please run seeders first.";
+    });
+}
 
 // ─── Staff Portal & Branch Manager Toggle ───
 Route::post('/branch/toggle-view', [\App\Http\Controllers\Branch\ViewToggleController::class, 'toggle'])
@@ -121,6 +133,7 @@ Route::prefix('api/studio')->middleware(['web', 'auth'])->group(function () {
         Route::post('{id}/reject', [ApprovalController::class, 'reject'])->middleware(['publish.permission:review', 'permission:versions.reject']);
         Route::post('{id}/publish', [ApprovalController::class, 'publish'])->middleware(['publish.permission:publish', 'permission:versions.publish']);
         Route::post('{id}/rollback', [ApprovalController::class, 'rollback'])->middleware(['publish.permission:rollback', 'permission:versions.rollback']);
+        Route::post('{id}/retire', [ApprovalController::class, 'retire'])->middleware(['publish.permission:rollback', 'permission:versions.rollback']);
         
         // Impact Analysis
         Route::get('{id}/impact-analysis', [ImpactAnalysisController::class, 'show'])->middleware('permission:versions.view');
@@ -139,6 +152,9 @@ Route::prefix('api/studio')->middleware(['web', 'auth'])->group(function () {
         Route::post('{flowId}/validate', [FlowBuilderController::class, 'validate'])->middleware('permission:flows.view');
         Route::post('{flowId}/simulate', [FlowBuilderController::class, 'simulate'])->middleware('permission:flows.simulate');
     });
+
+    // AI Field Hint
+    Route::post('ai/field-hint', [AIFieldHintController::class, 'hint'])->middleware('permission:flows.edit');
 
     // Page Builder Endpoints
     Route::prefix('pages')->group(function () {
@@ -160,4 +176,15 @@ Route::prefix('api/studio')->middleware(['web', 'auth'])->group(function () {
         Route::post('test-resolve', [ScopeOverrideController::class, 'testResolve'])->middleware('permission:scopes.view');
         Route::post('feature/{featureVersionId}/clear-cache', [ScopeOverrideController::class, 'clearCache'])->middleware('permission:scopes.edit');
     });
+});
+
+// ─── Admin Panel (Organization Management) ───
+Route::prefix('admin')->middleware(['web', 'auth', 'role:super-admin'])->group(function () {
+    Route::get('/', \App\Livewire\Admin\Dashboard::class)->name('admin.dashboard');
+    Route::get('/branches', \App\Livewire\Admin\BranchManager::class)->name('admin.branches');
+    Route::get('/branches/{branch}', \App\Livewire\Admin\BranchDetail::class)->name('admin.branches.show');
+    Route::get('/departments', \App\Livewire\Admin\DepartmentManager::class)->name('admin.departments');
+    Route::get('/staff', \App\Livewire\Admin\StaffManager::class)->name('admin.staff');
+    Route::get('/entity', \App\Livewire\Admin\EntitySettings::class)->name('admin.entity');
+    Route::get('/users/{user}/roles', \App\Livewire\Admin\UserRoleManager::class)->name('admin.users.roles');
 });

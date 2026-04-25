@@ -8,41 +8,22 @@ use App\Studio\Registry\FeatureVersion;
 use App\Studio\Registry\FlowDefinition;
 use App\Studio\Registry\PageDefinition;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class ReferenceFeatureSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1. Create Pilot Users
-        $staff = User::create([
-            'name' => 'Branch Staff One',
-            'email' => 'staff@arrahnu.com',
-            'password' => Hash::make('password'),
-            'role' => 'branch_staff',
-            'entity_id' => 1,
-            'branch_id' => 1,
-        ]);
+        // Use existing users (created by DatabaseSeeder)
+        $hq = User::where('role', 'hq_admin')->first();
+        $staff = User::where('role', 'branch_staff')->first();
+        $manager = User::where('role', 'branch_manager')->first();
 
-        $manager = User::create([
-            'name' => 'Branch Manager One',
-            'email' => 'manager@arrahnu.com',
-            'password' => Hash::make('password'),
-            'role' => 'branch_manager',
-            'entity_id' => 1,
-            'branch_id' => 1,
-        ]);
+        if (!$hq) {
+            $this->command->error('HQ Admin user not found. Please ensure DatabaseSeeder creates users first.');
+            return;
+        }
 
-        $hq = User::create([
-            'name' => 'HQ Administrator',
-            'email' => 'hq@arrahnu.com',
-            'password' => Hash::make('password'),
-            'role' => 'hq_admin',
-            'entity_id' => 1,
-            'branch_id' => 1,
-        ]);
-
-        // 2. Create "New Pledge" Feature
+        // 1. Create "New Pledge" Feature
         $feature = Feature::create([
             'key' => 'new-pledge',
             'name' => 'New Pledge Intake',
@@ -57,7 +38,7 @@ class ReferenceFeatureSeeder extends Seeder
             'published_by' => $hq->id,
         ]);
 
-        // 3. Create Flow Definition
+        // 2. Create Flow Definition
         $flow = FlowDefinition::create([
             'feature_version_id' => $version->id,
             'key' => 'intake-flow',
@@ -124,7 +105,7 @@ class ReferenceFeatureSeeder extends Seeder
         $flow->edges()->create(['source_node_id' => $regCustomer->id, 'target_node_id' => $createFacility->id]);
         $flow->edges()->create(['source_node_id' => $createFacility->id, 'target_node_id' => $end->id]);
 
-        // 4. Create Page Definition
+        // 3. Create Page Definition
         $page = PageDefinition::create([
             'feature_version_id' => $version->id,
             'key' => 'intake-form',
@@ -135,51 +116,51 @@ class ReferenceFeatureSeeder extends Seeder
 
         $step1 = $page->steps()->create([
             'step_key' => 'customer_step',
-            'title' => 'Customer Info', 
-            'sort_order' => 1
+            'title' => 'Customer Info',
+            'sort_order' => 1,
         ]);
         $step1->fields()->create([
             'field_key' => 'name',
             'label' => 'Full Name',
             'component_type' => 'input_text',
             'is_required' => true,
-            'sort_order' => 1
+            'sort_order' => 1,
         ]);
         $step1->fields()->create([
             'field_key' => 'ic_number',
             'label' => 'IC Number',
             'component_type' => 'input_text',
             'is_required' => true,
-            'sort_order' => 2
+            'sort_order' => 2,
         ]);
         $step1->fields()->create([
             'field_key' => 'email',
             'label' => 'Email Address',
             'component_type' => 'input_email',
-            'sort_order' => 3
+            'sort_order' => 3,
         ]);
 
         $step2 = $page->steps()->create([
             'step_key' => 'facility_step',
-            'title' => 'Facility Details', 
-            'sort_order' => 2
+            'title' => 'Facility Details',
+            'sort_order' => 2,
         ]);
         $step2->fields()->create([
             'field_key' => 'amount',
             'label' => 'Requested Amount',
             'component_type' => 'input_number',
             'is_required' => true,
-            'sort_order' => 1
+            'sort_order' => 1,
         ]);
         $step2->fields()->create([
             'field_key' => 'items',
             'label' => 'Item Details',
             'component_type' => 'input_hidden',
             'default_value' => [['item_type' => 'Jewelry', 'weight_grams' => 10, 'purity' => 916]],
-            'sort_order' => 2
+            'sort_order' => 2,
         ]);
 
-        // 5. Create Menu Item
+        // 4. Create Menu Item
         $version->menuItems()->create([
             'menu_key' => 'pledge_intake',
             'label' => 'New Pledge',
@@ -187,5 +168,7 @@ class ReferenceFeatureSeeder extends Seeder
             'route_key' => 'f/new-pledge',
             'sort_order' => 1,
         ]);
+
+        $this->command->info('Reference feature (new-pledge) seeded successfully!');
     }
 }

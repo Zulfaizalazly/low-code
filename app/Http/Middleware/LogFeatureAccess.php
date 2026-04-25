@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\AuditTrail;
+use App\Kernel\Audit\AuditLog;
 use App\Models\Branch\FeatureAccessLog;
 use App\Studio\Registry\Feature;
 use Closure;
@@ -66,12 +66,11 @@ class LogFeatureAccess
         // Audit Trail: Log when a Branch Manager executes features in Staff View mode
         if (session('branch_view_mode') === 'staff' && $user->hasRole('branch_manager')) {
             try {
-                AuditTrail::create([
-                    'user_id'     => $user->id,
-                    'branch_id'   => $user->branch_id,
-                    'action'      => 'FEATURE_EXECUTION_AS_STAFF',
-                    'description' => "{$user->name} executed feature '{$feature->name}' ({$featureKey}) while in Staff View mode.",
-                    'payload'     => [
+                AuditLog::record(
+                    action: 'FEATURE_EXECUTION_AS_STAFF',
+                    branchId: $user->branch_id,
+                    description: "{$user->name} executed feature '{$feature->name}' ({$featureKey}) while in Staff View mode.",
+                    payload: [
                         'feature_id'         => $feature->id,
                         'feature_key'        => $featureKey,
                         'feature_name'       => $feature->name,
@@ -80,10 +79,8 @@ class LogFeatureAccess
                         'page_key'           => $request->route('pageKey'),
                         'session_id'         => session()->getId(),
                         'request_url'        => $request->fullUrl(),
-                    ],
-                    'ip_address'  => $request->ip(),
-                    'user_agent'  => $request->userAgent(),
-                ]);
+                    ]
+                );
             } catch (\Exception $e) {
                 \Log::warning('Audit trail failed for feature execution', [
                     'error' => $e->getMessage(),

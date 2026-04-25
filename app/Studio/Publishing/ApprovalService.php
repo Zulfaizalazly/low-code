@@ -132,8 +132,8 @@ class ApprovalService
 
     private function notifyReviewers(FeatureVersion $version, User $submitter): void
     {
-        // Get all users with 'reviewer' or 'admin' role
-        $reviewers = User::whereIn('role', ['reviewer', 'admin'])->get();
+        // Get all users with reviewer/admin roles via Spatie
+        $reviewers = User::role(['reviewer', 'super-admin', 'system-admin'])->get();
 
         foreach ($reviewers as $reviewer) {
             $this->bus->dispatch(new SendNotification(
@@ -149,7 +149,12 @@ class ApprovalService
 
     private function notifySubmitter(FeatureVersion $version, string $decision, string $comments): void
     {
-        $submitter = User::find($version->published_by);
+        // Resolve submitter from ApprovalWorkflow (not published_by which is null at this stage)
+        $workflow = ApprovalWorkflow::where('feature_version_id', $version->id)
+            ->latest()
+            ->first();
+
+        $submitter = $workflow ? User::find($workflow->submitted_by) : null;
         
         if (!$submitter) {
             return; // No submitter to notify

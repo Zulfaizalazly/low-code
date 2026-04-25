@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Branch;
 
 use App\Http\Controllers\Controller;
-use App\Models\AuditTrail;
+use App\Kernel\Audit\AuditLog;
 use Illuminate\Http\Request;
 
 class ViewToggleController extends Controller
@@ -21,21 +21,17 @@ class ViewToggleController extends Controller
         if ($currentMode === 'ops') {
             session(['branch_view_mode' => 'staff']);
 
-            // Log: Manager entered Staff View
             try {
-                AuditTrail::create([
-                    'user_id'     => $user->id,
-                    'branch_id'   => $user->branch_id,
-                    'action'      => 'STAFF_VIEW_ENTERED',
-                    'description' => "{$user->name} entered Staff View mode — now operating with staff-level capabilities.",
-                    'payload'     => [
+                AuditLog::record(
+                    action: 'STAFF_VIEW_ENTERED',
+                    branchId: $user->branch_id,
+                    description: "{$user->name} entered Staff View mode — now operating with staff-level capabilities.",
+                    payload: [
                         'from_mode'  => 'ops',
                         'to_mode'    => 'staff',
                         'session_id' => session()->getId(),
-                    ],
-                    'ip_address'  => $request->ip(),
-                    'user_agent'  => $request->userAgent(),
-                ]);
+                    ]
+                );
             } catch (\Exception $e) {
                 \Log::warning('Audit trail failed: ' . $e->getMessage());
             }
@@ -44,21 +40,17 @@ class ViewToggleController extends Controller
         } else {
             session(['branch_view_mode' => 'ops']);
 
-            // Log: Manager returned to Ops View
             try {
-                AuditTrail::create([
-                    'user_id'     => $user->id,
-                    'branch_id'   => $user->branch_id,
-                    'action'      => 'STAFF_VIEW_EXITED',
-                    'description' => "{$user->name} returned to Ops View — staff capabilities deactivated.",
-                    'payload'     => [
+                AuditLog::record(
+                    action: 'STAFF_VIEW_EXITED',
+                    branchId: $user->branch_id,
+                    description: "{$user->name} returned to Ops View — staff capabilities deactivated.",
+                    payload: [
                         'from_mode'  => 'staff',
                         'to_mode'    => 'ops',
                         'session_id' => session()->getId(),
-                    ],
-                    'ip_address'  => $request->ip(),
-                    'user_agent'  => $request->userAgent(),
-                ]);
+                    ]
+                );
             } catch (\Exception $e) {
                 \Log::warning('Audit trail failed: ' . $e->getMessage());
             }

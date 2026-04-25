@@ -10,7 +10,7 @@ use Exception;
 
 class FormEngine extends Component
 {
-    public PageDefinition $page;
+    public ?PageDefinition $page = null;
     public array $formData = [];
     public int $currentStepIndex = 0;
     public bool $isSubmitted = false;
@@ -18,11 +18,15 @@ class FormEngine extends Component
     public function mount(string $featureKey, string $pageKey = null)
     {
         $loader = app(PageLoader::class);
-        $this->page = $loader->load($featureKey, $pageKey);
+        $page = $loader->load($featureKey, $pageKey);
 
-        if (!$this->page) {
-            throw new Exception("Page not found for feature: {$featureKey}");
+        if (!$page) {
+            session()->flash('error', 'Feature not available for your branch.');
+            $this->redirect(route('runtime.portal'));
+            return;
         }
+
+        $this->page = $page;
 
         $this->initializeFormData();
     }
@@ -38,7 +42,33 @@ class FormEngine extends Component
 
     public function next()
     {
-        // Validation would happen here based on field rules
+        // Validate current step fields
+        $currentStep = $this->page->steps[$this->currentStepIndex] ?? null;
+        if ($currentStep) {
+            $rules = [];
+            $messages = [];
+            foreach ($currentStep->fields as $field) {
+                $fieldRules = [];
+                if ($field->is_required) {
+                    $fieldRules[] = 'required';
+                    $messages["formData.{$field->field_key}.required"] = "{$field->label} is required.";
+                }
+                match ($field->data_type ?? 'string') {
+                    'integer' => $fieldRules[] = 'integer',
+                    'decimal' => $fieldRules[] = 'numeric',
+                    'date' => $fieldRules[] = 'date',
+                    'boolean' => $fieldRules[] = 'boolean',
+                    default => null,
+                };
+                if (!empty($fieldRules)) {
+                    $rules["formData.{$field->field_key}"] = $fieldRules;
+                }
+            }
+            if (!empty($rules)) {
+                $this->validate($rules, $messages);
+            }
+        }
+
         if ($this->currentStepIndex < count($this->page->steps) - 1) {
             $this->currentStepIndex++;
         } else {
@@ -58,9 +88,24 @@ class FormEngine extends Component
         $resolver = new BindingResolver();
         $payload = $resolver->resolve($this->page, $this->formData);
 
-        // Bridging Phase 3 (UI) to Phase 2 (Automation)
+        // Log submission to ui_submission_logs
         $featureVersion = $this->page->featureVersion;
-        $primaryFlow = $featureVersion->flows()->where('is_primary', true)->first();
+        try {
+            \DB::table('ui_submission_logs')->insert([
+                'page_definition_id' => $this->page->id,
+                'page_version' => $featureVersion?->version_no ?? 1,
+                'form_data' => json_encode($payload),
+                'submitted_by' => auth()->id(),
+                'submitted_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        } catch (\Exception $e) {
+            \Log::warning('Failed to log form submission', ['error' => $e->getMessage()]);
+        }
+
+        // Bridging Phase 3 (UI) to Phase 2 (Automation)
+        $primaryFlow = $featureVersion?->flows()->where('is_primary', true)->first();
 
         if ($primaryFlow) {
             $orchestrator = app(\App\Runtime\Automation\FlowOrchestrator::class);
@@ -73,6 +118,12 @@ class FormEngine extends Component
 
     public function render()
     {
+        if (!$this->page) {
+            return view('livewire.runtime.form-engine', [
+                'currentStep' => null,
+            ])->layout('layouts.app');
+        }
+
         return view('livewire.runtime.form-engine', [
             'currentStep' => $this->page->steps[$this->currentStepIndex] ?? null,
         ])->layout('layouts.app');

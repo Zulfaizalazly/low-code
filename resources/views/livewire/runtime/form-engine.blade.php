@@ -1,9 +1,14 @@
 <div class="max-w-4xl mx-auto">
+    @if(!$page)
+        <div class="bg-white shadow-xl rounded-2xl p-8 text-center border border-slate-200">
+            <p class="text-slate-500">Feature not available. Redirecting...</p>
+        </div>
+    @else
     <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-slate-200">
         <!-- Header / Stepper -->
         <div class="px-8 py-6 bg-slate-50 border-b border-slate-200">
             <h2 class="text-xl font-bold text-slate-900">{{ $page->name }}</h2>
-            <p class="text-sm text-slate-500 mt-1">{{ $currentStep->title }}</p>
+            <p class="text-sm text-slate-500 mt-1">{{ $currentStep?->title }}</p>
 
             <!-- Progress Bar -->
             <div class="mt-4 h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
@@ -22,8 +27,11 @@
                     <h3 class="text-2xl font-bold text-slate-900">Success!</h3>
                     <p class="text-slate-500 mt-2">The pledge intake has been recorded and the orchestration flow is executing.</p>
                     <div class="mt-8 flex justify-center gap-4">
-                        <a href="{{ route('studio.dashboard') }}" class="px-6 py-2 bg-slate-900 text-white rounded-xl text-sm font-bold shadow-lg">Return to Dashboard</a>
-                        <a href="{{ route('studio.monitor') }}" class="px-6 py-2 bg-indigo-600 text-white rounded-xl text-sm font-bold shadow-lg">View in Monitor</a>
+                        <a href="{{ route('runtime.portal') }}" class="px-6 py-2 bg-slate-900 text-white rounded-xl text-sm font-bold shadow-lg">Return to Portal</a>
+                        <a href="{{ route('v3.runtime', ['featureKey' => request()->route('featureKey')]) }}" class="px-6 py-2 bg-indigo-600 text-white rounded-xl text-sm font-bold shadow-lg">Start New</a>
+                        @if(auth()->user()?->hasRole('branch_manager') && session('branch_view_mode') === 'staff')
+                            <a href="{{ route('branch.dashboard') }}" class="px-6 py-2 bg-emerald-600 text-white rounded-xl text-sm font-bold shadow-lg">Return to Ops</a>
+                        @endif
                     </div>
                 </div>
             @else
@@ -44,6 +52,10 @@
                             @if($field->help_text)
                                 <p class="mt-2 text-xs text-slate-500">{{ $field->help_text }}</p>
                             @endif
+
+                            @error("formData.{$field->field_key}")
+                                <p class="mt-1 text-xs text-rose-500 font-medium">{{ $message }}</p>
+                            @enderror
                         </div>
                     @endforeach
                 </div>
@@ -68,4 +80,5 @@
             </div>
         @endif
     </div>
+    @endif
 </div>

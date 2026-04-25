@@ -47,7 +47,7 @@
     {{-- ─── Feature Cards ─── --}}
     <div class="space-y-5">
         @forelse($features as $feature)
-            <div class="group bg-white border border-black/[0.04] shadow-[0_8px_30px_rgb(0,0,0,0.02)] rounded-[24px] p-6 hover:shadow-[0_20px_40px_rgb(0,0,0,0.05)] hover:-translate-y-0.5 transition-all duration-500 relative overflow-hidden">
+            <div x-data="{ expanded: false }" class="group bg-white border border-black/[0.04] shadow-[0_8px_30px_rgb(0,0,0,0.02)] rounded-[24px] p-6 hover:shadow-[0_20px_40px_rgb(0,0,0,0.05)] hover:-translate-y-0.5 transition-all duration-500 relative overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-b from-white/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                 <div class="flex items-start justify-between relative">
                     <div class="flex items-start gap-5">
@@ -95,6 +95,15 @@
                                     <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
                                     {{ $feature->week_usage }} uses this week
                                 </span>
+
+                                {{-- View Details toggle --}}
+                                <button
+                                    @click="expanded = !expanded"
+                                    class="text-[12px] font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors"
+                                >
+                                    <svg class="w-4 h-4 transition-transform duration-200" :class="expanded ? 'rotate-90' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                    <span x-text="expanded ? 'Hide Details' : 'View Details'"></span>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -116,6 +125,26 @@
                                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                             </a>
                         @endif
+                    </div>
+                </div>
+
+                {{-- Expandable documentation panel --}}
+                <div
+                    x-show="expanded"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 -translate-y-2"
+                    x-transition:enter-end="opacity-100 translate-y-0"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 -translate-y-2"
+                    class="mt-4 ml-[76px] relative"
+                >
+                    <div class="p-4 rounded-[16px] bg-gray-50 border border-gray-100 text-[13px] font-medium text-[#515154] leading-relaxed">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-4 h-4 text-[#86868b]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                            <span class="text-[11px] font-bold text-[#86868b] uppercase tracking-wider">Feature Documentation</span>
+                        </div>
+                        {{ $feature->description ?? 'No documentation available for this feature.' }}
                     </div>
                 </div>
             </div>

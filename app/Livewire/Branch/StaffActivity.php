@@ -103,6 +103,29 @@ class StaffActivity extends Component
 
         $completionPercent = $totalExecutions > 0 ? round(($completionRate / $totalExecutions) * 100, 1) : 100;
 
+        // ─── Average completion time (Req 8.2) ───
+        $avgCompletionTime = (float) (DB::table('automation_execution_logs')
+            ->where('status', 'completed')
+            ->when($this->period === 'today', fn($q) => $q->whereDate('started_at', today()))
+            ->when($this->period === 'week', fn($q) => $q->whereBetween('started_at', [now()->startOfWeek(), now()->endOfWeek()]))
+            ->avg(DB::raw("(strftime('%s', completed_at) - strftime('%s', started_at))")) ?? 0);
+
+        // ─── Staff efficiency metrics (Req 8.4) ───
+        $staffEfficiency = DB::table('feature_access_logs')
+            ->join('automation_execution_logs', 'automation_execution_logs.feature_version_id', '=', 'feature_access_logs.feature_version_id')
+            ->where('feature_access_logs.branch_id', $branchId)
+            ->when($this->period === 'today', fn($q) => $q->whereDate('feature_access_logs.accessed_at', today()))
+            ->when($this->period === 'week', fn($q) => $q->whereBetween('feature_access_logs.accessed_at', [now()->startOfWeek(), now()->endOfWeek()]))
+            ->groupBy('feature_access_logs.user_id')
+            ->select(
+                'feature_access_logs.user_id',
+                DB::raw('COUNT(DISTINCT automation_execution_logs.id) as total_executions'),
+                DB::raw('SUM(CASE WHEN automation_execution_logs.status = \'completed\' THEN 1 ELSE 0 END) as completed_count'),
+                DB::raw('ROUND(SUM(CASE WHEN automation_execution_logs.status = \'completed\' THEN 1 ELSE 0 END) / COUNT(DISTINCT automation_execution_logs.id) * 100, 1) as success_rate'),
+                DB::raw("AVG(CASE WHEN automation_execution_logs.status = 'completed' AND automation_execution_logs.completed_at IS NOT NULL THEN (strftime('%s', automation_execution_logs.completed_at) - strftime('%s', automation_execution_logs.started_at)) ELSE NULL END) as avg_completion_seconds")
+            )
+            ->get();
+
         return view('livewire.branch.staff-activity', [
             'branchStaff' => $branchStaff,
             'totalStaff' => $totalStaff,
@@ -111,6 +134,8 @@ class StaffActivity extends Component
             'totalAccesses' => $totalAccesses,
             'completionPercent' => $completionPercent,
             'totalExecutions' => $totalExecutions,
+            'avgCompletionTime' => $avgCompletionTime,
+            'staffEfficiency' => $staffEfficiency,
         ])->layout('layouts.branch');
     }
 }

@@ -71,6 +71,6 @@ class UserRoleManager extends Component
             'roles' => $roles,
             'permissionsByCategory' => $permissionsByCategory,
             'userPermissions' => $userPermissions,
-        ]);
+        ])->layout('layouts.admin');
     }
 }

@@ -42,7 +42,13 @@ async function fetchData() {
 async function runAnalysis() {
   processing.value = true
   try {
-    const res = await fetch(`/api/studio/versions/${props.versionId}/impact-analysis`, { method: 'POST' })
+    const res = await fetch(`/api/studio/versions/${props.versionId}/impact-analysis`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
+      }
+    })
     const data = await res.json()
     if (data.success) report.value = data.report
   } catch (error) {
@@ -58,17 +64,41 @@ async function handleAction(action) {
     return
   }
 
+  if (action === 'rollback' && !comments.value) {
+    alert('Please provide a reason for rollback.')
+    return
+  }
+
+  if (action === 'retire' && !comments.value) {
+    alert('Please provide a reason for retirement (e.g. policy change, regulatory update).')
+    return
+  }
+
+  if (action === 'retire') {
+    if (!confirm('⚠️ This will permanently decommission this feature. All versions will be archived. Data is preserved for audit. Continue?')) {
+      return
+    }
+  }
+
   processing.value = true
   try {
     const res = await fetch(`/api/studio/versions/${props.versionId}/${action}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
+      },
       body: JSON.stringify({ comments: comments.value, reason: comments.value })
     })
     const data = await res.json()
     if (data.success) {
       alert(`Successfully ${action}ed.`)
-      window.location.href = '/studio/releases'
+      if (action === 'retire') {
+        window.location.href = '/studio'
+      } else {
+        window.location.href = '/studio/releases'
+      }
     } else {
       alert(`${action} failed: ` + data.message)
     }
@@ -315,7 +345,7 @@ const icons = {
             <h3>Governance Decision</h3>
             <div class="input-group">
               <label>Reviewer Comments</label>
-              <textarea v-model="comments" placeholder="Add your feedback or reasoning for the action taken..." class="comments-box"></textarea>
+              <textarea v-model="comments" :placeholder="version.status === 'published' ? 'Provide reason for rollback or retirement (required)...' : 'Add your feedback or reasoning for the action taken...'" class="comments-box"></textarea>
             </div>
             
             <div class="action-buttons">
@@ -337,6 +367,9 @@ const icons = {
               <template v-if="version.status === 'published'">
                 <button @click="handleAction('rollback')" :disabled="processing" class="rollback-btn">
                   Rollback to Previous
+                </button>
+                <button @click="handleAction('retire')" :disabled="processing" class="retire-btn">
+                  🗄️ Retire Feature
                 </button>
               </template>
             </div>
@@ -1011,6 +1044,24 @@ const icons = {
 .reject-btn:hover, .rollback-btn:hover { 
   background: #fff5f5;
   border-color: #ff3b30;
+}
+
+.retire-btn {
+  background: transparent;
+  border: 1px solid #86868b;
+  color: #86868b;
+  padding: 14px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.retire-btn:hover {
+  background: #f5f5f7;
+  border-color: #1d1d1f;
+  color: #1d1d1f;
 }
 
 .approve-btn:active, .publish-btn:active, .reject-btn:active {
