@@ -1,15 +1,37 @@
 <div>
-    @foreach($menuGroups as $parentKey => $items)
-        <div class="space-y-1">
+    @forelse($menuGroups as $groupLabel => $items)
+        <div class="space-y-0.5">
+            <div class="pt-5 pb-1.5 px-3 text-[11px] font-bold tracking-wider text-[#86868b]/70 uppercase">
+                {{ $groupLabel }}
+            </div>
+
             @foreach($items as $item)
-                <a href="{{ $item->route_key }}" 
-                   class="group flex items-center px-4 py-2 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors duration-200">
-                    <span class="mr-3 text-slate-400 group-hover:text-slate-500">
-                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
-                    </span>
+                @php
+                    $href = route('portal.operations.launch', ['featureKey' => $item->feature_key]);
+                    $isActive = request()->is('portal/operations/' . $item->feature_key . '*');
+                @endphp
+                <a href="{{ $href }}"
+                   class="group flex items-center gap-3 px-3 py-2.5 text-[14px] leading-5 rounded-[12px] {{ $isActive ? 'bg-gradient-to-r from-amber-50 to-orange-50 text-amber-900 font-semibold border border-amber-100/60 shadow-sm' : 'text-[#515154] hover:text-[#1d1d1f] hover:bg-black/[0.03] font-medium' }} transition-all duration-200">
+                    <div class="w-7 h-7 rounded-[8px] {{ $isActive ? 'bg-gradient-to-br from-amber-500 to-orange-600 shadow-sm shadow-amber-500/20' : 'bg-[#f5f5f7] group-hover:bg-[#e8e8ed]' }} flex items-center justify-center transition-all">
+                        @if(str_contains(strtolower($item->label), 'pledge') && str_contains(strtolower($item->label), 'new'))
+                            <svg class="w-3.5 h-3.5 {{ $isActive ? 'text-white' : 'text-[#86868b] group-hover:text-[#515154]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                        @elseif(str_contains(strtolower($item->label), 'redemption'))
+                            <svg class="w-3.5 h-3.5 {{ $isActive ? 'text-white' : 'text-[#86868b] group-hover:text-[#515154]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z" /></svg>
+                        @elseif(str_contains(strtolower($item->label), 'renewal'))
+                            <svg class="w-3.5 h-3.5 {{ $isActive ? 'text-white' : 'text-[#86868b] group-hover:text-[#515154]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                        @elseif(str_contains(strtolower($item->label), 'payment'))
+                            <svg class="w-3.5 h-3.5 {{ $isActive ? 'text-white' : 'text-[#86868b] group-hover:text-[#515154]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                        @else
+                            <svg class="w-3.5 h-3.5 {{ $isActive ? 'text-white' : 'text-[#86868b] group-hover:text-[#515154]' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        @endif
+                    </div>
                     {{ $item->label }}
                 </a>
             @endforeach
         </div>
-    @endforeach
+    @empty
+        <div class="px-4 py-6 text-center">
+            <p class="text-[12px] text-[#86868b] font-medium">No features deployed yet.</p>
+        </div>
+    @endforelse
 </div>

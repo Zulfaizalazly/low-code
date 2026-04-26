@@ -283,7 +283,7 @@
                         <span class="text-[#86868b] font-normal normal-case tracking-normal">(auto-generated, editable)</span>
                     </label>
                     <div class="flex items-center gap-2 px-4 py-3 rounded-xl border border-[#1d1d1f]/10 bg-[#f5f5f7]">
-                        <span class="text-[#86868b] text-[14px] shrink-0">f/</span>
+                        <span class="text-[#86868b] text-[14px] shrink-0">operations/</span>
                         <input 
                             type="text" 
                             wire:model="newFeatureKey"

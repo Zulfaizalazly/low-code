@@ -6,28 +6,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Studio | {{ config('app.name', 'Arrahnumation V3') }}</title>
-
-    <!-- Fonts: Inter (Apple system-like) -->
+    <link rel="icon" type="image/webp" href="{{ asset('images/arrahnumation.webp') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS CDN (works without Vite) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'] },
-                }
-            }
-        }
-    </script>
-
-    <!-- Vite (when dev server is running, overrides CDN) -->
-    @php try { @endphp
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @php } catch(\Exception $e) {} @endphp
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
     <style>
         * { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
@@ -56,9 +40,7 @@
         >
             <div class="p-5 pb-2 w-[260px]">
                 <div class="flex items-center gap-3 px-2 py-2">
-                    <div class="w-8 h-8 rounded-[10px] bg-gradient-to-b from-gray-800 to-gray-900 shadow-sm shadow-black/20 flex items-center justify-center border border-gray-700/50">
-                        <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
-                    </div>
+                    <x-app-logo size="sm" class="rounded-[10px]" />
                     <span class="text-[16px] font-semibold tracking-[-0.01em] text-[#1d1d1f]">HQ Studio</span>
                 </div>
             </div>
@@ -111,6 +93,10 @@
                     <svg class="w-5 h-5 {{ request()->routeIs('studio.audit') ? 'text-[#1d1d1f]' : 'text-[#86868b] group-hover:text-[#515154]' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                     Audit Logs
                 </a>
+                <a href="{{ route('studio.support') }}" class="flex items-center gap-3 px-3 py-2 text-[14px] leading-5 rounded-[10px] {{ request()->routeIs('studio.support') ? 'bg-[#1d1d1f]/[0.06] text-[#1d1d1f] font-semibold' : 'text-[#515154] hover:text-[#1d1d1f] hover:bg-[#1d1d1f]/[0.04] font-medium' }} transition-colors duration-200 group">
+                    <svg class="w-5 h-5 {{ request()->routeIs('studio.support') ? 'text-[#1d1d1f]' : 'text-[#86868b] group-hover:text-[#515154]' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                    Support
+                </a>
             </nav>
 
             @if(auth()->user()?->hasRole('super-admin'))
@@ -128,7 +114,7 @@
             @endif
 
             <div class="p-3 pt-1 w-[260px]">
-                <a href="{{ auth()->user()?->hasRole('super-admin') ? route('admin.dashboard') : '#' }}" class="flex items-center gap-3 p-2 rounded-[12px] hover:bg-[#1d1d1f]/[0.04] transition-colors cursor-pointer group">
+                <div class="flex items-center gap-3 p-2 rounded-[12px] hover:bg-[#1d1d1f]/[0.04] transition-colors group">
                     <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-[#e5e5ea] to-[#f5f5f7] shadow-inner border border-black/5 flex items-center justify-center shrink-0 group-hover:border-black/10 transition-colors">
                         <svg class="w-4 h-4 text-[#86868b]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                     </div>
@@ -142,7 +128,12 @@
                             @endif
                         </p>
                     </div>
-                </a>
+                    @if(config('app.demo_mode') || app()->environment(['local', 'testing']))
+                        <a href="/logout" class="p-1.5 rounded-lg text-[#86868b] hover:text-red-500 hover:bg-red-50 transition-all" title="Switch Role">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                        </a>
+                    @endif
+                </div>
             </div>
         </aside>
 

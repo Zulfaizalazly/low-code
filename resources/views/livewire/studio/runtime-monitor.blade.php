@@ -49,7 +49,7 @@
                             <div>
                                 <h4 class="text-[15px] font-semibold text-[#1d1d1f]">Execution #{{ str_pad($execution->id, 6, '0', STR_PAD_LEFT) }}</h4>
                                 <p class="text-[13px] text-[#86868b] mt-0.5">
-                                    {{ $execution->started_at->diffForHumans() }} 
+                                    {{ \Carbon\Carbon::parse($execution->started_at)->diffForHumans() }} 
                                     <span class="mx-2 text-[#e5e5ea]">|</span> 
                                     Flow: <span class="text-[#1d1d1f]">{{ $execution->flow_definition_id }}</span>
                                 </p>

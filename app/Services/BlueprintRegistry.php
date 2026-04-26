@@ -1040,13 +1040,13 @@ class BlueprintRegistry
                         'sort_order' => 2,
                         'fields' => [
                             [
-                                'field_key' => 'summary',
+                                'field_key' => 'proceeds_summary',
                                 'label' => 'Proceeds Summary',
                                 'component_type' => 'summary_panel',
                                 'data_type' => 'object',
                                 'is_required' => false,
                                 'config' => [],
-                                'binding' => ['target_entity' => '', 'target_path' => '']
+                                'binding' => ['target_entity' => '', 'target_path' => 'proceeds_summary']
                             ]
                         ]
                     ]

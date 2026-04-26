@@ -213,7 +213,7 @@
                             </div>
                             <p class="text-[13px] font-medium text-[#86868b] truncate">{{ $deployment->change_summary ?? 'System enhancement successfully deployed.' }}</p>
                         </div>
-                        <span class="text-[12px] text-[#86868b] font-medium whitespace-nowrap bg-gray-50 px-2.5 py-1 rounded-lg border border-gray-100">{{ $deployment->deployed_at->diffForHumans() }}</span>
+                        <span class="text-[12px] text-[#86868b] font-medium whitespace-nowrap bg-gray-50 px-2.5 py-1 rounded-lg border border-gray-100">{{ \Carbon\Carbon::parse($deployment->deployed_at)->diffForHumans() }}</span>
                     </div>
                 @empty
                     <div class="px-6 py-16 flex flex-col items-center justify-center text-center h-full">
@@ -302,7 +302,7 @@
                             <div class="flex items-center gap-2.5 mt-1">
                                 <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-gray-100 text-[#515154] uppercase tracking-wide border border-gray-200/60">{{ $feature->domain }}</span>
                                 @if($feature->last_used)
-                                    <span class="text-[12px] font-medium text-[#86868b]">Active {{ $feature->last_used->diffForHumans() }}</span>
+                                    <span class="text-[12px] font-medium text-[#86868b]">Active {{ \Carbon\Carbon::parse($feature->last_used)->diffForHumans() }}</span>
                                 @else
                                     <span class="text-[12px] font-medium text-[#86868b]">No recent activity</span>
                                 @endif
@@ -317,9 +317,15 @@
                         <span class="px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-full {{ $feature->availability === 'available' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' : ($feature->availability === 'degraded' ? 'bg-amber-50 text-amber-700 border border-amber-200/60' : 'bg-rose-50 text-rose-700 border border-rose-200/60') }} shadow-sm">
                             {{ ucfirst($feature->availability) }}
                         </span>
-                        <button class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-400 transition-colors" title="Launch feature">
-                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-                        </button>
+                        @if($feature->availability !== 'unavailable')
+                            <a href="{{ route('portal.operations.launch', ['featureKey' => $feature->key]) }}" class="w-8 h-8 rounded-full hover:bg-blue-50 flex items-center justify-center text-blue-500 transition-colors" title="Launch feature">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            </a>
+                        @else
+                            <span class="w-8 h-8 rounded-full flex items-center justify-center text-gray-300" title="Feature unavailable">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
+                            </span>
+                        @endif
                     </div>
                 </div>
             @empty

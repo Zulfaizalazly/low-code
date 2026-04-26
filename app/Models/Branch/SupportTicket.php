@@ -42,6 +42,11 @@ class SupportTicket extends Model
         return $this->belongsTo(User::class, 'it_responder_id');
     }
 
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Organization\Branch::class);
+    }
+
     // ─── Scopes ───
 
     public function scopeOpen(Builder $query): Builder
@@ -57,6 +62,21 @@ class SupportTicket extends Model
     public function scopeForUser(Builder $query, int $userId): Builder
     {
         return $query->where('user_id', $userId);
+    }
+
+    public function scopeForStatus(Builder $query, string $status): Builder
+    {
+        return $query->where('status', $status);
+    }
+
+    public function scopeForPriority(Builder $query, string $priority): Builder
+    {
+        return $query->where('priority', $priority);
+    }
+
+    public function scopeForCategory(Builder $query, string $category): Builder
+    {
+        return $query->where('category', $category);
     }
 
     // ─── Helpers ───

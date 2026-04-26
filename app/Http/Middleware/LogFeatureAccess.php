@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class LogFeatureAccess
 {
     /**
-     * Log every /f/{featureKey} access for branch dashboard visibility.
+     * Log every /portal/operations/{featureKey} access for branch dashboard visibility.
      * Captures user, feature, branch, and timestamp for staff activity monitoring.
      * Additionally logs to audit_trails when a manager is operating in Staff View.
      */

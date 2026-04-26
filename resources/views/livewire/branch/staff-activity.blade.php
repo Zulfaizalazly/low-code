@@ -86,7 +86,7 @@
                                         — using {{ $staff->last_feature }}
                                     @endif
                                 @elseif($staff->last_access)
-                                    Last active {{ $staff->last_access->diffForHumans() }}
+                                    Last active {{ \Carbon\Carbon::parse($staff->last_access)->diffForHumans() }}
                                 @else
                                     No activity recorded
                                 @endif

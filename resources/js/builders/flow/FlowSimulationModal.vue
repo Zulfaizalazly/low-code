@@ -11,6 +11,7 @@ import { ref, watch, nextTick, computed } from 'vue'
 import usePreflightChecker from './composables/usePreflightChecker'
 import { getConfigFields } from './composables/useConfigFields'
 import useFieldHintService from './composables/useFieldHintService'
+import { generateMockForNode } from './composables/useMockDataGenerator'
 import FieldHelperPopover from './FieldHelperPopover.vue'
 
 const props = defineProps({
@@ -151,6 +152,33 @@ function isStringOptions(field) {
 function isCommandSelect(field) {
   return field.type === 'select' && field.key === 'command_class'
 }
+
+// ─── AI Mock Data Auto-Fill ───
+const isAutoFilling = ref(false)
+
+async function autoFillMockData() {
+  if (!results.value || results.value.totalFailed === 0) return
+
+  isAutoFilling.value = true
+
+  // Small delay for visual feedback
+  await new Promise(r => setTimeout(r, 300))
+
+  for (const node of failedNodes.value) {
+    const mockValues = generateMockForNode(node.missingFields, {
+      nodeType: node.nodeType,
+      nodeLabel: node.label,
+      nodeKey: node.nodeKey,
+      commands: props.commands,
+    })
+
+    for (const [key, value] of Object.entries(mockValues)) {
+      setFixValue(node.nodeId, key, value)
+    }
+  }
+
+  isAutoFilling.value = false
+}
 </script>
 
 <template>
@@ -267,6 +295,26 @@ function isCommandSelect(field) {
                   <span class="failures-count">{{ results.totalFailed }}</span>
                   <span class="failures-text">of {{ results.totalScanned }} nodes need attention</span>
                 </div>
+
+                <!-- AI Mock Data Auto-Fill Button -->
+                <button
+                  class="autofill-btn"
+                  :disabled="isAutoFilling"
+                  @click="autoFillMockData"
+                >
+                  <span v-if="isAutoFilling" class="autofill-loading">
+                    <span class="loader-small"></span>
+                    Generating mock data...
+                  </span>
+                  <span v-else class="autofill-content">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                      <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                      <path d="M2 17l10 5 10-5"></path>
+                      <path d="M2 12l10 5 10-5"></path>
+                    </svg>
+                    AI Mock Data Auto-Fill
+                  </span>
+                </button>
 
                 <!-- Inline fix form -->
                 <div class="fix-form custom-scroll">
@@ -1002,6 +1050,63 @@ function isCommandSelect(field) {
 
 .recheck-btn {
   flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   AI MOCK DATA AUTO-FILL BUTTON
+   ═══════════════════════════════════════════════════════════════ */
+.autofill-btn {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.08) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 12px;
+  color: #6ee7b7;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.autofill-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.15) 100%);
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
+  transform: translateY(-1px);
+}
+
+.autofill-btn:active {
+  transform: translateY(0);
+}
+
+.autofill-btn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.autofill-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.autofill-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.loader-small {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(110, 231, 183, 0.3);
+  border-top-color: #6ee7b7;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
 /* ═══════════════════════════════════════════════════════════════

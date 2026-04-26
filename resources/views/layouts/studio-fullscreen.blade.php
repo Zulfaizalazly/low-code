@@ -6,28 +6,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Studio | {{ config('app.name', 'Arrahnumation V3') }}</title>
-
-    <!-- Fonts: Inter (Apple system-like) -->
+    <link rel="icon" type="image/webp" href="{{ asset('images/arrahnumation.webp') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'] },
-                }
-            }
-        }
-    </script>
-
-    <!-- Vite (when dev server is running) -->
-    @php try { @endphp
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @php } catch(\Exception $e) {} @endphp
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
     <style>
         * { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }

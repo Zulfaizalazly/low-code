@@ -20,7 +20,8 @@ class CheckPermission
         }
 
         if (!auth()->user()->hasPermissionTo($permission)) {
-            abort(403, 'You do not have permission to access this resource.');
+            return redirect('/')
+                ->with('access_denied', "You don't have the required permission to access this resource. Please select a workspace that matches your account.");
         }
 
         return $next($request);

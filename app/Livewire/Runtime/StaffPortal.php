@@ -15,6 +15,7 @@ class StaffPortal extends Component
 
         $features = FeatureVersion::with('feature')
             ->where('status', 'published')
+            ->whereHas('feature', fn($q) => $q->where('status', 'published'))
             ->get()
             ->map(function ($version) {
                 // Attach health status

@@ -41,14 +41,30 @@ class CommandBus
     }
 
     /**
+     * Explicit mapping for legacy App\Commands\* classes
+     * to their actual Domain handler counterparts.
+     */
+    protected static array $handlerMap = [
+        \App\Commands\AmlaCheckCommand::class        => \App\Domain\Compliance\Handlers\AmlaCheckHandler::class,
+        \App\Commands\FetchDuePaymentsCommand::class => \App\Domain\Payment\Handlers\RecordPaymentHandler::class,
+        \App\Commands\PostGLEntryCommand::class      => \App\Domain\Accounting\Handlers\PostJournalEntryHandler::class,
+        \App\Commands\SendNotificationCommand::class => \App\Domain\Notification\Handlers\SendNotificationHandler::class,
+    ];
+
+    /**
      * Resolve the handler class name from the command class name.
-     * Pattern: App\Domain\{Domain}\Commands\{CommandName} 
-     *      -> App\Domain\{Domain}\Handlers\{CommandName}Handler
+     * 
+     * 1. Check explicit $handlerMap first (for legacy commands).
+     * 2. Fall back to convention: \Commands\ -> \Handlers\, strip "Command" suffix.
      */
     protected function resolveHandler(Command $command): string
     {
         $commandClass = get_class($command);
-        
+
+        if (isset(static::$handlerMap[$commandClass])) {
+            return static::$handlerMap[$commandClass];
+        }
+
         return str_replace(
             ['\\Commands\\', 'Command'], 
             ['\\Handlers\\', ''], 

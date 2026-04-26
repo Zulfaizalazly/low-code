@@ -14,9 +14,12 @@ class FormEngine extends Component
     public array $formData = [];
     public int $currentStepIndex = 0;
     public bool $isSubmitted = false;
+    public string $featureKey = '';
 
     public function mount(string $featureKey, string $pageKey = null)
     {
+        $this->featureKey = $featureKey;
+
         $loader = app(PageLoader::class);
         $page = $loader->load($featureKey, $pageKey);
 
@@ -108,8 +111,16 @@ class FormEngine extends Component
         $primaryFlow = $featureVersion?->flows()->where('is_primary', true)->first();
 
         if ($primaryFlow) {
-            $orchestrator = app(\App\Runtime\Automation\FlowOrchestrator::class);
-            $orchestrator->execute($primaryFlow, ['form' => $payload]);
+            try {
+                $orchestrator = app(\App\Runtime\Automation\FlowOrchestrator::class);
+                $orchestrator->execute($primaryFlow, ['form' => $payload]);
+            } catch (\Throwable $e) {
+                // Log but don't crash — flow execution errors are recorded in automation_execution_logs
+                \Log::warning('Flow execution error (non-blocking)', [
+                    'flow' => $primaryFlow->key,
+                    'error' => $e->getMessage(),
+                ]);
+            }
         }
 
         $this->isSubmitted = true;

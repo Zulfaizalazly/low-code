@@ -3,17 +3,19 @@
 namespace App\Domain\Compliance\Handlers;
 
 use App\Domain\Compliance\Commands\AmlaCheck;
+use App\Kernel\Contracts\Command;
+use App\Kernel\Contracts\CommandHandler;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 
-class AmlaCheckHandler
+class AmlaCheckHandler implements CommandHandler
 {
     /**
      * Handle the AMLA Check command.
      * 
      * In a real system, this would call an external API (e.g., world-check, sanction lists).
      */
-    public function handle(AmlaCheck $command): array
+    public function handle(Command $command): mixed
     {
         Log::info("Executing AMLA Check for IC: {$command->icNumber}", [
             'name' => $command->name,

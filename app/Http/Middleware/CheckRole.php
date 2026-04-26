@@ -20,7 +20,10 @@ class CheckRole
         }
 
         if (!auth()->user()->hasAnyRole($roles)) {
-            abort(403, 'You do not have the required role to access this resource.');
+            $roleLabels = collect($roles)->map(fn ($r) => str_replace('_', ' ', ucfirst($r)))->join(', ');
+
+            return redirect('/')
+                ->with('access_denied', "You don't have the required role ({$roleLabels}) to access this workspace. Please select a workspace that matches your account.");
         }
 
         return $next($request);

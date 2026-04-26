@@ -176,6 +176,45 @@ class Dashboard extends Component
                     'sort_order' => 1,
                 ]);
             }
+
+            // ─── Safeguards: Auto-create menu item if missing ───
+            if ($version->menuItems()->count() === 0) {
+                $version->menuItems()->create([
+                    'menu_key'        => Str::snake($this->newFeatureKey),
+                    'label'           => $this->newFeatureName,
+                    'icon'            => 'document',
+                    'parent_menu_key' => $this->newFeatureDomain,
+                    'route_key'       => '/portal/operations/' . $this->newFeatureKey,
+                    'sort_order'      => Feature::count(),
+                    'is_enabled'      => true,
+                ]);
+            }
+
+            // ─── Safeguards: Auto-create bindings for required fields without one ───
+            $page->load('steps.fields.binding');
+            foreach ($page->steps as $step) {
+                foreach ($step->fields as $field) {
+                    if ($field->is_required && !$field->binding) {
+                        $field->binding()->create([
+                            'binding_type' => 'command_argument',
+                            'target_path'  => $field->field_key,
+                        ]);
+                    }
+                }
+            }
+
+            // ─── Safeguards: Deduplicate field keys within page ───
+            $page->load('steps.fields');
+            $seenKeys = [];
+            foreach ($page->steps as $step) {
+                foreach ($step->fields as $field) {
+                    if (in_array($field->field_key, $seenKeys)) {
+                        $uniqueKey = $step->step_key . '_' . $field->field_key;
+                        $field->update(['field_key' => $uniqueKey]);
+                    }
+                    $seenKeys[] = $field->field_key;
+                }
+            }
         });
 
         $this->showCreateModal = false;

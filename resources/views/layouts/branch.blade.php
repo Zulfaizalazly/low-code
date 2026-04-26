@@ -6,28 +6,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Branch Operations | {{ config('app.name', 'Arrahnumation V3') }}</title>
-
-    <!-- Fonts: Inter (Apple system-like) -->
+    <link rel="icon" type="image/webp" href="{{ asset('images/arrahnumation.webp') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'] },
-                }
-            }
-        }
-    </script>
-
-    <!-- Vite (when dev server is running, overrides CDN) -->
-    @php try { @endphp
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @php } catch(\Exception $e) {} @endphp
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
     <style>
         * { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
@@ -52,10 +36,7 @@
         <aside class="flex-shrink-0 w-[260px] bg-[#f5f5f7]/60 backdrop-blur-3xl border-r border-black/[0.05] flex flex-col z-40">
             <div class="p-5 pb-2">
                 <div class="flex items-center gap-3 px-2 py-2">
-                    <div class="w-9 h-9 rounded-[12px] bg-gradient-to-br from-[#1d1d1f] to-[#434346] shadow-md flex items-center justify-center border border-white/20 relative overflow-hidden group">
-                        <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <svg class="w-5 h-5 text-white relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                    </div>
+                    <x-app-logo size="md" class="rounded-[12px] shadow-md" />
                     <div>
                         <span class="text-[17px] font-bold tracking-tight text-[#1d1d1f]">Branch Ops</span>
                         <p class="text-[10px] font-bold text-[#86868b] uppercase tracking-widest mt-0.5">Operations Center</p>
@@ -129,6 +110,11 @@
                         <p class="text-[14px] font-bold text-[#1d1d1f] truncate leading-tight group-hover:text-emerald-600 transition-colors">{{ auth()->user()->name ?? 'Branch Manager' }}</p>
                         <p class="text-[11px] font-medium text-[#86868b] truncate leading-tight mt-0.5">Manager Profile</p>
                     </div>
+                    @if(config('app.demo_mode') || app()->environment(['local', 'testing']))
+                        <a href="/logout" class="p-1.5 rounded-lg text-[#86868b] hover:text-red-500 hover:bg-red-50 transition-all" title="Switch Role">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                        </a>
+                    @endif
                 </div>
             </div>
         </aside>

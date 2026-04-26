@@ -18,8 +18,20 @@ Route::get('/login', function() {
     return redirect('/');
 })->name('login');
 
-// ─── Dev-only login shortcuts (NOT available in production) ───
-if (app()->environment(['local', 'testing'])) {
+// ─── Logout Route ───
+Route::post('/logout', function (\Illuminate\Http\Request $request) {
+    \Illuminate\Support\Facades\Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect('/');
+})->name('logout')->middleware('web');
+
+// ─── DEPRECATED: Demo login shortcuts ───
+// These auto-login routes are deprecated and will be removed in a future release.
+// Use the SSO Login Modal on the landing page instead.
+// Kept temporarily for backward compatibility with existing bookmarks.
+if (config('app.demo_mode') || app()->environment(['local', 'testing'])) {
+    // @deprecated — Use SSO Login Modal instead
     Route::get('/login-hq', function() {
         $user = \App\Models\User::where('email', 'admin@arrahnu.com')->first();
         if ($user) {
@@ -29,6 +41,7 @@ if (app()->environment(['local', 'testing'])) {
         return 'HQ Admin user not found. Please run `php artisan db:seed` first.';
     });
 
+    // @deprecated — Use SSO Login Modal instead
     Route::get('/login-admin', function() {
         $user = \App\Models\User::where('email', 'admin@arrahnu.com')->first();
         if ($user) {
@@ -38,6 +51,7 @@ if (app()->environment(['local', 'testing'])) {
         return 'Admin user not found. Please seed database.';
     });
 
+    // @deprecated — Use SSO Login Modal instead
     Route::get('/login-admin-panel', function() {
         $user = \App\Models\User::where('email', 'admin@arrahnu.com')->first();
         if ($user) {
@@ -47,6 +61,7 @@ if (app()->environment(['local', 'testing'])) {
         return 'Admin user not found. Please seed database.';
     });
 
+    // @deprecated — Use SSO Login Modal instead
     Route::get('/login-manager', function() {
         $user = \App\Models\User::where('email', 'manager1@arrahnu.com')->first();
         if ($user) {
@@ -56,14 +71,23 @@ if (app()->environment(['local', 'testing'])) {
         return 'Manager user not found. Please seed database.';
     });
 
+    // @deprecated — Use SSO Login Modal instead
     Route::get('/login-teller', function() {
         $user = \App\Models\User::where('email', 'staff1@arrahnu.com')->first();
         if ($user) {
             auth()->login($user);
-            return redirect('/f/new-pledge');
+            return redirect('/portal/operations/new-pledge');
         }
         return "Teller user not found. Please run seeders first.";
     });
+
+    // @deprecated — Replaced by POST /logout route above
+    Route::get('/logout', function() {
+        auth()->logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect('/');
+    })->name('demo.logout');
 }
 
 // ─── Staff Portal & Branch Manager Toggle ───
@@ -75,10 +99,14 @@ Route::get('/portal', \App\Livewire\Runtime\StaffPortal::class)
     ->middleware(['web', 'auth'])
     ->name('runtime.portal');
 
-// V3 Dynamic Feature Runtime
-Route::get('/f/{featureKey}/{pageKey?}', \App\Livewire\Runtime\FormEngine::class)
+Route::get('/portal/support', \App\Livewire\Studio\StaffSupport::class)
+    ->middleware(['web', 'auth'])
+    ->name('portal.support');
+
+// V3 Dynamic Feature Runtime (Branch Teller Operations)
+Route::get('/portal/operations/{featureKey}/{pageKey?}', \App\Livewire\Runtime\FormEngine::class)
     ->middleware(['web', 'auth', 'permission:runtime.execute', \App\Http\Middleware\LogFeatureAccess::class])
-    ->name('v3.runtime');
+    ->name('portal.operations.launch');
 
 // ─── Branch Manager Dashboard ───
 Route::prefix('branch')->middleware(['web', 'auth', 'role:branch_manager'])->group(function () {
@@ -115,6 +143,9 @@ Route::prefix('studio')->middleware(['web', 'auth', 'role:super-admin,system-adm
     // Support & Error Reporting
     Route::get('/support/report-issue', [\App\Http\Controllers\SupportController::class, 'reportIssue'])->name('studio.support.report-issue');
     Route::post('/support/submit-report', [\App\Http\Controllers\SupportController::class, 'submitReport'])->name('studio.support.submit-report');
+
+    // Support Ticket Management Dashboard
+    Route::get('/support', \App\Livewire\Studio\StudioSupport::class)->name('studio.support');
 
     // Audit Trail Logs
     Route::get('/audit', \App\Livewire\Studio\AuditLogs::class)->name('studio.audit');

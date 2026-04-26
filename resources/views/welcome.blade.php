@@ -4,14 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Arrahnumation - Welcome</title>
-    <!-- Tailwind CSS CDN (works without Vite dev server) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Vite (optional, overrides CDN when dev server is running) -->
-    @php try { @endphp
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @php } catch(\Exception $e) {} @endphp
+    <link rel="icon" type="image/webp" href="{{ asset('images/arrahnumation.webp') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -181,19 +180,61 @@
     <!-- Main Content -->
     <div class="w-full max-w-5xl px-6 py-12 relative z-10 flex flex-col items-center">
         
+        <!-- Authenticated User Indicator -->
+        @auth
+        <div class="w-full flex justify-end mb-4 fade-in-up" style="max-width: 64rem;">
+            <div class="flex items-center gap-3 px-4 py-2 rounded-full" style="background: rgba(255,255,255,0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+                <span class="text-sm text-gray-600 font-medium">
+                    {{ Auth::user()->name ?? Auth::user()->email }}
+                </span>
+                <form method="POST" action="/logout" class="inline">
+                    @csrf
+                    <button type="submit" class="text-xs font-medium px-3 py-1 rounded-full transition-colors" style="background: rgba(0,0,0,0.05); color: #86868b;" onmouseover="this.style.background='rgba(0,0,0,0.1)';this.style.color='#1d1d1f'" onmouseout="this.style.background='rgba(0,0,0,0.05)';this.style.color='#86868b'">
+                        Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+        @endauth
+
+        <!-- Access Denied Notice -->
+        @if(session('access_denied'))
+        <div class="w-full max-w-2xl mb-8 fade-in-up" style="max-width: 42rem;">
+            <div class="flex items-start gap-3 px-5 py-4 rounded-2xl" style="background: rgba(254,243,199,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(217,169,56,0.2); box-shadow: 0 2px 12px rgba(0,0,0,0.04);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-0.5">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <p class="text-sm text-amber-800 leading-relaxed">{{ session('access_denied') }}</p>
+            </div>
+        </div>
+        @endif
+
         <!-- Header -->
         <header class="text-center mb-16 fade-in-up">
+            <img src="{{ asset('images/arrahnumation.webp') }}" alt="Arrahnu" class="w-24 h-24 mx-auto mb-6">
             <h1 class="system-title">Arrahnumation V3</h1>
             <p class="system-subtitle max-w-lg mx-auto">
-                The next-generation dynamic operating platform. Select your workspace to continue securely.
+                The next-generation dynamic operating platform. Select your workspace to continue.
             </p>
+            @if(config('app.demo_mode'))
+            <span class="inline-block mt-4 px-4 py-1.5 text-xs font-semibold tracking-widest uppercase bg-amber-100 text-amber-700 rounded-full border border-amber-200">
+                Demo Mode
+            </span>
+            @endif
         </header>
 
-        <!-- Login Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl fade-in-up delay-1">
+        <!-- Workspace Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-5xl fade-in-up delay-1">
             
-            <!-- Teller Login -->
-            <a href="/login-teller" class="role-card group">
+            <!-- Branch Teller -->
+            @guest
+            <div onclick="Livewire.dispatch('openLoginModal', { targetUrl: '/portal/operations/new-pledge' })" class="role-card group">
+            @endguest
+            @auth
+            <a href="/portal/operations/new-pledge" class="role-card group">
+            @endauth
                 <div class="role-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
@@ -202,10 +243,20 @@
                 </div>
                 <h3 class="role-title">Branch Teller</h3>
                 <p class="role-desc">Pledge intake, redemptions, and daily customer servicing.</p>
+            @guest
+            </div>
+            @endguest
+            @auth
             </a>
+            @endauth
 
-            <!-- Manager Login -->
-            <a href="/login-manager" class="role-card group">
+            <!-- Branch Manager -->
+            @guest
+            <div onclick="Livewire.dispatch('openLoginModal', { targetUrl: '/branch' })" class="role-card group">
+            @endguest
+            @auth
+            <a href="/branch" class="role-card group">
+            @endauth
                 <div class="role-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -216,10 +267,20 @@
                 </div>
                 <h3 class="role-title">Branch Manager</h3>
                 <p class="role-desc">Approve high-value transactions and monitor branch health.</p>
+            @guest
+            </div>
+            @endguest
+            @auth
             </a>
+            @endauth
 
-            <!-- HQ / IT Login -->
-            <a href="/login-hq" class="role-card group">
+            <!-- HQ Studio -->
+            @guest
+            <div onclick="Livewire.dispatch('openLoginModal', { targetUrl: '/studio' })" class="role-card group">
+            @endguest
+            @auth
+            <a href="/studio" class="role-card group">
+            @endauth
                 <div class="role-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
@@ -227,9 +288,36 @@
                         <line x1="12" y1="17" x2="12" y2="21"></line>
                     </svg>
                 </div>
-                <h3 class="role-title">HQ IT & Studio</h3>
-                <p class="role-desc">Manage workflows, release features, and system orchestration.</p>
+                <h3 class="role-title">HQ Studio</h3>
+                <p class="role-desc">Workflows, features, and system orchestration.</p>
+            @guest
+            </div>
+            @endguest
+            @auth
             </a>
+            @endauth
+
+            <!-- Admin Panel -->
+            @guest
+            <div onclick="Livewire.dispatch('openLoginModal', { targetUrl: '/admin' })" class="role-card group">
+            @endguest
+            @auth
+            <a href="/admin" class="role-card group">
+            @endauth
+                <div class="role-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                </div>
+                <h3 class="role-title">Admin Panel</h3>
+                <p class="role-desc">Organization, branches, staff, and entity settings.</p>
+            @guest
+            </div>
+            @endguest
+            @auth
+            </a>
+            @endauth
 
         </div>
 
@@ -240,6 +328,11 @@
             </p>
         </div>
     </div>
+
+    <!-- Login Modal (Livewire) -->
+    @guest
+    <livewire:login-modal />
+    @endguest
 
     <!-- Mouse Parallax Script -->
     <script>
@@ -262,5 +355,6 @@
             });
         });
     </script>
+    @livewireScripts
 </body>
 </html>
