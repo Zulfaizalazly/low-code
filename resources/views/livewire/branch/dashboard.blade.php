@@ -125,7 +125,7 @@
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </div>
             </div>
-            <p class="text-[32px] font-bold tracking-tight relative leading-none mb-2 {{ $weeklyPerformance['completion_rate'] >= 90 ? 'text-emerald-600' : ($weeklyPerformance['completion_rate'] >= 70 ? 'text-amber-600' : 'text-rose-600') }}">{{ $weeklyPerformance['completion_rate'] }}%</p>
+            <p class="text-[32px] font-bold tracking-tight relative leading-none mb-2 {{ $weeklyPerformance['completion_rate'] >= 90 ? 'text-emerald-600' : ($weeklyPerformance['completion_rate'] >= 70 ? 'text-green-600' : 'text-rose-600') }}">{{ $weeklyPerformance['completion_rate'] }}%</p>
             <p class="text-[13px] font-medium text-[#86868b] relative">This week</p>
         </div>
 
@@ -152,7 +152,7 @@
             <div class="absolute inset-0 bg-gradient-to-b from-white/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
             <div class="flex items-center justify-between mb-4 relative">
                 <p class="text-[12px] font-semibold text-[#86868b] uppercase tracking-wider">Active Staff</p>
-                <div class="w-10 h-10 rounded-[14px] bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-100/50 flex items-center justify-center text-orange-500 shadow-sm">
+                <div class="w-10 h-10 rounded-[14px] bg-gradient-to-br from-green-50 to-emerald-50 border border-emerald-100/50 flex items-center justify-center text-emerald-500 shadow-sm">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                 </div>
             </div>
@@ -163,9 +163,9 @@
 
     {{-- ─── Usage Drop Alert (Req 8.3) ─── --}}
     @if($usageDropAlert)
-        <div class="mb-6 px-5 py-4 bg-amber-50 border border-amber-200 rounded-2xl flex items-center gap-3">
-            <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
-            <p class="text-[13px] text-amber-700 font-medium">
+        <div class="mb-6 px-5 py-4 bg-green-50 border border-green-200 rounded-2xl flex items-center gap-3">
+            <svg class="w-5 h-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+            <p class="text-[13px] text-green-700 font-medium">
                 Usage drop detected for <span class="font-bold">{{ $usageDropAlert['feature_name'] }}</span>: {{ $usageDropAlert['previous_week'] }} accesses last week → {{ $usageDropAlert['current_week'] }} this week ({{ $usageDropAlert['drop_percent'] }}% decrease).
             </p>
         </div>
@@ -231,12 +231,12 @@
         <div class="space-y-6">
             {{-- Open Tickets --}}
             <div class="bg-white border border-black/[0.04] shadow-[0_8px_30px_rgb(0,0,0,0.03)] rounded-[24px] p-6 relative overflow-hidden group">
-                <div class="absolute -right-4 -top-4 w-24 h-24 bg-amber-50 rounded-full blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="absolute -right-4 -top-4 w-24 h-24 bg-green-50 rounded-full blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <h3 class="text-[12px] font-semibold text-[#86868b] uppercase tracking-wider mb-5 relative">Support Center</h3>
                 
                 <div class="flex items-center gap-4 mb-6 relative">
-                    <div class="w-14 h-14 rounded-[18px] bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100/50 flex items-center justify-center shadow-sm">
-                        <span class="text-[22px] font-bold text-amber-600">{{ $openTickets }}</span>
+                    <div class="w-14 h-14 rounded-[18px] bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100/50 flex items-center justify-center shadow-sm">
+                        <span class="text-[22px] font-bold text-green-600">{{ $openTickets }}</span>
                     </div>
                     <div>
                         <p class="text-[16px] font-bold text-[#1d1d1f] tracking-tight">Active Tickets</p>
@@ -288,7 +288,7 @@
             @forelse($features as $feature)
                 <div class="px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-[#fcfcfc] transition-colors group">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-[16px] {{ $feature->availability === 'available' ? 'bg-emerald-50 border-emerald-100/50 text-emerald-500' : ($feature->availability === 'degraded' ? 'bg-amber-50 border-amber-100/50 text-amber-500' : 'bg-rose-50 border-rose-100/50 text-rose-500') }} border flex items-center justify-center shadow-sm group-hover:shadow-md transition-all shrink-0">
+                        <div class="w-12 h-12 rounded-[16px] {{ $feature->availability === 'available' ? 'bg-emerald-50 border-emerald-100/50 text-emerald-500' : ($feature->availability === 'degraded' ? 'bg-green-50 border-green-100/50 text-green-500' : 'bg-rose-50 border-rose-100/50 text-rose-500') }} border flex items-center justify-center shadow-sm group-hover:shadow-md transition-all shrink-0">
                             @if($feature->availability === 'available')
                                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                             @elseif($feature->availability === 'degraded')
@@ -314,7 +314,7 @@
                         @if($feature->health_error)
                             <span class="text-[12px] font-medium text-rose-600 bg-rose-50 px-3 py-1.5 rounded-lg border border-rose-100/50 max-w-[220px] truncate hidden md:block">{{ $feature->health_error }}</span>
                         @endif
-                        <span class="px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-full {{ $feature->availability === 'available' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' : ($feature->availability === 'degraded' ? 'bg-amber-50 text-amber-700 border border-amber-200/60' : 'bg-rose-50 text-rose-700 border border-rose-200/60') }} shadow-sm">
+                        <span class="px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-full {{ $feature->availability === 'available' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' : ($feature->availability === 'degraded' ? 'bg-green-50 text-green-700 border border-green-200/60' : 'bg-rose-50 text-rose-700 border border-rose-200/60') }} shadow-sm">
                             {{ ucfirst($feature->availability) }}
                         </span>
                         @if($feature->availability !== 'unavailable')

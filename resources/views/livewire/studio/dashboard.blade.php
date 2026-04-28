@@ -24,11 +24,11 @@
         </div>
         <div class="p-6 rounded-[24px] bg-white border border-[#1d1d1f]/[0.04] shadow-[0_4px_24px_rgba(0,0,0,0.02)] transition-transform hover:-translate-y-1 duration-300">
             <p class="text-[11px] font-semibold text-[#86868b] uppercase tracking-wide mb-2">AI Usage MTD</p>
-            <p class="text-[32px] font-bold tracking-tight {{ $budget_used_percent > 80 ? 'text-orange-500' : 'text-[#1d1d1f]' }}">
+            <p class="text-[32px] font-bold tracking-tight {{ $budget_used_percent > 80 ? 'text-emerald-500' : 'text-[#1d1d1f]' }}">
                 ${{ number_format($mtd_ai_cost, 2) }}
             </p>
             <div class="mt-3 w-full bg-[#f5f5f7] rounded-full h-1.5 overflow-hidden">
-                <div class="h-full {{ $budget_used_percent > 90 ? 'bg-rose-500' : ($budget_used_percent > 70 ? 'bg-orange-500' : 'bg-blue-500') }}" 
+                <div class="h-full {{ $budget_used_percent > 90 ? 'bg-rose-500' : ($budget_used_percent > 70 ? 'bg-green-500' : 'bg-blue-500') }}" 
                      style="width: {{ min($budget_used_percent, 100) }}%"></div>
             </div>
         </div>
@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="flex items-center gap-4">
-                        <span class="px-3 py-1 text-[11px] font-bold uppercase tracking-wide rounded-full {{ $feature->status === 'published' ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'bg-amber-50 text-amber-600 border border-amber-200' }}">
+                        <span class="px-3 py-1 text-[11px] font-bold uppercase tracking-wide rounded-full {{ $feature->status === 'published' ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'bg-green-50 text-green-600 border border-green-200' }}">
                             {{ $feature->status }}
                         </span>
                         
@@ -194,7 +194,7 @@
                                 <div>
                                     <p class="text-[14px] font-semibold text-[#1d1d1f] mb-1">Margin Call</p>
                                     <p class="text-[11px] text-[#86868b] mb-2">Panggilan Margin</p>
-                                    <span class="inline-block px-2 py-0.5 text-[9px] font-semibold bg-orange-100 text-orange-700 rounded">Risk</span>
+                                    <span class="inline-block px-2 py-0.5 text-[9px] font-semibold bg-green-100 text-green-700 rounded">Risk</span>
                                 </div>
                             </label>
 

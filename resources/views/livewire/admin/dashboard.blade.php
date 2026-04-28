@@ -36,7 +36,7 @@
                     ['label' => 'Branches', 'value' => $activeBranchCount, 'sub' => 'active', 'color' => 'blue'],
                     ['label' => 'Staff', 'value' => $totalStaffCount, 'sub' => 'total', 'color' => 'emerald'],
                     ['label' => 'Departments', 'value' => $departmentCount, 'sub' => 'active', 'color' => 'violet'],
-                    ['label' => 'Regions', 'value' => $regionCount, 'sub' => 'coverage', 'color' => 'amber'],
+                    ['label' => 'Regions', 'value' => $regionCount, 'sub' => 'coverage', 'color' => 'green'],
                 ];
             @endphp
             @foreach($kpis as $kpi)
@@ -63,7 +63,7 @@
                     $typeConfig = [
                         'hq'          => ['label' => 'HQ',          'bg' => 'bg-blue-600',   'light' => 'bg-blue-50 text-blue-700'],
                         'branch'      => ['label' => 'Branch',      'bg' => 'bg-emerald-500', 'light' => 'bg-emerald-50 text-emerald-700'],
-                        'mini_branch' => ['label' => 'Mini Branch', 'bg' => 'bg-amber-500',   'light' => 'bg-amber-50 text-amber-700'],
+                        'mini_branch' => ['label' => 'Mini Branch', 'bg' => 'bg-green-500',   'light' => 'bg-green-50 text-green-700'],
                     ];
                     $totalBranches = max(array_sum($branchTypeBreakdown), 1);
                 @endphp
@@ -150,7 +150,7 @@
                                         $tBadge = match($branch->type) {
                                             'hq'          => ['HQ',          'bg-blue-600 text-white'],
                                             'branch'      => ['Branch',      'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200/60'],
-                                            'mini_branch' => ['Mini',        'bg-amber-50 text-amber-700 ring-1 ring-amber-200/60'],
+                                            'mini_branch' => ['Mini',        'bg-green-50 text-green-700 ring-1 ring-green-200/60'],
                                             default       => [ucfirst($branch->type), 'bg-gray-100 text-gray-600'],
                                         };
                                     @endphp

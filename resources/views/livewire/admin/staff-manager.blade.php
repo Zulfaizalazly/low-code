@@ -161,7 +161,7 @@
                                             Assign
                                         </button>
                                         @if($user->primaryAssignment)
-                                            <button wire:click="openTransferModal({{ $user->id }})" class="inline-flex items-center px-2.5 py-1.5 text-[11px] font-semibold text-amber-600 bg-amber-50 rounded-[8px] hover:bg-amber-100 transition-colors">
+                                            <button wire:click="openTransferModal({{ $user->id }})" class="inline-flex items-center px-2.5 py-1.5 text-[11px] font-semibold text-green-600 bg-green-50 rounded-[8px] hover:bg-green-100 transition-colors">
                                                 Transfer
                                             </button>
                                         @endif
@@ -466,7 +466,7 @@
                                 <button type="button" wire:click="closeTransferModal" class="px-5 py-2.5 text-[14px] font-semibold text-[#515154] bg-[#f5f5f7] rounded-[12px] hover:bg-black/[0.06] transition-colors">
                                     Cancel
                                 </button>
-                                <button type="submit" class="px-5 py-2.5 text-[14px] font-semibold text-white bg-amber-600 rounded-[12px] hover:bg-amber-700 transition-colors shadow-sm">
+                                <button type="submit" class="px-5 py-2.5 text-[14px] font-semibold text-white bg-green-600 rounded-[12px] hover:bg-green-700 transition-colors shadow-sm">
                                     Review Transfer
                                 </button>
                             </div>
@@ -474,12 +474,12 @@
                     @else
                         <!-- Transfer Confirmation -->
                         <div class="px-6 py-6 space-y-5">
-                            <div class="bg-amber-50 border border-amber-200 rounded-[12px] p-4">
+                            <div class="bg-green-50 border border-green-200 rounded-[12px] p-4">
                                 <div class="flex items-start gap-3">
-                                    <svg class="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+                                    <svg class="w-5 h-5 text-green-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
                                     <div>
-                                        <h3 class="text-[15px] font-semibold text-amber-800">Confirm Transfer</h3>
-                                        <p class="text-[14px] text-amber-700 mt-1">
+                                        <h3 class="text-[15px] font-semibold text-green-800">Confirm Transfer</h3>
+                                        <p class="text-[14px] text-green-700 mt-1">
                                             You are about to transfer <span class="font-semibold">{{ $transferringUser?->name }}</span>
                                             @if($currentTransferAssignment)
                                                 from <span class="font-semibold">{{ $currentTransferAssignment->branch?->name ?? $currentTransferAssignment->department?->name }}</span>
@@ -494,7 +494,7 @@
                                             as <span class="font-semibold">{{ $transferPosition }}</span>
                                             effective <span class="font-semibold">{{ $transferEffectiveDate }}</span>.
                                         </p>
-                                        <p class="text-[13px] text-amber-600 mt-2">Reason: {{ $transferReason }}</p>
+                                        <p class="text-[13px] text-green-600 mt-2">Reason: {{ $transferReason }}</p>
                                     </div>
                                 </div>
                             </div>

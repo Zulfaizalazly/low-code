@@ -65,7 +65,7 @@
                             wire:model="email"
                             id="login-email"
                             type="email"
-                            placeholder="admin@arrahnumation.com"
+                            placeholder="admin@kopsya-arrahnu.com"
                             autocomplete="email"
                             class="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200"
                             style="
@@ -133,7 +133,7 @@
 
                 {{-- Demo hint --}}
                 <p class="mt-6 text-center text-xs" style="color: #86868b;">
-                    Demo: <span class="font-medium" style="color: #1d1d1f;">admin@arrahnumation.com</span>
+                    Demo: <span class="font-medium" style="color: #1d1d1f;">admin@kopsya-arrahnu.com</span>
                 </p>
             </div>
         </div>

@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Admin | {{ config('app.name', 'Arrahnumation V3') }}</title>
-    <link rel="icon" type="image/webp" href="{{ asset('images/arrahnumation.webp') }}">
+    <title>Admin | {{ config('app.name', 'Kopsya Ar-Rahnu') }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/KOPSYA-final-logo-tagline-OL2-Copy-175x96.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@
         * { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
         [x-cloak] { display: none !important; }
 
         @keyframes fadeInUp {
@@ -29,99 +29,99 @@
         }
     </style>
 </head>
-<body class="h-full font-sans antialiased text-[#1d1d1f] selection:bg-blue-500/30">
+<body class="h-full font-sans antialiased text-[#1d1d1f] selection:bg-green-500/30">
     <div class="flex h-full overflow-hidden">
 
-        <!-- Admin Sidebar -->
-        <aside class="flex-shrink-0 w-[260px] bg-[#f5f5f7]/60 backdrop-blur-3xl border-r border-black/[0.05] flex flex-col z-40 h-full overflow-hidden">
+        <!-- Admin Sidebar (Kopsya AR-Rahnu Theme) -->
+        <aside class="flex-shrink-0 w-[260px] bg-[#0a1628] flex flex-col z-40 h-full overflow-hidden">
             <div class="p-5 pb-2">
                 <div class="flex items-center gap-3 px-2 py-2">
                     <x-app-logo size="md" class="rounded-[12px] shadow-md" />
                     <div>
-                        <span class="text-[17px] font-bold tracking-tight text-[#1d1d1f]">Admin</span>
-                        <p class="text-[10px] font-bold text-[#86868b] uppercase tracking-widest mt-0.5">Organization Management</p>
+                        <span class="text-[17px] font-bold tracking-tight text-white">Admin</span>
+                        <p class="text-[10px] font-bold text-white/40 uppercase tracking-widest mt-0.5">Organization Management</p>
                     </div>
                 </div>
             </div>
 
             <nav class="flex-1 px-3 py-3 space-y-1 overflow-y-auto scrollbar-hide min-h-0">
                 <!-- Dashboard -->
-                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-3 py-2 text-[14px] leading-5 rounded-[12px] {{ request()->routeIs('admin.dashboard') ? 'bg-black/[0.04] text-[#1d1d1f] font-semibold' : 'text-[#515154] hover:text-[#1d1d1f] hover:bg-black/[0.03] font-medium' }} transition-all duration-200 group">
-                    <svg class="w-5 h-5 {{ request()->routeIs('admin.dashboard') ? 'text-[#1d1d1f]' : 'text-[#86868b] group-hover:text-[#515154]' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-3 py-2 text-[14px] leading-5 rounded-[12px] {{ request()->routeIs('admin.dashboard') ? 'bg-white/[0.1] text-white font-semibold' : 'text-white/60 hover:text-white hover:bg-white/[0.06] font-medium' }} transition-all duration-200 group">
+                    <svg class="w-5 h-5 {{ request()->routeIs('admin.dashboard') ? 'text-[#2ecc71]' : 'text-white/40 group-hover:text-white/60' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                     Dashboard
                 </a>
 
                 <!-- Organization Section -->
-                <div class="pt-6 pb-2 px-3 text-[11px] font-bold tracking-wider text-[#86868b] uppercase">
+                <div class="pt-6 pb-2 px-3 text-[11px] font-bold tracking-wider text-white/30 uppercase">
                     Organization
                 </div>
 
                 <!-- Branches -->
-                <a href="{{ route('admin.branches') }}" class="flex items-center gap-3 px-3 py-2 text-[14px] leading-5 rounded-[12px] {{ request()->routeIs('admin.branches*') ? 'bg-black/[0.04] text-[#1d1d1f] font-semibold' : 'text-[#515154] hover:text-[#1d1d1f] hover:bg-black/[0.03] font-medium' }} transition-all duration-200 group">
-                    <svg class="w-5 h-5 {{ request()->routeIs('admin.branches*') ? 'text-[#1d1d1f]' : 'text-[#86868b] group-hover:text-[#515154]' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                <a href="{{ route('admin.branches') }}" class="flex items-center gap-3 px-3 py-2 text-[14px] leading-5 rounded-[12px] {{ request()->routeIs('admin.branches*') ? 'bg-white/[0.1] text-white font-semibold' : 'text-white/60 hover:text-white hover:bg-white/[0.06] font-medium' }} transition-all duration-200 group">
+                    <svg class="w-5 h-5 {{ request()->routeIs('admin.branches*') ? 'text-[#2ecc71]' : 'text-white/40 group-hover:text-white/60' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
                     Branches
                 </a>
 
                 <!-- Departments -->
-                <a href="{{ route('admin.departments') }}" class="flex items-center gap-3 px-3 py-2 text-[14px] leading-5 rounded-[12px] {{ request()->routeIs('admin.departments') ? 'bg-black/[0.04] text-[#1d1d1f] font-semibold' : 'text-[#515154] hover:text-[#1d1d1f] hover:bg-black/[0.03] font-medium' }} transition-all duration-200 group">
-                    <svg class="w-5 h-5 {{ request()->routeIs('admin.departments') ? 'text-[#1d1d1f]' : 'text-[#86868b] group-hover:text-[#515154]' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                <a href="{{ route('admin.departments') }}" class="flex items-center gap-3 px-3 py-2 text-[14px] leading-5 rounded-[12px] {{ request()->routeIs('admin.departments') ? 'bg-white/[0.1] text-white font-semibold' : 'text-white/60 hover:text-white hover:bg-white/[0.06] font-medium' }} transition-all duration-200 group">
+                    <svg class="w-5 h-5 {{ request()->routeIs('admin.departments') ? 'text-[#2ecc71]' : 'text-white/40 group-hover:text-white/60' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
                     Departments
                 </a>
 
                 <!-- People Section -->
-                <div class="pt-6 pb-2 px-3 text-[11px] font-bold tracking-wider text-[#86868b] uppercase">
+                <div class="pt-6 pb-2 px-3 text-[11px] font-bold tracking-wider text-white/30 uppercase">
                     People
                 </div>
 
                 <!-- Staff -->
-                <a href="{{ route('admin.staff') }}" class="flex items-center gap-3 px-3 py-2 text-[14px] leading-5 rounded-[12px] {{ request()->routeIs('admin.staff') ? 'bg-black/[0.04] text-[#1d1d1f] font-semibold' : 'text-[#515154] hover:text-[#1d1d1f] hover:bg-black/[0.03] font-medium' }} transition-all duration-200 group">
-                    <svg class="w-5 h-5 {{ request()->routeIs('admin.staff') ? 'text-[#1d1d1f]' : 'text-[#86868b] group-hover:text-[#515154]' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                <a href="{{ route('admin.staff') }}" class="flex items-center gap-3 px-3 py-2 text-[14px] leading-5 rounded-[12px] {{ request()->routeIs('admin.staff') ? 'bg-white/[0.1] text-white font-semibold' : 'text-white/60 hover:text-white hover:bg-white/[0.06] font-medium' }} transition-all duration-200 group">
+                    <svg class="w-5 h-5 {{ request()->routeIs('admin.staff') ? 'text-[#2ecc71]' : 'text-white/40 group-hover:text-white/60' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                     Staff
                 </a>
 
                 <!-- User Roles -->
-                <a href="{{ route('admin.staff') }}" class="flex items-center gap-3 px-3 py-2 text-[14px] leading-5 rounded-[12px] {{ request()->routeIs('admin.users.roles') ? 'bg-black/[0.04] text-[#1d1d1f] font-semibold' : 'text-[#515154] hover:text-[#1d1d1f] hover:bg-black/[0.03] font-medium' }} transition-all duration-200 group">
-                    <svg class="w-5 h-5 {{ request()->routeIs('admin.users.roles') ? 'text-[#1d1d1f]' : 'text-[#86868b] group-hover:text-[#515154]' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                <a href="{{ route('admin.staff') }}" class="flex items-center gap-3 px-3 py-2 text-[14px] leading-5 rounded-[12px] {{ request()->routeIs('admin.users.roles') ? 'bg-white/[0.1] text-white font-semibold' : 'text-white/60 hover:text-white hover:bg-white/[0.06] font-medium' }} transition-all duration-200 group">
+                    <svg class="w-5 h-5 {{ request()->routeIs('admin.users.roles') ? 'text-[#2ecc71]' : 'text-white/40 group-hover:text-white/60' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                     <div class="flex flex-col">
                         <span>User Roles</span>
-                        <span class="text-[10px] font-medium text-[#86868b] -mt-0.5">via Staff page</span>
+                        <span class="text-[10px] font-medium text-white/30 -mt-0.5">via Staff page</span>
                     </div>
                 </a>
 
                 <!-- Settings Section -->
-                <div class="pt-6 pb-2 px-3 text-[11px] font-bold tracking-wider text-[#86868b] uppercase">
+                <div class="pt-6 pb-2 px-3 text-[11px] font-bold tracking-wider text-white/30 uppercase">
                     Settings
                 </div>
 
                 <!-- Entity Settings -->
-                <a href="{{ route('admin.entity') }}" class="flex items-center gap-3 px-3 py-2 text-[14px] leading-5 rounded-[12px] {{ request()->routeIs('admin.entity') ? 'bg-black/[0.04] text-[#1d1d1f] font-semibold' : 'text-[#515154] hover:text-[#1d1d1f] hover:bg-black/[0.03] font-medium' }} transition-all duration-200 group">
-                    <svg class="w-5 h-5 {{ request()->routeIs('admin.entity') ? 'text-[#1d1d1f]' : 'text-[#86868b] group-hover:text-[#515154]' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                <a href="{{ route('admin.entity') }}" class="flex items-center gap-3 px-3 py-2 text-[14px] leading-5 rounded-[12px] {{ request()->routeIs('admin.entity') ? 'bg-white/[0.1] text-white font-semibold' : 'text-white/60 hover:text-white hover:bg-white/[0.06] font-medium' }} transition-all duration-200 group">
+                    <svg class="w-5 h-5 {{ request()->routeIs('admin.entity') ? 'text-[#2ecc71]' : 'text-white/40 group-hover:text-white/60' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                     Entity Settings
                 </a>
             </nav>
 
             <!-- Quick Access: Studio Dashboard -->
             <div class="shrink-0 px-4 pb-2 mt-auto">
-                <a href="{{ route('studio.dashboard') }}" class="w-full flex items-center justify-between p-3 rounded-[14px] bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100/50 hover:shadow-sm hover:border-blue-200 transition-all group">
+                <a href="{{ route('studio.dashboard') }}" class="w-full flex items-center justify-between p-3 rounded-[14px] bg-[#1b6b2f]/20 border border-[#1b6b2f]/30 hover:bg-[#1b6b2f]/30 hover:border-[#1b6b2f]/50 transition-all group">
                     <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-[10px] bg-white flex items-center justify-center text-blue-600 shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        <div class="w-7 h-7 rounded-[10px] bg-[#1b6b2f] flex items-center justify-center text-white shadow-sm group-hover:bg-[#239b40] transition-colors">
                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
                         </div>
-                        <span class="text-[13px] font-bold text-blue-800 tracking-tight">Studio</span>
+                        <span class="text-[13px] font-bold text-white/80 tracking-tight">Studio</span>
                     </div>
-                    <span class="text-[10px] font-bold text-blue-500 uppercase tracking-widest bg-white px-2 py-0.5 rounded-full shadow-sm">Go</span>
+                    <span class="text-[10px] font-bold text-[#2ecc71] uppercase tracking-widest bg-white/10 px-2 py-0.5 rounded-full">Go</span>
                 </a>
             </div>
 
             <!-- User Profile -->
             <div class="shrink-0 px-4 pb-4">
-                <div class="flex items-center gap-3 p-3 rounded-[16px] bg-white border border-black/[0.04] shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.04)] transition-all group cursor-pointer">
-                    <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-violet-400 to-purple-500 shadow-inner border border-white/20 flex items-center justify-center shrink-0">
+                <div class="flex items-center gap-3 p-3 rounded-[16px] bg-white/[0.05] border border-white/[0.08] hover:bg-white/[0.08] transition-all group cursor-pointer">
+                    <div class="w-9 h-9 rounded-full bg-[#1b6b2f] shadow-inner border border-white/10 flex items-center justify-center shrink-0">
                         <span class="text-[12px] font-bold text-white">{{ substr(auth()->user()->name ?? 'A', 0, 1) }}</span>
                     </div>
                     <div class="flex-1 min-w-0">
-                        <p class="text-[14px] font-bold text-[#1d1d1f] truncate leading-tight group-hover:text-violet-600 transition-colors">{{ auth()->user()->name ?? 'Administrator' }}</p>
-                        <p class="text-[11px] font-medium text-[#86868b] truncate leading-tight mt-0.5">
+                        <p class="text-[14px] font-bold text-white truncate leading-tight group-hover:text-[#2ecc71] transition-colors">{{ auth()->user()->name ?? 'Administrator' }}</p>
+                        <p class="text-[11px] font-medium text-white/40 truncate leading-tight mt-0.5">
                             @if(auth()->user() && auth()->user()->roles->isNotEmpty())
                                 {{ auth()->user()->roles->first()->name }}
                             @else
@@ -130,7 +130,7 @@
                         </p>
                     </div>
                     @if(config('app.demo_mode') || app()->environment(['local', 'testing']))
-                        <a href="/logout" class="p-1.5 rounded-lg text-[#86868b] hover:text-red-500 hover:bg-red-50 transition-all" title="Switch Role">
+                        <a href="/logout" class="p-1.5 rounded-lg text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all" title="Switch Role">
                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                         </a>
                     @endif

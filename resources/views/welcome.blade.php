@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Arrahnumation - Welcome</title>
-    <link rel="icon" type="image/webp" href="{{ asset('images/arrahnumation.webp') }}">
+    <title>Kopsya Ar-Rahnu - Welcome</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/KOPSYA-final-logo-tagline-OL2-Copy-175x96.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -206,20 +206,20 @@
                     <line x1="12" y1="8" x2="12" y2="12"></line>
                     <line x1="12" y1="16" x2="12.01" y2="16"></line>
                 </svg>
-                <p class="text-sm text-amber-800 leading-relaxed">{{ session('access_denied') }}</p>
+                <p class="text-sm text-green-800 leading-relaxed">{{ session('access_denied') }}</p>
             </div>
         </div>
         @endif
 
         <!-- Header -->
         <header class="text-center mb-16 fade-in-up">
-            <img src="{{ asset('images/arrahnumation.webp') }}" alt="Arrahnu" class="w-24 h-24 mx-auto mb-6">
-            <h1 class="system-title">Arrahnumation V3</h1>
+            <img src="{{ asset('images/KOPSYA-final-logo-tagline-OL2-Copy-175x96.png') }}" alt="Kopsya Ar-Rahnu" class="h-24 w-auto mx-auto mb-6">
+            <h1 class="system-title">Kopsya Ar-Rahnu</h1>
             <p class="system-subtitle max-w-lg mx-auto">
-                The next-generation dynamic operating platform. Select your workspace to continue.
+                Sistem Operasi Ar-Rahnu. Pilih ruang kerja anda untuk meneruskan.
             </p>
             @if(config('app.demo_mode'))
-            <span class="inline-block mt-4 px-4 py-1.5 text-xs font-semibold tracking-widest uppercase bg-amber-100 text-amber-700 rounded-full border border-amber-200">
+            <span class="inline-block mt-4 px-4 py-1.5 text-xs font-semibold tracking-widest uppercase bg-green-100 text-green-700 rounded-full border border-green-200">
                 Demo Mode
             </span>
             @endif
@@ -324,7 +324,7 @@
         <!-- Footer Notice -->
         <div class="mt-16 text-center fade-in-up delay-2">
             <p class="text-sm text-gray-400">
-                Arrahnumation Core Infrastructure &copy; {{ date('Y') }}
+                Kopsya Ar-Rahnu &copy; {{ date('Y') }}
             </p>
         </div>
     </div>

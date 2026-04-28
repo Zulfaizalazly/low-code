@@ -128,8 +128,8 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-4 p-3 rounded-[16px] hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-100">
-                        <div class="w-12 h-12 rounded-[14px] bg-gradient-to-tr from-amber-50 to-orange-50 flex items-center justify-center shrink-0 border border-amber-100/50 shadow-sm">
-                            <svg class="w-6 h-6 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <div class="w-12 h-12 rounded-[14px] bg-gradient-to-tr from-green-50 to-emerald-50 flex items-center justify-center shrink-0 border border-green-100/50 shadow-sm">
+                            <svg class="w-6 h-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         </div>
                         <div class="min-w-0">
                             <p class="text-[11px] font-medium text-[#86868b] uppercase tracking-wide mb-0.5">Support Hours</p>
@@ -146,7 +146,7 @@
                 <div class="space-y-4 relative">
                     <div class="flex items-center justify-between">
                         <span class="text-[14px] font-medium text-[#515154]">Open Tickets</span>
-                        <span class="text-[16px] font-bold text-amber-600 bg-amber-50 px-2.5 py-0.5 rounded-lg border border-amber-100">{{ $openCount }}</span>
+                        <span class="text-[16px] font-bold text-green-600 bg-green-50 px-2.5 py-0.5 rounded-lg border border-green-100">{{ $openCount }}</span>
                     </div>
                     <div class="flex items-center justify-between">
                         <span class="text-[14px] font-medium text-[#515154]">Resolved</span>

@@ -52,11 +52,11 @@
                 <div class="flex items-start justify-between relative">
                     <div class="flex items-start gap-5">
                         {{-- Status icon --}}
-                        <div class="w-14 h-14 rounded-[16px] {{ $feature->availability === 'available' ? 'bg-gradient-to-tr from-emerald-50 to-teal-50 border-emerald-100/50 shadow-sm' : ($feature->availability === 'degraded' ? 'bg-gradient-to-tr from-amber-50 to-orange-50 border-amber-100/50 shadow-sm' : 'bg-gradient-to-tr from-rose-50 to-red-50 border-rose-100/50 shadow-sm') }} border flex items-center justify-center shrink-0 mt-0.5">
+                        <div class="w-14 h-14 rounded-[16px] {{ $feature->availability === 'available' ? 'bg-gradient-to-tr from-emerald-50 to-teal-50 border-emerald-100/50 shadow-sm' : ($feature->availability === 'degraded' ? 'bg-gradient-to-tr from-green-50 to-emerald-50 border-green-100/50 shadow-sm' : 'bg-gradient-to-tr from-rose-50 to-red-50 border-rose-100/50 shadow-sm') }} border flex items-center justify-center shrink-0 mt-0.5">
                             @if($feature->availability === 'available')
                                 <svg class="w-7 h-7 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                             @elseif($feature->availability === 'degraded')
-                                <svg class="w-7 h-7 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+                                <svg class="w-7 h-7 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
                             @else
                                 <svg class="w-7 h-7 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                             @endif
@@ -109,7 +109,7 @@
                     </div>
 
                     <div class="flex flex-col items-end gap-3">
-                        <span class="px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-full shadow-sm {{ $feature->availability === 'available' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/50' : ($feature->availability === 'degraded' ? 'bg-amber-50 text-amber-700 border border-amber-200/50' : 'bg-rose-50 text-rose-700 border border-rose-200/50') }}">
+                        <span class="px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-full shadow-sm {{ $feature->availability === 'available' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/50' : ($feature->availability === 'degraded' ? 'bg-green-50 text-green-700 border border-green-200/50' : 'bg-rose-50 text-rose-700 border border-rose-200/50') }}">
                             {{ ucfirst($feature->availability) }}
                         </span>
 

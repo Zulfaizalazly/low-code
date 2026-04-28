@@ -18,7 +18,7 @@
                 $badgeClass = match($branch->type) {
                     'hq' => 'bg-blue-100 text-blue-700',
                     'branch' => 'bg-green-100 text-green-700',
-                    'mini_branch' => 'bg-amber-100 text-amber-700',
+                    'mini_branch' => 'bg-green-100 text-green-700',
                     default => 'bg-gray-100 text-gray-700',
                 };
                 $badgeLabel = match($branch->type) {
@@ -216,7 +216,7 @@
                                                 @php
                                                     $empBadge = match($assignment->employment_type) {
                                                         'permanent' => 'bg-blue-100 text-blue-700',
-                                                        'contract' => 'bg-amber-100 text-amber-700',
+                                                        'contract' => 'bg-green-100 text-green-700',
                                                         'temporary' => 'bg-purple-100 text-purple-700',
                                                         default => 'bg-gray-100 text-gray-700',
                                                     };

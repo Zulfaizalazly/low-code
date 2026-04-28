@@ -121,7 +121,7 @@
                                         $badgeClass = match($branch->type) {
                                             'hq' => 'bg-blue-100 text-blue-700',
                                             'branch' => 'bg-green-100 text-green-700',
-                                            'mini_branch' => 'bg-amber-100 text-amber-700',
+                                            'mini_branch' => 'bg-green-100 text-green-700',
                                             default => 'bg-gray-100 text-gray-700',
                                         };
                                         $badgeLabel = match($branch->type) {
@@ -178,7 +178,7 @@
                                         <button wire:click="edit({{ $branch->id }})" class="inline-flex items-center px-3 py-1.5 text-[12px] font-semibold text-[#515154] bg-[#f5f5f7] rounded-[8px] hover:bg-black/[0.06] transition-colors">
                                             Edit
                                         </button>
-                                        <button wire:click="toggleStatus({{ $branch->id }})" class="inline-flex items-center px-3 py-1.5 text-[12px] font-semibold {{ $branch->is_active ? 'text-amber-600 bg-amber-50 hover:bg-amber-100' : 'text-emerald-600 bg-emerald-50 hover:bg-emerald-100' }} rounded-[8px] transition-colors">
+                                        <button wire:click="toggleStatus({{ $branch->id }})" class="inline-flex items-center px-3 py-1.5 text-[12px] font-semibold {{ $branch->is_active ? 'text-green-600 bg-green-50 hover:bg-green-100' : 'text-emerald-600 bg-emerald-50 hover:bg-emerald-100' }} rounded-[8px] transition-colors">
                                             {{ $branch->is_active ? 'Deactivate' : 'Activate' }}
                                         </button>
                                     </div>

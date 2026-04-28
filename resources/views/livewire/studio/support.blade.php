@@ -32,10 +32,10 @@
         {{-- Open Tickets --}}
         <div class="bg-white rounded-2xl border border-[#1d1d1f]/[0.06] p-5 shadow-sm hover:shadow-md transition-shadow">
             <div class="flex items-center justify-between mb-3">
-                <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
-                    <svg class="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center">
+                    <svg class="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </div>
-                <span class="text-[11px] font-semibold uppercase tracking-wider text-amber-600">Active</span>
+                <span class="text-[11px] font-semibold uppercase tracking-wider text-green-600">Active</span>
             </div>
             <p class="text-[32px] font-bold tracking-tight text-[#1d1d1f] leading-none">{{ $openCount }}</p>
             <p class="text-[13px] text-[#86868b] mt-1">Open Tickets</p>
@@ -208,7 +208,7 @@
             <h3 class="text-[12px] font-semibold text-[#86868b] uppercase tracking-wider mb-4">Priority Breakdown</h3>
             <div class="space-y-3">
                 @php
-                    $priorityColors = ['critical' => 'rose', 'high' => 'orange', 'medium' => 'amber', 'low' => 'blue'];
+                    $priorityColors = ['critical' => 'rose', 'high' => 'green', 'medium' => 'emerald', 'low' => 'blue'];
                     $priorityOrder = ['critical', 'high', 'medium', 'low'];
                 @endphp
                 @foreach($priorityOrder as $priority)
@@ -230,7 +230,7 @@
             <h3 class="text-[12px] font-semibold text-[#86868b] uppercase tracking-wider mb-4">Category Breakdown</h3>
             <div class="space-y-3">
                 @php
-                    $categoryColors = ['bug' => 'rose', 'feature_request' => 'purple', 'issue' => 'amber'];
+                    $categoryColors = ['bug' => 'rose', 'feature_request' => 'purple', 'issue' => 'green'];
                     $categoryLabels = ['bug' => 'Bug', 'feature_request' => 'Feature Request', 'issue' => 'Issue'];
                 @endphp
                 @foreach($categoryLabels as $catKey => $catLabel)

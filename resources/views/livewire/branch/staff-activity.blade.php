@@ -34,7 +34,7 @@
         </div>
         <div class="p-5 rounded-[20px] bg-white border border-[#1d1d1f]/[0.04] shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
             <p class="text-[11px] font-semibold text-[#86868b] uppercase tracking-wide mb-2">Completion Rate</p>
-            <p class="text-[28px] font-bold tracking-tight {{ $completionPercent >= 90 ? 'text-emerald-500' : ($completionPercent >= 70 ? 'text-amber-500' : 'text-rose-500') }}">{{ $completionPercent }}%</p>
+            <p class="text-[28px] font-bold tracking-tight {{ $completionPercent >= 90 ? 'text-emerald-500' : ($completionPercent >= 70 ? 'text-green-500' : 'text-rose-500') }}">{{ $completionPercent }}%</p>
             <p class="text-[11px] text-[#86868b] mt-0.5">{{ $totalExecutions }} workflow executions</p>
         </div>
         <div class="p-5 rounded-[20px] bg-white border border-[#1d1d1f]/[0.04] shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
@@ -52,9 +52,9 @@
 
     {{-- ─── Inactive Staff Alert ─── --}}
     @if($inactiveStaff > 0)
-        <div class="mb-6 px-5 py-4 bg-amber-50 border border-amber-200 rounded-2xl flex items-center gap-3">
-            <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
-            <p class="text-[13px] text-amber-700 font-medium">{{ $inactiveStaff }} staff {{ $inactiveStaff === 1 ? 'member has' : 'members have' }} not used any features in the last {{ config('branch.dashboard.inactive_staff_threshold_hours', 4) }} hours.</p>
+        <div class="mb-6 px-5 py-4 bg-green-50 border border-green-200 rounded-2xl flex items-center gap-3">
+            <svg class="w-5 h-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+            <p class="text-[13px] text-green-700 font-medium">{{ $inactiveStaff }} staff {{ $inactiveStaff === 1 ? 'member has' : 'members have' }} not used any features in the last {{ config('branch.dashboard.inactive_staff_threshold_hours', 4) }} hours.</p>
         </div>
     @endif
 
@@ -163,7 +163,7 @@
                                 <span class="text-[14px] font-bold text-[#1d1d1f]">{{ $efficiency->total_executions }}</span>
                             </td>
                             <td class="px-6 py-4 text-center">
-                                <span class="px-2.5 py-1 text-[12px] font-bold rounded-full {{ $successRate >= 90 ? 'bg-emerald-50 text-emerald-600' : ($successRate >= 70 ? 'bg-amber-50 text-amber-600' : 'bg-rose-50 text-rose-600') }}">
+                                <span class="px-2.5 py-1 text-[12px] font-bold rounded-full {{ $successRate >= 90 ? 'bg-emerald-50 text-emerald-600' : ($successRate >= 70 ? 'bg-green-50 text-green-600' : 'bg-rose-50 text-rose-600') }}">
                                     {{ $successRate }}%
                                 </span>
                             </td>

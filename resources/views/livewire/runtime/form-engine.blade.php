@@ -11,7 +11,7 @@
         <!-- Header -->
         <div class="px-8 pt-8 pb-6">
             <div class="flex items-center gap-3 mb-1">
-                <div class="w-8 h-8 rounded-[10px] bg-gradient-to-br from-amber-500 to-orange-600 shadow-sm shadow-amber-500/20 flex items-center justify-center">
+                <div class="w-8 h-8 rounded-[10px] bg-gradient-to-br from-green-500 to-emerald-600 shadow-sm shadow-green-500/20 flex items-center justify-center">
                     <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                 </div>
                 <h2 class="text-[22px] font-bold tracking-tight text-[#1d1d1f]">{{ $page->name }}</h2>
@@ -24,7 +24,7 @@
                         <div class="flex items-center {{ $idx < count($page->steps) - 1 ? 'flex-1' : '' }}">
                             <div class="flex items-center gap-2 {{ $idx <= $currentStepIndex ? '' : 'opacity-40' }}">
                                 <div class="w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0 transition-all duration-300
-                                    {{ $idx < $currentStepIndex ? 'bg-emerald-500 text-white shadow-sm shadow-emerald-500/20' : ($idx === $currentStepIndex ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-sm shadow-amber-500/20' : 'bg-white text-[#86868b] border border-black/[0.08]') }}">
+                                    {{ $idx < $currentStepIndex ? 'bg-emerald-500 text-white shadow-sm shadow-emerald-500/20' : ($idx === $currentStepIndex ? 'bg-gradient-to-br from-green-500 to-emerald-600 text-white shadow-sm shadow-green-500/20' : 'bg-white text-[#86868b] border border-black/[0.08]') }}">
                                     @if($idx < $currentStepIndex)
                                         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
                                     @else
@@ -57,7 +57,7 @@
                         <a href="{{ route('runtime.portal') }}" class="px-5 py-2.5 bg-[#1d1d1f] text-white rounded-[12px] text-[13px] font-bold shadow-lg hover:bg-[#434346] transition-colors">
                             Back to Portal
                         </a>
-                        <a href="{{ route('portal.operations.launch', ['featureKey' => $this->featureKey]) }}" class="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-[12px] text-[13px] font-bold shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all">
+                        <a href="{{ route('portal.operations.launch', ['featureKey' => $this->featureKey]) }}" class="px-5 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-[12px] text-[13px] font-bold shadow-lg shadow-green-500/20 hover:shadow-green-500/30 transition-all">
                             Start New
                         </a>
                         @if(auth()->user()?->hasRole('branch_manager') && session('branch_view_mode') === 'staff')
@@ -80,7 +80,7 @@
                             <label for="{{ $field->field_key }}" class="block text-[13px] font-semibold text-[#1d1d1f] mb-2">
                                 {{ $field->label }}
                                 @if($field->is_required)
-                                    <span class="text-amber-500 ml-0.5">*</span>
+                                    <span class="text-green-500 ml-0.5">*</span>
                                 @endif
                             </label>
 
@@ -120,7 +120,7 @@
                 <button type="button"
                         wire:click="next"
                         wire:loading.attr="disabled"
-                        class="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-[13px] font-bold rounded-[12px] shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-60">
+                        class="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-[13px] font-bold rounded-[12px] shadow-lg shadow-green-500/20 hover:shadow-green-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-60">
                     <span wire:loading.remove wire:target="next">
                         {{ $currentStepIndex === count($page->steps) - 1 ? 'Submit' : 'Continue' }}
                     </span>
