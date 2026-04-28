@@ -216,7 +216,7 @@
             <img src="{{ asset('images/KOPSYA-final-logo-tagline-OL2-Copy-175x96.png') }}" alt="Kopsya Ar-Rahnu" class="h-24 w-auto mx-auto mb-6">
             <h1 class="system-title">Kopsya Ar-Rahnu</h1>
             <p class="system-subtitle max-w-lg mx-auto">
-                Sistem Operasi Ar-Rahnu. Pilih ruang kerja anda untuk meneruskan.
+                Ar-Rahnu Operations System. Select your workspace to continue.
             </p>
             @if(config('app.demo_mode'))
             <span class="inline-block mt-4 px-4 py-1.5 text-xs font-semibold tracking-widest uppercase bg-green-100 text-green-700 rounded-full border border-green-200">

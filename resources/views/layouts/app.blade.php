@@ -45,20 +45,22 @@
 
     <div class="flex h-full overflow-hidden @if(auth()->check() && auth()->user()->hasRole('branch_manager') && session('branch_view_mode') === 'staff') h-[calc(100%-48px)] @endif">
         <!-- Sidebar (Kopsya AR-Rahnu Theme) -->
-        <aside class="flex-shrink-0 w-[260px] bg-[#0a1628] flex flex-col z-40 h-full">
-            <div class="p-5 pb-2">
-                <div class="flex items-center gap-3 px-2 py-2">
-                    <x-app-logo size="md" class="rounded-[12px] shadow-lg" />
+        <aside class="flex-shrink-0 w-[200px] bg-[#0a1628] flex flex-col z-40 h-full">
+            <!-- Logo & Branding -->
+            <div class="px-4 pt-5 pb-4">
+                <div class="flex items-center gap-3">
+                    <x-app-logo size="sm" class="rounded-[8px]" />
                     <div>
-                        <span class="text-[17px] font-bold tracking-tight text-white">Kopsya Ar-Rahnu</span>
-                        <p class="text-[10px] font-bold text-white/40 uppercase tracking-widest mt-0.5">Branch Portal</p>
+                        <span class="text-[14px] font-bold tracking-tight text-white uppercase">AR-RAHNU</span>
+                        <p class="text-[9px] font-medium text-white/40 tracking-wide">Islamic Pawnbroking</p>
                     </div>
                 </div>
             </div>
 
-            <nav class="flex-1 px-3 py-3 space-y-1 overflow-y-auto scrollbar-hide">
-                <a href="{{ route('runtime.portal') }}" class="flex items-center gap-3 px-3 py-2.5 text-[14px] leading-5 rounded-[12px] {{ request()->routeIs('runtime.portal') ? 'bg-white/[0.1] text-white font-semibold' : 'text-white/60 hover:text-white hover:bg-white/[0.06] font-medium' }} transition-all duration-200 group">
-                    <svg class="w-5 h-5 {{ request()->routeIs('runtime.portal') ? 'text-[#2ecc71]' : 'text-white/40 group-hover:text-white/60' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+            <!-- Navigation -->
+            <nav class="flex-1 px-3 py-2 space-y-0.5 overflow-y-auto scrollbar-hide">
+                <a href="{{ route('runtime.portal') }}" class="flex items-center gap-3 px-3 py-2 text-[13px] leading-5 rounded-lg {{ request()->routeIs('runtime.portal') ? 'bg-white/[0.1] text-white font-semibold' : 'text-white/60 hover:text-white hover:bg-white/[0.06] font-medium' }} transition-all duration-200 group">
+                    <span class="w-2 h-2 rounded-full {{ request()->routeIs('runtime.portal') ? 'bg-[#2ecc71]' : 'bg-white/20 group-hover:bg-white/40' }} transition-colors shrink-0"></span>
                     Dashboard
                 </a>
 
@@ -66,43 +68,97 @@
                 <livewire:runtime.sidebar />
 
                 <!-- Support Link -->
-                <div class="pt-4 pb-1 px-3 text-[11px] font-bold tracking-wider text-white/30 uppercase">
+                <div class="pt-4 pb-1 px-3 text-[10px] font-bold tracking-wider text-white/25 uppercase">
                     Help
                 </div>
-                <a href="{{ route('portal.support') }}" class="flex items-center gap-3 px-3 py-2.5 text-[14px] leading-5 rounded-[12px] {{ request()->routeIs('portal.support') ? 'bg-white/[0.1] text-white font-semibold' : 'text-white/60 hover:text-white hover:bg-white/[0.06] font-medium' }} transition-all duration-200 group">
-                    <svg class="w-5 h-5 {{ request()->routeIs('portal.support') ? 'text-[#2ecc71]' : 'text-white/40 group-hover:text-white/60' }} transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                <a href="{{ route('portal.support') }}" class="flex items-center gap-3 px-3 py-2 text-[13px] leading-5 rounded-lg {{ request()->routeIs('portal.support') ? 'bg-white/[0.1] text-white font-semibold' : 'text-white/60 hover:text-white hover:bg-white/[0.06] font-medium' }} transition-all duration-200 group">
+                    <span class="w-2 h-2 rounded-full {{ request()->routeIs('portal.support') ? 'bg-[#2ecc71]' : 'bg-white/20 group-hover:bg-white/40' }} transition-colors shrink-0"></span>
                     IT Support
                 </a>
             </nav>
 
-            <!-- User Profile -->
-            <div class="shrink-0 px-4 pb-4">
-                <div class="flex items-center gap-3 p-3 rounded-[16px] bg-white/[0.05] border border-white/[0.08] hover:bg-white/[0.08] transition-all group">
-                    <div class="w-9 h-9 rounded-full bg-[#1b6b2f] shadow-inner border border-white/10 flex items-center justify-center shrink-0">
-                        <span class="text-[12px] font-bold text-white">{{ substr(auth()->user()->name ?? 'U', 0, 1) }}</span>
+            <!-- Bottom Branding -->
+            <div class="shrink-0 px-4 pb-4 pt-2 border-t border-white/[0.06]">
+                <div class="flex items-center gap-2 mb-2">
+                    <x-app-logo size="xs" class="rounded-[6px] opacity-80" />
+                    <div>
+                        <p class="text-[11px] font-bold text-white/70">AR-Rahnu</p>
+                        <p class="text-[9px] text-white/30 font-medium">Trusted. Shariah Compliant.</p>
                     </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="text-[14px] font-bold text-white truncate leading-tight">{{ auth()->user()->name ?? 'Staff' }}</p>
-                        <p class="text-[11px] font-medium text-white/40 truncate leading-tight mt-0.5">
-                            {{ auth()->user()->roles->first()?->name ? ucwords(str_replace(['_', '-'], ' ', auth()->user()->roles->first()->name)) : 'Staff' }}
-                        </p>
-                    </div>
-                    @if(config('app.demo_mode') || app()->environment(['local', 'testing']))
-                        <a href="/logout" class="p-1.5 rounded-lg text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all" title="Switch Role">
-                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
-                        </a>
-                    @endif
+                </div>
+                <div class="text-[10px] text-white/25 font-medium space-y-0.5">
+                    <p id="portal-date">{{ now()->format('d M Y') }}</p>
+                    <p id="portal-time">{{ now()->format('h:i:s A') }}</p>
+                    <p>v{{ config('app.version', '1.0.0') }}</p>
                 </div>
             </div>
         </aside>
 
         <!-- Main Content Area -->
-        <main class="flex-1 overflow-y-auto bg-[#f5f5f7] relative min-w-0">
-            <div class="p-6 lg:p-8 max-w-full">
-                {{ $slot }}
-            </div>
-        </main>
+        <div class="flex-1 flex flex-col min-w-0 h-full">
+            <!-- Green Header Bar -->
+            <header class="shrink-0 bg-[#1b6b2f] h-[52px] flex items-center justify-between px-6 shadow-sm z-30">
+                <!-- Page Title -->
+                <h1 class="text-[18px] font-bold text-white tracking-tight">
+                    @hasSection('page-title')
+                        @yield('page-title')
+                    @else
+                        {{ $pageTitle ?? 'Dashboard' }}
+                    @endif
+                </h1>
+
+                <!-- Right Side: Branch Selector + User -->
+                <div class="flex items-center gap-4">
+                    <!-- Branch Indicator -->
+                    @if(auth()->user()->branch)
+                    <div class="flex items-center gap-2 text-white/90">
+                        <svg class="w-4 h-4 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        <span class="text-[13px] font-semibold">{{ auth()->user()->branch->name ?? 'No Branch' }}</span>
+                    </div>
+                    @endif
+
+                    <!-- User Profile -->
+                    <div class="flex items-center gap-2.5 pl-4 border-l border-white/20">
+                        <div class="w-8 h-8 rounded-full bg-white/20 border border-white/10 flex items-center justify-center shrink-0">
+                            <span class="text-[11px] font-bold text-white">{{ substr(auth()->user()->name ?? 'U', 0, 1) }}</span>
+                        </div>
+                        <div class="hidden sm:block">
+                            <p class="text-[12px] font-semibold text-white leading-tight">{{ auth()->user()->name ?? 'Staff' }}</p>
+                            <p class="text-[10px] text-white/60 leading-tight">
+                                {{ auth()->user()->roles->first()?->name ? ucwords(str_replace(['_', '-'], ' ', auth()->user()->roles->first()->name)) : 'Staff' }}
+                            </p>
+                        </div>
+                        @if(config('app.demo_mode') || app()->environment(['local', 'testing']))
+                            <a href="/logout" class="p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/10 transition-all ml-1" title="Switch Role">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" /></svg>
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto bg-[#f5f5f7] relative min-w-0">
+                <div class="p-6 lg:p-8 max-w-full">
+                    {{ $slot }}
+                </div>
+            </main>
+        </div>
     </div>
+
+    <!-- Live Clock Script -->
+    <script>
+        setInterval(function() {
+            const el = document.getElementById('portal-time');
+            if (el) {
+                const now = new Date();
+                let h = now.getHours(), m = now.getMinutes(), s = now.getSeconds();
+                const ampm = h >= 12 ? 'PM' : 'AM';
+                h = h % 12; h = h ? h : 12;
+                el.textContent = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0') + ' ' + ampm;
+            }
+        }, 1000);
+    </script>
 
     @livewireScripts
 </body>
