@@ -1,58 +1,162 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Ar-Rahnumation — Low-Code Platform
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A low-code / no-code feature management platform for **Ar-Rahnu (Islamic Pawnbroking)** operations. HQ administrators design workflows, forms, rules, and approvals visually; branch staff execute them in a runtime portal — no traditional release cycle required.
 
-## About Laravel
+Built on Laravel 13, Livewire 4, and Vue 3 (Vue Flow).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## What's inside
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The platform is split into three layers:
 
-## Learning Laravel
+| Layer        | Path             | Responsibility                                                        |
+| ------------ | ---------------- | --------------------------------------------------------------------- |
+| **Studio**   | `app/Studio`     | Authoring tools — flow builder, page builder, rules, AI, publishing   |
+| **Runtime**  | `app/Runtime`    | Executes published features — automation engine, dynamic UI, sims     |
+| **Domain**   | `app/Domain`     | Ar-Rahnu business modules — customer, facility, valuation, payment, vault, document, notification, approval, accounting, compliance |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Studio features include a Flow Builder (Vue Flow), Page Builder / Form Engine, Rule Engine, Formula Engine, Blueprint Registry, Publish & Release Management, Scope Overrides, AI-assisted generation, and a Simulation harness. See `BRS_ArRahnumation.md` for the full business spec.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Tech stack
 
-## Agentic Development
+- **PHP** 8.3+ / **Laravel** 13
+- **Livewire** 4 (server-driven UI)
+- **Vue** 3 + **Vue Flow** (visual builders)
+- **Tailwind CSS** 4 + **Vite** 8
+- **Spatie Laravel Permission** (RBAC)
+- **SQLite** by default (any Laravel-supported DB works)
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+---
+
+## Getting started
+
+### Prerequisites
+
+- PHP 8.3+ with the usual Laravel extensions
+- Composer 2.x
+- Node.js 20+ and npm
+
+### Install
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone <repo-url> low-code
+cd low-code
+composer setup
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+`composer setup` runs `composer install`, copies `.env.example` → `.env`, generates the app key, runs migrations, installs npm packages, and builds frontend assets.
 
-## Contributing
+### Configure
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Edit `.env` as needed. Notable keys:
 
-## Code of Conduct
+```env
+APP_URL=http://localhost
+DEMO_MODE=true                # enables demo login shortcuts
+DB_CONNECTION=sqlite          # swap to mysql/pgsql if preferred
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# AI-assisted feature generation (optional)
+OPENAI_API_KEY=
+AI_MODEL=gpt-5.2
+AI_MONTHLY_BUDGET=50.00
+```
 
-## Security Vulnerabilities
+### Seed demo data
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan migrate --seed
+```
+
+This creates demo accounts:
+
+| Role           | Email                  |
+| -------------- | ---------------------- |
+| HQ Admin       | `admin@arrahnu.com`    |
+| Branch Manager | `manager1@arrahnu.com` |
+| Teller / Staff | `staff1@arrahnu.com`   |
+
+### Run
+
+```bash
+composer dev
+```
+
+Boots `php artisan serve`, the queue worker, log tailer (`pail`), and Vite together via `concurrently`. App is served at `http://localhost:8000`.
+
+To run them individually:
+
+```bash
+php artisan serve
+php artisan queue:listen --tries=1 --timeout=0
+npm run dev
+```
+
+---
+
+## Useful routes
+
+| Route                              | Purpose                          |
+| ---------------------------------- | -------------------------------- |
+| `/`                                | Landing page with SSO modal      |
+| `/studio`                          | Studio authoring environment     |
+| `/admin`                           | HQ admin panel                   |
+| `/branch`                          | Branch manager dashboard         |
+| `/portal/operations/new-pledge`    | Teller portal — pledge intake    |
+
+When `DEMO_MODE=true`, `/login-hq`, `/login-manager`, `/login-teller`, etc. are available as one-click logins (deprecated — prefer the SSO modal).
+
+---
+
+## Testing & code style
+
+```bash
+composer test                 # php artisan test (PHPUnit 12)
+./vendor/bin/pint             # Laravel Pint — code formatter
+```
+
+---
+
+## Project layout
+
+```
+app/
+├── Studio/        # Discovery, Registry, Publishing, Scoping, Validation, AI
+├── Runtime/       # Automation, UI, Simulation, Models
+├── Domain/        # Customer, Facility, Valuation, Payment, ...
+├── Livewire/      # Livewire components
+├── Http/          # Controllers, middleware, requests
+├── Models/        # Eloquent models
+└── Services/      # Cross-cutting services
+resources/
+├── views/         # Blade + Livewire views
+├── js/            # Vue components (builders, runtime UI)
+└── css/
+routes/
+├── web.php        # Web + Studio API routes
+└── api.php
+database/
+├── migrations/
+├── seeders/
+└── factories/
+```
+
+---
+
+## Deployment
+
+A reference deploy script is provided at `deploy.sh`, and a PM2 ecosystem file at `ecosystem.config.cjs`. Adjust both to match your hosting target before using in production.
+
+---
+
+## Documentation
+
+- **`BRS_ArRahnumation.md`** — full Business Requirements Specification covering Studio, Runtime, Domain features, data model, NFRs, and the Ar-Rahnu blueprint catalogue.
+
+---
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+MIT.
